@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="extra_small">@dimen/_8sdp</dimen>
+    <dimen name="small">@dimen/_10sdp</dimen>
+    <dimen name="normal">@dimen/_11sdp</dimen>
+    <dimen name="medium">@dimen/_14sdp</dimen>
+    <dimen name="large">@dimen/_15sdp</dimen>
+    <dimen name="extra_large">@dimen/_18sdp</dimen>
+    <dimen name="over_large">@dimen/_20sdp</dimen>
+</resources>

@@ -1,0 +1,199 @@
+<resources>
+    <string name="app_name">Smart Policy Agency</string>
+    <string name="top_image">Top Image</string>
+    <string name="bottom_image">Bottom Image</string>
+    <string name="splash_title">Welcome to name!</string>
+    <string name="splash_description">Lorem Ipsum has been the industry\'s standard dummy text ever.</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_in_description">Please enter the details to begin</string>
+    <string name="user_id">UserID/Mobile No</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="password">Password</string>
+    <string name="forgot_title">Forgot Password</string>
+    <string name="forgot_description">Select which contact details should we use to reset your password</string>
+    <string name="continu">Continue</string>
+    <string name="confirm_otp">Confirm OTP</string>
+    <string name="code_sent_to">Code has been send to </string>
+    <string name="create_new_password">Create New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="resend_code_in">Resend code in </string>
+    <string name="login_successfull">Login Successful!</string>
+    <string name="resend">Resend</string>
+    <string name="home">Home</string>
+    <string name="documents">Documents</string>
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_portfolio">My Insurance Portfolio</string>
+    <string name="premium_calendar">Premium Due Calendar</string>
+    <string name="premium_due">Premium Due List</string>
+    <string name="add_policy">Add Policy</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="notification">Notification</string>
+    <string name="share_app">Share App</string>
+    <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="contact_us">Contact Us</string>
+    <string name="logout">Log Out</string>
+    <string name="my_documents">My Documents</string>
+    <string name="family_members">Family Members</string>
+    <string name="type">Type</string>
+    <string name="summary">Summary</string>
+    <string name="no_of_policies">Number Of Polices</string>
+    <string name="annual_premium">Annual Premium</string>
+    <string name="risk_cover">Risk Cover</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="month">Month</string>
+    <string name="policies">Policies</string>
+    <string name="life_insurance">Life Insurance</string>
+    <string name="health_insurance">Health Insurance</string>
+    <string name="car_insurance">Car/Motor Insurance</string>
+    <string name="wc_insurance">Wc Insurance</string>
+    <string name="fire_insurance">Fire Insurance</string>
+    <string name="client_name">Client Name</string>
+    <string name="sume_insured">SI(Sum Insured)</string>
+    <string name="policy_start_date">PSD (Policy Start Date)</string>
+    <string name="policy_end_date">PED (Policy End Date)</string>
+    <string name="pre_existing_decease">Pre Existing Decease</string>
+    <string name="policy_number">Policy Number</string>
+    <string name="company_name">Company Name</string>
+    <string name="plan_name">Plan Name</string>
+    <string name="payment_mode">Payment Mode</string>
+    <string name="premium_amount">Premium Amount</string>
+    <string name="maturity_amount">Maturity Amount</string>
+    <string name="policy_term">Policy Term</string>
+    <string name="premium_payment_term">Premium Payment Term</string>
+    <string name="maturity_benefit">Maturity Benefit</string>
+    <string name="maturity_term">Maturity Term</string>
+    <string name="yearly_bonus_amount">Yearly Bonus Amount</string>
+    <string name="nominee_dateils">Nominee Details</string>
+    <string name="additional_rider">Additional Rider</string>
+    <string name="please_enter_valid_id">Please Enter Valid UserID/Mobile No</string>
+    <string name="please_enter_valid_password">Please Enter Valid Password</string>
+    <string name="add_member">Add Member</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="gender">Gender</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="age">Age</string>
+    <string name="reletionship">Relationship</string>
+    <string name="please_enter_valid_otp">Invalid Otp</string>
+    <string name="please_enter_atleast_six_character">Please Enter Atleast 6 Characters</string>
+    <string name="password_does_not_match">Password Does Not Match</string>
+    <string name="document_type">Document Type</string>
+    <string name="invalid_data">Invalid Data</string>
+    <string name="user_name">Username</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="set_new_password">Set New Password</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="address">Address</string>
+    <string name="sort">Sort</string>
+    <string name="insure_details">Insure Details</string>
+    <string name="name">Name</string>
+    <string name="policy">Policy</string>
+    <string name="company_details">Company Details</string>
+    <string name="policy_no">Policy No</string>
+    <string name="company">Company</string>
+    <string name="product">Product</string>
+    <string name="product_type">Product Type</string>
+    <string name="agent_name">Agency Name</string>
+    <string name="policy_details">Policy Details</string>
+    <string name="premium_sign">Premium(₹)</string>
+    <string name="premium">Premium</string>
+    <string name="sa">SA</string>
+    <string name="satart_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="ncb">NCB(%)</string>
+    <string name="ncb_val">NCB</string>
+    <string name="discount">Discount(%)</string>
+    <string name="discount_val">Discount</string>
+    <string name="yearly">Yearly</string>
+    <string name="year">Year</string>
+    <string name="reg_no">Reg No</string>
+    <string name="details">Details</string>
+    <string name="add">Add</string>
+    <string name="search_your_policy">Search your policy</string>
+    <string name="add_new_policy">Add New Policy</string>
+    <string name="insurance_type">Insurance Type</string>
+    <string name="product_name">Product Name</string>
+    <string name="start_date">Start Date</string>
+    <string name="insurance_sub_type">Insurance Sub Type</string>
+    <string name="rto">RTO</string>
+    <string name="gvw">GVW</string>
+    <string name="claim_details">Claim Details</string>
+    <string name="risk_start_date">Risk Start Date</string>
+    <string name="risk_end_date">Risk End Date</string>
+    <string name="gst">GST</string>
+    <string name="own_damage_premium">Own Damage Premium</string>
+    <string name="tp_premium">TP Premium</string>
+    <string name="idv">IDV</string>
+    <string name="net_premium">Net Premium</string>
+    <string name="total_premium">Total Premium</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="marital_status">Marital Status</string>
+    <string name="status">Status</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="si">Sum Insured</string>
+    <string name="st">ST</string>
+    <string name="waiting_period">Waiting Period</string>
+    <string name="tsi">Total Sum Insured</string>
+    <string name="bonus">Bonus</string>
+    <string name="client_document">Client Document</string>
+    <string name="insurance_document">Insurance Document</string>
+
+    <string-array name="family_members">
+        <item>All</item>
+        <item>Member 1</item>
+        <item>Member 2</item>
+    </string-array>
+
+    <string-array name="insurance_type">
+        <item>All</item>
+        <item>Life Insurance</item>
+        <item>Health Insurance</item>
+        <item>Car/Motor Insurance</item>
+        <item>Wc Insurance</item>
+        <item>Fire Insurance</item>
+    </string-array>
+
+    <string-array name="clients">
+        <item>Client 1</item>
+        <item>Client 2</item>
+    </string-array>
+
+    <string-array name="companies">
+        <item>Company 1</item>
+        <item>Company 2</item>
+    </string-array>
+
+    <string-array name="payment_mode">
+        <item>Yearly</item>
+        <item>Half Yearly</item>
+        <item>Quartely</item>
+        <item>Monthly</item>
+        <item>Single</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="relations">
+        <item>Husband</item>
+        <item>Wife</item>
+        <item>Daughter</item>
+        <item>Son</item>
+        <item>Mother</item>
+        <item>Father</item>
+    </string-array>
+
+</resources>

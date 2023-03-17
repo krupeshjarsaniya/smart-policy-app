@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include android:id="@+id/appBar"
+        layout="@layout/app_bar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                android:layout_marginVertical="@dimen/_6sdp"
+                app:hintEnabled="false">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tv_client_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:background="@drawable/bg_edit_text"
+                    android:maxLines="1"
+                    android:textSize="@dimen/normal"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/grey"
+                    android:text="@string/client_name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+
+                    >
+                    <EditText
+                        android:id="@+id/et_sum_insured"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/sume_insured"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_start_date"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+               android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:layout_marginVertical="@dimen/_6sdp"
+                android:background="@drawable/bg_edit_text"
+                android:text="@string/policy_start_date"
+                android:textColor="@color/black"
+                android:textSize="@dimen/normal"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <TextView
+                android:id="@+id/tv_end_date"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:layout_marginVertical="@dimen/_6sdp"
+                android:background="@drawable/bg_edit_text"
+                android:text="@string/policy_end_date"
+                android:textColor="@color/black"
+                android:textSize="@dimen/normal"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_ped"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/pre_existing_decease"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_policy_number"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/policy_number"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                android:layout_marginVertical="@dimen/_6sdp"
+                app:hintEnabled="false">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tv_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:background="@drawable/bg_edit_text"
+                    android:maxLines="1"
+                    android:textSize="@dimen/normal"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/company_name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_plan_name"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/plan_name"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                android:layout_marginVertical="@dimen/_6sdp"
+                app:hintEnabled="false">
+
+                <AutoCompleteTextView
+                    android:id="@+id/tv_payment_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:background="@drawable/bg_edit_text"
+                    android:maxLines="1"
+                    android:textSize="@dimen/normal"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/payment_mode" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_premium_amount"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/premium_amount"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_maturity_amount"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/maturity_amount"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_policy_term"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/policy_term"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_premium_payment_term"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/premium_payment_term"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_maturity_benefit"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/maturity_benefit"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_maturity_term"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/maturity_term"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_yearly_bonus_amount"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/yearly_bonus_amount"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_nominee_details"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/nominee_dateils"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_additional_rider"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:gravity="center_vertical"
+                        android:hint="@string/additional_rider"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_family"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginVertical="@dimen/_6sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+
+            <TextView
+                android:id="@+id/tv_add_member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_6sdp"
+                android:background="@drawable/bg_add_member"
+                android:padding="@dimen/_8sdp"
+                android:text=   "@string/add_member"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/normal"
+                />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</LinearLayout>
+</layout>
