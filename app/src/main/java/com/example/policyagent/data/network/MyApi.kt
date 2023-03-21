@@ -5,7 +5,9 @@ import com.example.policyagent.data.responses.login.LoginResponse
 import com.example.policyagent.util.AppConstants
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.Response
@@ -49,6 +51,16 @@ interface MyApi {
 
     @GET("agent/form/fire-insurance")
     suspend fun getFireInsurance(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+
+    @GET("agent/client/show")
+    suspend fun getClientList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+
+    @GET("agent/companylist")
+    suspend fun getCompanyList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/form/life-insurance/create")
+    suspend fun addLifeInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
 
     companion object {
         operator fun invoke(

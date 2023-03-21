@@ -5,7 +5,10 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -41,11 +44,11 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val genders = mContext.resources.getStringArray(R.array.gender)
         val genderAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, genders)
-        mBinding!!.tvGender.setAdapter(genderAdapter)
+        mBinding!!.spGender.adapter = genderAdapter
 
         val relations = mContext.resources.getStringArray(R.array.relations)
         val relationsAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, relations)
-        mBinding!!.tvRelationship.setAdapter(relationsAdapter)
+        mBinding!!.spRelationship.adapter = relationsAdapter
 
         mBinding!!.etFirstName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -90,17 +93,8 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
             datePicker.show()
         }
 
-        mBinding!!.tvGender.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(editable: Editable?) {
-                familyList[position].gender = editable.toString()
-            }
-        })
+        familyList[position].f_gender = mBinding!!.spGender.selectedItem.toString()
+        familyList[position].relationship = mBinding!!.spRelationship.selectedItem.toString()
 
         mBinding!!.etHeight.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -110,7 +104,7 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                familyList[position].height = editable.toString()
+                familyList[position].f_height = editable.toString()
             }
         })
 
@@ -122,7 +116,7 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                familyList[position].weight = editable.toString()
+                familyList[position].f_weight = editable.toString()
             }
         })
 
@@ -134,11 +128,11 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                familyList[position].age = editable.toString()
+                familyList[position].f_age = editable.toString()
             }
         })
 
-        mBinding!!.tvRelationship.addTextChangedListener(object : TextWatcher {
+        /*mBinding!!.tvRelationship.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -148,7 +142,7 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
             override fun afterTextChanged(editable: Editable?) {
                 familyList[position].relationship = editable.toString()
             }
-        })
+        })*/
 
     }
 

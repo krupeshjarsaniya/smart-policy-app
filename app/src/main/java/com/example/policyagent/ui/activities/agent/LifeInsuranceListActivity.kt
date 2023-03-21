@@ -18,6 +18,7 @@ import com.example.policyagent.ui.listeners.LifeInsuranceListListener
 import com.example.policyagent.ui.viewmodels.agent.LifeInsuranceListViewModel
 import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.launchActivity
+import com.example.policyagent.util.show
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -37,6 +38,10 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         binding!!.appBar.tvTitle.text = resources.getString(R.string.life_insurance)
         binding!!.appBar.ivBack.setOnClickListener {
             finish()
+        }
+        binding!!.appBar.btnAddPolicy.show()
+        binding!!.appBar.btnAddPolicy.setOnClickListener {
+            launchActivity<AddLifeInsuranceActivity> {  }
         }
         policyAdapter = LifeInsuranceListAdapter(this, this)
         binding!!.rvPolicies.adapter = policyAdapter

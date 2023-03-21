@@ -147,6 +147,11 @@
     <string name="bonus">Bonus</string>
     <string name="client_document">Client Document</string>
     <string name="insurance_document">Insurance Document</string>
+    <string name="commission_per">Commission(%)</string>
+    <string name="policy_file">Policy File</string>
+    <string name="add_document">Add Document</string>
+    <string name="save">Save</string>
+    <string name="enter_text">Enter Text</string>
 
     <string-array name="family_members">
         <item>All</item>
@@ -175,7 +180,7 @@
 
     <string-array name="payment_mode">
         <item>Yearly</item>
-        <item>Half Yearly</item>
+        <item>Half-Yearly</item>
         <item>Quartely</item>
         <item>Monthly</item>
         <item>Single</item>
@@ -194,6 +199,14 @@
         <item>Son</item>
         <item>Mother</item>
         <item>Father</item>
+    </string-array>
+
+    <string-array name="documents">
+        <item>Adharcard</item>
+        <item>Pancard</item>
+        <item>Driving Licance</item>
+        <item>Mediclaim</item>
+        <item>Other File</item>
     </string-array>
 
 </resources>

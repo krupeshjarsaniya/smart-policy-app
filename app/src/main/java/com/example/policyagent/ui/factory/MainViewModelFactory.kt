@@ -53,8 +53,8 @@ class MainViewModelFactory(
             PolicyTypeViewModel::class.java -> {
                 PolicyTypeViewModel(repository) as T
             }
-            LifeInsuranceViewModel::class.java -> {
-                LifeInsuranceViewModel(repository) as T
+            AddLifeInsuranceViewModel::class.java -> {
+                AddLifeInsuranceViewModel(repository) as T
             }
             ClientEditProfileViewModel::class.java -> {
                 ClientEditProfileViewModel(repository) as T
@@ -85,6 +85,9 @@ class MainViewModelFactory(
             }
             FireInsuranceListViewModel::class.java -> {
                 FireInsuranceListViewModel(repository) as T
+            }
+            LoginSuccessViewModel::class.java -> {
+                LoginSuccessViewModel(repository) as T
             }
             else -> {
                 SplashViewModel(repository) as T

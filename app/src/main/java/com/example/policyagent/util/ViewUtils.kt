@@ -8,6 +8,7 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.provider.Settings
 import android.text.*
 import android.util.Base64
@@ -78,6 +79,51 @@ fun getGlideProgress(mContext: Context): CircularProgressDrawable {
     return circularProgressDrawable
 }
 
+fun getFileChooserIntent(): Intent {
+    val mimeTypes = arrayOf("image/*", "application/pdf")
+    val intent = Intent(Intent.ACTION_GET_CONTENT)
+    intent.addCategory(Intent.CATEGORY_OPENABLE)
+    intent.type = if (mimeTypes.size == 1) mimeTypes[0] else "*/*"
+    if (mimeTypes.size > 0) {
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+    }
+    return intent
+}
+
+fun getFileFromURI(uri: Uri, context: Context): File? {
+    val returnCursor = context.contentResolver.query(uri, null, null, null, null)
+    val nameIndex =  returnCursor!!.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+    val sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE)
+    returnCursor.moveToFirst()
+    val name = returnCursor.getString(nameIndex)
+    val size = returnCursor.getLong(sizeIndex).toString()
+    val file = File(context.filesDir, name)
+    try {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        val outputStream = FileOutputStream(file)
+        var read = 0
+        val maxBufferSize = 1 * 1024 * 1024
+        val bytesAvailable: Int = inputStream?.available() ?: 0
+        //int bufferSize = 1024;
+        val bufferSize = Math.min(bytesAvailable, maxBufferSize)
+        val buffers = ByteArray(bufferSize)
+        while (inputStream?.read(buffers).also {
+                if (it != null) {
+                    read = it
+                }
+            } != -1) {
+            outputStream.write(buffers, 0, read)
+        }
+        Log.e("File Size", "Size " + file.length())
+        inputStream?.close()
+        outputStream.close()
+        Log.e("File Path", "Path " + file.path)
+
+    } catch (e: java.lang.Exception) {
+        Log.e("Exception", e.message!!)
+    }
+    return file
+}
 fun loadPdf(mContext: Context,url: String){
     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     mContext.startActivity(browserIntent)

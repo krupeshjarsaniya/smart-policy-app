@@ -6,6 +6,7 @@ import com.example.policyagent.data.network.SafeApiRequest
 import com.example.policyagent.data.preferences.PreferenceProvider
 import com.example.policyagent.util.AppConstants
 import com.google.gson.JsonObject
+import okhttp3.RequestBody
 import java.util.*
 
 class MainRepository(private val api: MyApi, private val db: AppDatabase, private val appPrefrences: PreferenceProvider) : SafeApiRequest() {
@@ -79,6 +80,18 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
 
     suspend fun getFireInsurance(): JsonObject {
         return apiRequest { api.getFireInsurance(getHeaderMap()) }
+    }
+
+    suspend fun getClients(): JsonObject {
+        return apiRequest { api.getClientList(getHeaderMap()) }
+    }
+
+    suspend fun getCompanies(): JsonObject {
+        return apiRequest { api.getCompanyList(getHeaderMap()) }
+    }
+
+    suspend fun addLifeInsurance(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.addLifeInsurance(getHeaderMap(),map) }
     }
 
     fun getHeaderMap(): HashMap<String, Any> {
