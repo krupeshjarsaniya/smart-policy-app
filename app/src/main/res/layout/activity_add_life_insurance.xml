@@ -778,6 +778,51 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeWidth="0dp"
+                    app:hintEnabled="false"
+                    app:boxStrokeWidthFocused="0dp"
+                    >
+                    <EditText
+                        android:id="@+id/et_view_commision"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/bg_edit_text"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:hint="0.0"
+                        android:fontFamily="@font/poppins_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingVertical="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_4sdp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -803,12 +848,15 @@
                     android:orientation="horizontal"
                     >
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_policy_file"
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="@dimen/_100sdp"
-                        android:padding="@dimen/_1sdp"
-                        android:src="@drawable/ic_add"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_1sdp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_add_purple"
+                        app:shapeAppearanceOverlay="@style/roundedCorners"
                          />
 
                 </LinearLayout>

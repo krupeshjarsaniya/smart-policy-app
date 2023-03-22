@@ -17,6 +17,7 @@ import com.example.policyagent.ui.listeners.HealthInsuranceListListener
 import com.example.policyagent.ui.viewmodels.agent.HealthInsuranceListViewModel
 import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.launchActivity
+import com.example.policyagent.util.show
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -36,6 +37,10 @@ class HealthInsuranceListActivity : BaseActivity(), KodeinAware, HealthInsurance
         binding!!.appBar.tvTitle.text = resources.getString(R.string.health_insurance)
         binding!!.appBar.ivBack.setOnClickListener{
             finish()
+        }
+        binding!!.appBar.btnAddPolicy.show()
+        binding!!.appBar.btnAddPolicy.setOnClickListener {
+            launchActivity<AddHealthInsuranceActivity> {  }
         }
         policyAdapter = HealthInsuranceListAdapter(this,this)
         binding!!.rvPolicies.adapter = policyAdapter

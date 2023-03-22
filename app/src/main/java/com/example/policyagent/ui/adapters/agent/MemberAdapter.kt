@@ -83,13 +83,14 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
                 { _, year, monthOfYear, dayOfMonth ->
                     val date =
                         (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
-                    mBinding!!.tvBirthDate.text = date
+                    mBinding!!.tvBirthDate.setText(date)
                     familyList[position].birth_date = date
                 },
                 yy,
                 mm,
                 dd
             )
+            datePicker.datePicker.maxDate = System.currentTimeMillis()
             datePicker.show()
         }
 
@@ -129,6 +130,18 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
 
             override fun afterTextChanged(editable: Editable?) {
                 familyList[position].f_age = editable.toString()
+            }
+        })
+
+        mBinding!!.etPan.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                familyList[position].pan = editable.toString()
             }
         })
 

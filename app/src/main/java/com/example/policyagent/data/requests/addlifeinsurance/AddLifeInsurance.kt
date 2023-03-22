@@ -1,10 +1,8 @@
 package com.example.policyagent.data.requests.addlifeinsurance
 
-import com.example.policyagent.data.responses.DocumentModel
-import com.example.policyagent.data.responses.MemberModel
 import java.io.File
 
-data class AddLifewInsurance(
+data class AddLifeInsurance(
     var client_id: String? = "",
     var member_id: String? = "",
     var sum_insured: String? = "",

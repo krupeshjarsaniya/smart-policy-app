@@ -110,9 +110,9 @@
     <string name="satart_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="ncb">NCB(%)</string>
-    <string name="ncb_val">NCB</string>
+    <string name="ncb_val">NCB(No Claim Bonus)</string>
     <string name="discount">Discount(%)</string>
-    <string name="discount_val">Discount</string>
+    <string name="discount_val">DTC(Discount)</string>
     <string name="yearly">Yearly</string>
     <string name="year">Year</string>
     <string name="reg_no">Reg No</string>
@@ -124,7 +124,7 @@
     <string name="product_name">Product Name</string>
     <string name="start_date">Start Date</string>
     <string name="insurance_sub_type">Insurance Sub Type</string>
-    <string name="rto">RTO</string>
+    <string name="rto">Registration Number/RTO</string>
     <string name="gvw">GVW</string>
     <string name="claim_details">Claim Details</string>
     <string name="risk_start_date">Risk Start Date</string>
@@ -132,7 +132,7 @@
     <string name="gst">GST</string>
     <string name="own_damage_premium">Own Damage Premium</string>
     <string name="tp_premium">TP Premium</string>
-    <string name="idv">IDV</string>
+    <string name="idv">IDV(Vehical Value)</string>
     <string name="net_premium">Net Premium</string>
     <string name="total_premium">Total Premium</string>
     <string name="personal_details">Personal Details</string>
@@ -152,6 +152,7 @@
     <string name="add_document">Add Document</string>
     <string name="save">Save</string>
     <string name="enter_text">Enter Text</string>
+    <string name="pan">PAN NO.</string>
 
     <string-array name="family_members">
         <item>All</item>
@@ -186,6 +187,23 @@
         <item>Single</item>
     </string-array>
 
+    <string-array name="health_insurance_type">
+        <item>Single</item>
+        <item>Floater</item>
+    </string-array>
+
+    <string-array name="car_insurance_type">
+        <item>Package</item>
+        <item>Liability</item>
+    </string-array>
+
+    <string-array name="car_insurance_sub_type">
+        <item>PVT Car</item>
+        <item>GCCV</item>
+        <item>2W</item>
+        <item>MISD</item>
+    </string-array>
+
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
@@ -208,5 +226,17 @@
         <item>Mediclaim</item>
         <item>Other File</item>
     </string-array>
+    <string name="title_activity_test">TestActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="total_sum_insured">Total Sum Insured</string>
+    <string name="title_activity_car_insurance">CarInsuranceActivity</string>
+    <string name="seating_capacity">Seating Capacity</string>
 
 </resources>

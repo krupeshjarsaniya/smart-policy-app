@@ -6,15 +6,17 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.policyagent.data.preferences.PreferenceProvider
 import com.example.policyagent.data.repositories.MainRepository
-import com.example.policyagent.data.requests.addlifeinsurance.AddLifewInsurance
+import com.example.policyagent.data.requests.addlifeinsurance.AddLifeInsurance
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.ui.listeners.AddLifeInsuranceListener
 import com.example.policyagent.util.*
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class AddLifeInsuranceViewModel (
     private val repository: MainRepository
@@ -28,17 +30,20 @@ class AddLifeInsuranceViewModel (
         return repository.getPrefernces()
     }
 
-    fun addLifeInsurance(addLifeInsurance: AddLifewInsurance, mContext: Context){
+    fun addLifeInsurance(addLifeInsurance: AddLifeInsurance, mContext: Context){
         listener?.onStarted()
         Coroutines.main {
             try {
+                var gson = Gson()
+                val json = gson.toJson(addLifeInsurance)
+                Log.e("lifeinsurancerequest",json!!.replace("\\",""))
                 val map = HashMap<String, RequestBody>()
                 map["client_id"] = addLifeInsurance.client_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["member_id"] = addLifeInsurance.member_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["sum_insured"] = addLifeInsurance.sum_insured!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["policy_start_date"] = addLifeInsurance.policy_start_date!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["policy_end_date"] = addLifeInsurance.policy_end_date!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["family"] = addLifeInsurance.family!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["family"] = addLifeInsurance.family!!.replace("\\","").toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["pre_existing_decease"] = addLifeInsurance.pre_existing_decease!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["policy_number"] = addLifeInsurance.policy_number!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["company_name"] = addLifeInsurance.company_name!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -54,23 +59,69 @@ class AddLifeInsuranceViewModel (
                 map["commision"] = addLifeInsurance.commision!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["nominee_details"] = addLifeInsurance.nominee_details!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["additional_rider"] = addLifeInsurance.additional_rider!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["document"] = addLifeInsurance.document.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-
+                map["document"] = addLifeInsurance.document.replace("\\","").toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 for(i in 0 until addLifeInsurance.file.size) {
                     val uri = Uri.fromFile(addLifeInsurance.file[i])
-                    map["file[$i]"] = addLifeInsurance.file[i].asRequestBody(mContext.contentResolver.getType(uri)?.let {
+                    var  imageBody = addLifeInsurance.file[i].asRequestBody(mContext.contentResolver.getType(uri)?.let {
                         it.toMediaTypeOrNull()
                     })
+                    map.put("file[$i]\"; filename=\"${addLifeInsurance.file[i].name}\"",imageBody)
                 }
-                val uri = Uri.fromFile(addLifeInsurance.policy_file)
-                map["policy_file"] = addLifeInsurance.policy_file!!.asRequestBody(mContext.contentResolver.getType(uri)?.let {
-                    it.toMediaTypeOrNull()
-                })
+
+                if(addLifeInsurance.policy_file != null) {
+                    val uri = Uri.fromFile(addLifeInsurance.policy_file)
+                    var  imageBody = addLifeInsurance.policy_file!!.asRequestBody(mContext.contentResolver.getType(uri)?.let {
+                        it.toMediaTypeOrNull()
+                    })
+                    map.put(
+                        "policy_file\"; filename=\"${addLifeInsurance.policy_file!!.name}\" ",
+                        imageBody
+                    )
+                }
+                //map["policy_file[0]"] = reqFile
 
                 val response = Gson().fromJson(repository.addLifeInsurance(map), CommonResponse::class.java)
                 if (response.status!!){
                     listener!!.onSuccess(response)
                     } else {
+                    if (response.status_code == 200) {
+                        listener!!.onFailure(response.message!!)
+                    } else {
+                        listener!!.onError(response.error!!)
+                    }
+                }
+            }catch (e: ApiException){
+                listener?.onFailure(e.message!!)
+            }catch (e: NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (ex: Exception){
+                printLog("exp-->", ex.message.toString())
+                listener?.onFailure(ex.message!!)
+            }
+        }
+    }
+
+
+    fun addFilte(file: File, mContext: Context){
+        listener?.onStarted()
+        Coroutines.main {
+            try {
+                val map = HashMap<String, RequestBody>()
+
+                //val reqFile: RequestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(),file)
+                val uri = Uri.fromFile(file)
+
+                var imageBody = file.asRequestBody(mContext.contentResolver.getType(uri)?.let {
+                    it.toMediaTypeOrNull()
+                })
+                map.put("file\"; filename=\"${file.name}\" ",imageBody)
+
+                //map["file"] = reqFile
+
+                val response = Gson().fromJson(repository.addFile(map), CommonResponse::class.java)
+                if (response.status!!){
+                    listener!!.onSuccess(response)
+                } else {
                     if (response.status_code == 200) {
                         listener!!.onFailure(response.message!!)
                     } else {

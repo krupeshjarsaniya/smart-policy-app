@@ -1,36 +1,25 @@
 package com.example.policyagent.ui.activities.agent
 
-import android.app.DatePickerDialog
+
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.view.View
-import android.widget.*
+import android.os.PersistableBundle
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.policyagent.R
-import com.example.policyagent.data.requests.addlifeinsurance.AddLifeInsurance
+import com.example.policyagent.data.requests.addcarinsurance.AddCarInsurance
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.DocumentModel
-import com.example.policyagent.data.responses.MemberModel
 import com.example.policyagent.data.responses.clientlist.ClientData
-import com.example.policyagent.data.responses.clientlist.ClientListResponse
-import com.example.policyagent.data.responses.commoninsurance.FamilyDetail
 import com.example.policyagent.data.responses.companylist.CompanyData
-import com.example.policyagent.data.responses.companylist.CompanyListResponse
-import com.example.policyagent.databinding.ActivityAddLifeInsuranceBinding
+import com.example.policyagent.databinding.ActivityAddCarInsuranceBinding
 import com.example.policyagent.ui.activities.BaseActivity
-import com.example.policyagent.ui.adapters.agent.MemberAdapter
 import com.example.policyagent.ui.adapters.agent.UploadDocumentAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
-import com.example.policyagent.ui.listeners.AddLifeInsuranceListener
+import com.example.policyagent.ui.listeners.AddCarInsuranceListener
 import com.example.policyagent.ui.listeners.FilePickerListener
 import com.example.policyagent.ui.listeners.LoadDocumentListener
-import com.example.policyagent.ui.viewmodels.agent.AddLifeInsuranceViewModel
-import com.example.policyagent.util.AppConstants
+import com.example.policyagent.ui.viewmodels.agent.AddCarInsuranceViewModel
 import com.example.policyagent.util.getFileChooserIntent
 import com.example.policyagent.util.getFileFromURI
 import com.google.gson.Gson
@@ -38,46 +27,42 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.File
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener,
-    FilePickerListener, AddLifeInsuranceListener {
+class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener,
+    FilePickerListener, AddCarInsuranceListener {
     override val kodein by kodein()
     private val factory: MainViewModelFactory by instance()
-    private var binding: ActivityAddLifeInsuranceBinding? = null
-    private var viewModel: AddLifeInsuranceViewModel? = null
-    private var familyList = ArrayList<MemberModel>()
+    private var binding: ActivityAddCarInsuranceBinding? = null
+    private var viewModel: AddCarInsuranceViewModel? = null
     private var documentList = ArrayList<DocumentModel>()
     private var fileList = ArrayList<File>()
-    private var memberAdapter: MemberAdapter? = null
     private var documentAdapter: UploadDocumentAdapter? = null
     private val FILEREQUEST = 100
     private var pos: Int = 0
     private var familyJson: ArrayList<String>? = ArrayList()
     private var docJson: ArrayList<String>? = ArrayList()
     var gson = Gson()
-    var addLifeInsurance: AddLifeInsurance? = AddLifeInsurance()
-    var familyMemberList: ArrayList<String>? = ArrayList()
-    var families: ArrayList<FamilyDetail?>? = ArrayList()
+    var addCarInsurance: AddCarInsurance? = AddCarInsurance()
     var companyList: ArrayList<String>? = ArrayList()
     var companies: ArrayList<CompanyData?>? = ArrayList()
     var clientList: ArrayList<String>? = ArrayList()
     var clients: ArrayList<ClientData?>? = ArrayList()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_health_insurance)
+    }
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_life_insurance)
-        viewModel = ViewModelProvider(this, factory)[AddLifeInsuranceViewModel::class.java]
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_health_insurance)
+        viewModel = ViewModelProvider(this, factory)[AddCarInsuranceViewModel::class.java]
         viewModel!!.listener = this
-        binding!!.appBar.tvTitle.text = resources.getString(R.string.life_insurance)
-        memberAdapter = MemberAdapter(this)
+        binding!!.appBar.tvTitle.text = resources.getString(R.string.car_insurance)
         documentAdapter = UploadDocumentAdapter(this, this)
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding!!.rvFamily.layoutManager = layoutManager
-        binding!!.rvFamily.adapter = memberAdapter
         binding!!.rvDocument.adapter = documentAdapter
         binding!!.appBar.ivBack.setOnClickListener {
             finish()
@@ -85,7 +70,8 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
         val clientJson: String = viewModel!!.getPreference().getStringValue(AppConstants.CLIENTS)!!
         val clientObj: ClientListResponse =
             gson.fromJson(clientJson, ClientListResponse::class.java)
-        clients = clientObj.data//resources.getStringArray(R.array.clients)
+        clients = clientObj.data
+        resources.getStringArray(R.array.clients)
         for (i in 0 until clients!!.size) {
             clientList!!.add(clients!![i]!!.firstname!!)
         }
@@ -105,9 +91,9 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
         val companyAdapter = ArrayAdapter(this, R.layout.dropdown_item, companyList!!)
         binding!!.spCompanyName.adapter = companyAdapter
 
-        val paymentMode = resources.getStringArray(R.array.payment_mode)
-        val paymentAdapter = ArrayAdapter(this, R.layout.dropdown_item, paymentMode)
-        binding!!.spPaymentMode.adapter = paymentAdapter
+        val insuranceSubType = resources.getStringArray(R.array.car_insurance_sub_type)
+        val insuranceSubAdapter = ArrayAdapter(this, R.layout.dropdown_item, insuranceSubType)
+        binding!!.spInsuranceSubType.adapter = insuranceSubAdapter
 
         binding!!.spClientName.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -117,33 +103,7 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 position: Int,
                 id: Long
             ) {
-                addLifeInsurance!!.client_id = clients!![position]!!.id!!.toString()
-                familyMemberList!!.clear();
-                families = clients!![position]!!.family_Details
-                for (i in 0 until families!!.size) {
-                    familyMemberList!!.add(families!![i]!!.firstname!!)
-                }
-                val familyAdapter = ArrayAdapter(
-                    this@AddLifeInsuranceActivity,
-                    R.layout.dropdown_item,
-                    familyMemberList!!
-                )
-                binding!!.spFamilyMember.adapter = familyAdapter
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
-
-        binding!!.spFamilyMember.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                addLifeInsurance!!.member_id = families!![position]!!.id!!.toString()
+                addCarInsurance!!.client_id = clients!![position]!!.id!!.toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -158,14 +118,14 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 position: Int,
                 id: Long
             ) {
-                addLifeInsurance!!.company_name = companies!![position]!!.id!!.toString()
+                addCarInsurance!!.company_id = companies!![position]!!.id!!.toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
 
-        binding!!.spPaymentMode.onItemSelectedListener = object :
+        binding!!.spInsuranceSubType.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -173,7 +133,26 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 position: Int,
                 id: Long
             ) {
-                addLifeInsurance!!.payment_mode = binding!!.spPaymentMode.selectedItem.toString()
+                addCarInsurance!!.insurance_sub_type = binding!!.spInsuranceSubType.selectedItem.toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
+
+        val insuranceType = resources.getStringArray(R.array.car_insurance_type)
+        val insuranceTypeAdapter = ArrayAdapter(this, R.layout.dropdown_item, insuranceType)
+        binding!!.spInsuranceType.adapter = insuranceTypeAdapter
+        binding!!.spInsuranceType.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                addCarInsurance!!.insurance_type = binding!!.spInsuranceType.selectedItem.toString().toUpperCase()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -187,7 +166,7 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
             val mm = calendar.get(Calendar.MONTH)
             val dd = calendar.get(Calendar.DAY_OF_MONTH)
             val datePicker = DatePickerDialog(
-                this@AddLifeInsuranceActivity,
+                this@AddCarInsuranceActivity,
                 { _, year, monthOfYear, dayOfMonth ->
                     val date =
                         (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
@@ -208,7 +187,7 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
             val mm = calendar.get(Calendar.MONTH)
             val dd = calendar.get(Calendar.DAY_OF_MONTH)
             val datePicker = DatePickerDialog(
-                this@AddLifeInsuranceActivity,
+                this@AddCarInsuranceActivity,
                 { _, year, monthOfYear, dayOfMonth ->
                     val date =
                         (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
@@ -325,24 +304,29 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 documentAdapter!!.updateList(documentList, fileList)
             }
         }
-        
-        binding!!.etCommission.addTextChangedListener(object : TextWatcher{
+
+        binding!!.etCommission.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                
+
             }
 
             override fun afterTextChanged(s: Editable?) {
-                var commission = binding!!.etPremiumAmount.editableText.toString().toDouble() * binding!!.etCommission.editableText.toString().toDouble() / 100
-                binding!!.etViewCommision.setText(String.format("%.2f",commission))
+                if(binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
+                    var commission = binding!!.etPremiumAmount.editableText.toString()
+                        .toDouble() * binding!!.etCommission.editableText.toString()
+                        .toDouble() / 100
+                    binding!!.etViewCommision.setText(String.format("%.2f",commission))
+                } else{
+                    binding!!.etViewCommision.setText("0.00")
+                }
             }
-
         })
 
-        binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher{
+        binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -352,8 +336,14 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
             }
 
             override fun afterTextChanged(s: Editable?) {
-                var commission = binding!!.etPremiumAmount.editableText.toString().toDouble() * binding!!.etCommission.editableText.toString().toDouble() / 100
-                binding!!.etViewCommision.setText(String.format("%.2f",commission))
+                if(binding!!.etCommission.editableText.toString().isNotEmpty()) {
+                    var commission = binding!!.etPremiumAmount.editableText.toString()
+                        .toDouble() * binding!!.etCommission.editableText.toString()
+                        .toDouble() / 100
+                    binding!!.etViewCommision.setText(String.format("%.2f",commission))
+                } else{
+                    binding!!.etViewCommision.setText("0.00")
+                }
             }
 
         })
@@ -441,143 +431,119 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
             for (doc in documentList) {
                 docJson!!.add(gson.toJson(doc))
             }
-            if (binding!!.etSumInsured.editableText.toString().isNotEmpty()) {
+            if (binding!!.etSt.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.sum_insured = binding!!.etSumInsured.editableText.toString()
+                addCarInsurance!!.st = binding!!.etSt.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etSumInsured.error = resources.getString(R.string.invalid_data)
             }
+            if (binding!!.etPed.editableText.toString().isNotEmpty()) {
+                callApi+=1
+                addCarInsurance!!.pre_existing_decease = binding!!.etPed.editableText.toString()
+            } else {
+                callApi-=1
+                binding!!.etPed.error = resources.getString(R.string.invalid_data)
+            }
             if (binding!!.tvStartDate.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.policy_start_date = binding!!.tvStartDate.text.toString()
+                addCarInsurance!!.risk_start_date = binding!!.tvStartDate.text.toString()
             } else {
                 callApi-=1
                 binding!!.tvStartDate.error = resources.getString(R.string.invalid_data)
             }
             if (binding!!.tvEndDate.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.policy_end_date = binding!!.tvEndDate.text.toString()
+                addCarInsurance!!.risk_end_date = binding!!.tvEndDate.text.toString()
             } else {
                 callApi-=1
                 binding!!.tvEndDate.error = resources.getString(R.string.invalid_data)
             }
-            if (binding!!.etPed.editableText.toString().isNotEmpty()) {
-                callApi+=1
-                addLifeInsurance!!.pre_existing_decease = binding!!.etPed.editableText.toString()
-            } else {
-                callApi-=1
-                binding!!.etPed.error = resources.getString(R.string.invalid_data)
-            }
             if (binding!!.etPolicyNumber.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.policy_number = binding!!.etPolicyNumber.editableText.toString()
+                addCarInsurance!!.policy_number = binding!!.etPolicyNumber.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPolicyNumber.error = resources.getString(R.string.invalid_data)
             }
             if (binding!!.etPlanName.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.plan_name = binding!!.etPlanName.editableText.toString()
+                addCarInsurance!!.plan_name = binding!!.etPlanName.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPlanName.error = resources.getString(R.string.invalid_data)
             }
             if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.premium_amount =
+                addCarInsurance!!.premium_amount =
                     binding!!.etPremiumAmount.editableText.toString()
-
             } else {
                 callApi-=1
                 binding!!.etPremiumAmount.error = resources.getString(R.string.invalid_data)
             }
-            if (binding!!.etMaturityAmount.editableText.toString().isNotEmpty()) {
-                callApi+=1
-                addLifeInsurance!!.maturity_amount =
-                    binding!!.etMaturityAmount.editableText.toString()
-            } else {
-                callApi-=1
-                binding!!.etMaturityAmount.error = resources.getString(R.string.invalid_data)
-            }
             if (binding!!.etPolicyTerm.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.policy_term = binding!!.etPolicyTerm.editableText.toString()
+                addCarInsurance!!.policy_term = binding!!.etPolicyTerm.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPolicyTerm.error = resources.getString(R.string.invalid_data)
             }
-            if (binding!!.etMaturityBenefit.editableText.toString().isNotEmpty()) {
+            if (binding!!.etWaitingPeriod.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.maturity_benefit =
-                    binding!!.etMaturityBenefit.editableText.toString()
+                addCarInsurance!!.waiting =
+                    binding!!.etWaitingPeriod.editableText.toString()
             } else {
                 callApi-=1
-                binding!!.etMaturityBenefit.error = resources.getString(R.string.invalid_data)
+                binding!!.etWaitingPeriod.error = resources.getString(R.string.invalid_data)
             }
-            if (binding!!.etPremiumPaymentTerm.editableText.toString().isNotEmpty()) {
+            if (binding!!.etSumInsured.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.preminum_payment_term =
-                    binding!!.etPremiumPaymentTerm.editableText.toString()
+                addCarInsurance!!.sum_insured = binding!!.etSumInsured.editableText.toString()
             } else {
                 callApi-=1
-                binding!!.etPremiumPaymentTerm.error = resources.getString(R.string.invalid_data)
+                binding!!.etSumInsured.error = resources.getString(R.string.invalid_data)
             }
-            if (binding!!.etMaturityTerm.editableText.toString().isNotEmpty()) {
+            if (binding!!.etBonus.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.maturity_term = binding!!.etMaturityTerm.editableText.toString()
+                addCarInsurance!!.bonus = binding!!.etBonus.editableText.toString()
             } else {
                 callApi-=1
-                binding!!.etMaturityTerm.error = resources.getString(R.string.invalid_data)
+                binding!!.etBonus.error = resources.getString(R.string.invalid_data)
             }
-            if (binding!!.etYearlyBonusAmount.editableText.toString().isNotEmpty()) {
+            if (binding!!.etTotalSumInsured.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.yearly_bonus_amount =
-                    binding!!.etYearlyBonusAmount.editableText.toString()
+                addCarInsurance!!.total_sum_insured = binding!!.etTotalSumInsured.editableText.toString()
             } else {
                 callApi-=1
-                binding!!.etYearlyBonusAmount.error = resources.getString(R.string.invalid_data)
+                binding!!.etTotalSumInsured.error = resources.getString(R.string.invalid_data)
             }
+
             if (binding!!.etViewCommision.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addLifeInsurance!!.commision = binding!!.etCommission.editableText.toString()
+                addCarInsurance!!.commision =
+                    binding!!.etViewCommision.editableText.toString()
             } else {
                 callApi-=1
-                binding!!.etCommission.error = resources.getString(R.string.invalid_data)
+                binding!!.etViewCommision.error = resources.getString(R.string.invalid_data)
             }
-            if (binding!!.etNomineeDetails.editableText.toString().isNotEmpty()) {
-                callApi+=1
-                addLifeInsurance!!.nominee_details =
-                    binding!!.etNomineeDetails.editableText.toString()
-            } else {
-                callApi-=1
-                binding!!.etNomineeDetails.error = resources.getString(R.string.invalid_data)
-            }
-            if (binding!!.etAdditionalRider.editableText.toString().isNotEmpty()) {
-                callApi+=1
-                addLifeInsurance!!.additional_rider =
-                    binding!!.etAdditionalRider.editableText.toString()
-            } else {
-                callApi-=1
-                binding!!.etAdditionalRider.error = resources.getString(R.string.invalid_data)
-            }
-            addLifeInsurance!!.family = familyJson.toString()
-            addLifeInsurance!!.document = docJson.toString()
-            addLifeInsurance!!.file = fileList
-            if(callApi >= 16) {
-                viewModel!!.addLifeInsurance(addLifeInsurance!!, this)
+
+            addCarInsurance!!.family = familyJson.toString()
+            addCarInsurance!!.document = docJson.toString()
+            addCarInsurance!!.file = fileList
+            if(callApi >= 13) {
+                viewModel!!.addCarInsurance(addCarInsurance!!, this)
             } else{
                 showToastMessage(resources.getString(R.string.invalid_data))
             }
         }
-    }
+    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             val imageSelected = data!!.data
             if (requestCode == FILEREQUEST) {
-                addLifeInsurance!!.policy_file = getFileFromURI(imageSelected!!, this)
+                addCarInsurance!!.policy_file = getFileFromURI(imageSelected!!, this)
                 binding!!.ivPolicyFile.setImageURI(imageSelected)
             } else {
                 fileList[pos] = getFileFromURI(imageSelected!!, this)!!

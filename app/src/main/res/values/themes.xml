@@ -13,4 +13,13 @@
         <item name="android:statusBarColor">#4919A5</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.PolicyAgent.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.PolicyAgent.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PolicyAgent.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

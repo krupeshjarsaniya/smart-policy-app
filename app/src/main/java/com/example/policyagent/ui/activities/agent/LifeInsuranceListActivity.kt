@@ -64,6 +64,11 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel!!.getLifeInsurance(this)
+    }
+
     private fun filter(text: String) {
         val filteredList: ArrayList<LifeInsuranceData?> = arrayListOf()
 

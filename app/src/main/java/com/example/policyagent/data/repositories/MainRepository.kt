@@ -94,6 +94,14 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.addLifeInsurance(getHeaderMap(),map) }
     }
 
+    suspend fun addHealthInsurance(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.addHealthInsurance(getHeaderMap(),map) }
+    }
+
+    suspend fun addFile(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.addFile(getHeaderMap(),map) }
+    }
+
     fun getHeaderMap(): HashMap<String, Any> {
         val map = HashMap<String, Any>()
         map[AppConstants.Accept] = "application/json"

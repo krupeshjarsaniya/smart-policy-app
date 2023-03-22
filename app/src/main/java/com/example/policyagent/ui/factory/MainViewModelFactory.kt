@@ -89,6 +89,12 @@ class MainViewModelFactory(
             LoginSuccessViewModel::class.java -> {
                 LoginSuccessViewModel(repository) as T
             }
+            AddHealthInsuranceViewModel::class.java -> {
+                AddHealthInsuranceViewModel(repository) as T
+            }
+            AddCarInsuranceViewModel::class.java -> {
+                AddCarInsuranceViewModel(repository) as T
+            }
             else -> {
                 SplashViewModel(repository) as T
             }

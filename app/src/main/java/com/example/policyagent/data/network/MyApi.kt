@@ -62,6 +62,14 @@ interface MyApi {
     @POST("agent/form/life-insurance/create")
     suspend fun addLifeInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
 
+    @Multipart
+    @POST("agent/form/health-insurance/create")
+    suspend fun addHealthInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/form/life-insurance/imageupload")
+    suspend fun addFile(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
+
     companion object {
         operator fun invoke(
             networkConnectionInterceptor: NetworkConnectionInterceptor
