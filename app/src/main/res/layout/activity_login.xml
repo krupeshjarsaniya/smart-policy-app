@@ -60,7 +60,7 @@
                     app:boxStrokeWidthFocused="0dp"
                     app:hintTextAppearance="@style/Widget.Design.TextInputLayout"
                     >
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_mobile"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                     app:passwordToggleTint="@color/black"
                     app:boxStrokeWidthFocused="0dp"
                     >
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_password"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"

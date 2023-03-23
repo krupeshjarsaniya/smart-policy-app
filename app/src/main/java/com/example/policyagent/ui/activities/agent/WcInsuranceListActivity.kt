@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
+import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.healthinsurancelist.HealthInsuranceData
 import com.example.policyagent.data.responses.wcinsurancelist.WcInsuranceData
 import com.example.policyagent.data.responses.wcinsurancelist.WcInsuranceListResponse
@@ -22,6 +24,7 @@ import com.example.policyagent.ui.viewmodels.agent.LifeInsuranceListViewModel
 import com.example.policyagent.ui.viewmodels.agent.WcInsuranceListViewModel
 import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.launchActivity
+import com.example.policyagent.util.show
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -42,9 +45,14 @@ class WcInsuranceListActivity : BaseActivity(), KodeinAware, WcInsuranceListList
         binding!!.appBar.ivBack.setOnClickListener {
             finish()
         }
+        binding!!.appBar.btnAddPolicy.show()
+        binding!!.appBar.btnAddPolicy.setOnClickListener {
+            launchActivity<AddWcInsuranceActivity> {
+
+            }
+        }
         policyAdapter = WcInsuranceListAdapter(this, this)
         binding!!.rvPolicies.adapter = policyAdapter
-        viewModel!!.getWcInsurance(this)
         binding!!.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -59,6 +67,11 @@ class WcInsuranceListActivity : BaseActivity(), KodeinAware, WcInsuranceListList
             }
 
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel!!.getWcInsurance(this)
     }
 
     private fun filter(text: String) {
@@ -105,5 +118,16 @@ class WcInsuranceListActivity : BaseActivity(), KodeinAware, WcInsuranceListList
         launchActivity<WcInsuranceDetailsActivity> {
             this.putExtra(AppConstants.WC_INSURANCE,data)
         }
+    }
+
+    override fun onDelete(id: String,position: Int) {
+        viewModel!!.deleteWcInsurance(this,id,position)
+    }
+
+    override fun onSuccessDelete(data: CommonResponse, position: Int) {
+        hideProgress()
+        showToastMessage(data.message!!)
+        policyList.removeAt(position)
+        policyAdapter!!.updateList(policyList)
     }
 }

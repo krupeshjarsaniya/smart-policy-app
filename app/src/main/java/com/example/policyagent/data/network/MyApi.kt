@@ -67,6 +67,36 @@ interface MyApi {
     suspend fun addHealthInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
 
     @Multipart
+    @POST("agent/form/car-insurance/create")
+    suspend fun addCarInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/form/wc-insurance/create")
+    suspend fun addWcInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/form/fire-insurance/create")
+    suspend fun addFireInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
+
+    @GET("agent/form/life-insurance/delete/{id}")
+    suspend fun deleteLifeInsurance(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
+
+    @GET("agent/form/health-insurance/delete/{id}")
+    suspend fun deleteHealthInsurance(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
+
+    @GET("agent/form/car-insurance/delete/{id}")
+    suspend fun deleteCarInsurance(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
+
+    @GET("agent/form/fire-insurance/delete/{id}")
+    suspend fun deleteFireInsurance(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
+
+    @GET("agent/form/wc-insurance/delete/{id}")
+    suspend fun deleteWcInsurance(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
+
+
+
+
+    @Multipart
     @POST("agent/form/life-insurance/imageupload")
     suspend fun addFile(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
 

@@ -40,7 +40,7 @@
     <string name="family_members">Family Members</string>
     <string name="type">Type</string>
     <string name="summary">Summary</string>
-    <string name="no_of_policies">Number Of Polices</string>
+    <string name="no_of_policies">Number Of</string>
     <string name="annual_premium">Annual Premium</string>
     <string name="risk_cover">Risk Cover</string>
     <string name="current_password">Current Password</string>
@@ -187,6 +187,18 @@
         <item>Single</item>
     </string-array>
 
+    <string-array name="commission_type">
+        <item>Own-Damage-Premium</item>
+        <item>TP-Premium</item>
+        <item>Net-Premium</item>
+    </string-array>
+
+    <string-array name="fire_insurance_type">
+        <item>Stock</item>
+        <item>Building</item>
+        <item>Equipment</item>
+    </string-array>
+
     <string-array name="health_insurance_type">
         <item>Single</item>
         <item>Floater</item>
@@ -204,11 +216,15 @@
         <item>MISD</item>
     </string-array>
 
+
+
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
     </string-array>
+
+
 
     <string-array name="relations">
         <item>Husband</item>
@@ -238,5 +254,43 @@
     <string name="total_sum_insured">Total Sum Insured</string>
     <string name="title_activity_car_insurance">CarInsuranceActivity</string>
     <string name="seating_capacity">Seating Capacity</string>
+    <string name="st_with_me">ST With Me</string>
+    <string name="net_amount">Net Amount</string>
+    <string name="invalid_rto">Enter Valid Registration Number/RTO</string>
+    <string name="invalid_risk_start_date">Enter Valid Risk Start Date</string>
+    <string name="invalid_risk_end_date">Enter Valid Risk End Date</string>
+    <string name="invalid_idv">Enter Valid IDV</string>
+    <string name="invalid_ncb">Enter Valid NCB</string>
+    <string name="invalid_discount">Enter Valid Discount</string>
+    <string name="invalid_policy_number">Enter Valid Policy Number</string>
+    <string name="invalid_plan_name">Enter Valid Plan Name</string>
+    <string name="invalid_premium_amount">Enter Valid Premium Amount</string>
+    <string name="invalid_claim_details">Enter Valid Claim Details</string>
+    <string name="invalid_own_damage_premium">Enter Valid Own Damage Premium</string>
+    <string name="invalid_tp_premium">Enter Valid Tp Premium</string>
+    <string name="invalid_net_premium">Enter Valid Net Premium</string>
+    <string name="invalid_gst">Enter Valid Gst</string>
+    <string name="invalid_total_premium">Enter Valid Total Premium</string>
+    <string name="invalid_commission">Enter Valid Commission</string>
+    <string name="invalid_st">Enter Valid ST</string>
+    <string name="invalid_net_amount">Enter Valid Net Amount</string>
+    <string name="invalid_pre_existing_decease">Enter Valid Pre existing decease</string>
+    <string name="invalid_policy_term">Enter Valid Policy Term</string>
+    <string name="invalid_waiting_period">Enter Valid Waiting Period</string>
+    <string name="invalid_sum_insured">Enter Valid Sum Insured</string>
+    <string name="invalid_bonus">Enter Valid Bonus</string>
+    <string name="invalid_total_sum_insured">Enter Valid Total Sum Insured</string>
+    <string name="invalid_policy_start_date">Enter Valid Policy Start Date</string>
+    <string name="invalid_policy_end_date">Enter Valid Policy End Date</string>
+    <string name="invalid_maturity_amount">Enter Valid Maturity Amount</string>
+    <string name="invalid_maturity_benefit">Enter Valid Maturity Benefit</string>
+    <string name="invalid_premium_payment_term">Enter Valid Premium Payment Term</string>
+    <string name="invalid_maturity_term">Enter Valid Maturity Term</string>
+    <string name="invalid_yearly_bonus_amount">Enter Valid Yearly Bonus Amount</string>
+    <string name="invalid_nominee_details">Enter Valid Nominee Details</string>
+    <string name="invalid_additional_rider">Enter Valid additional Rider</string>
+    <string name="invalid_st_with_me">Enter Valid St With Me</string>
+    <string name="invalid_no_of">Invalid No Of</string>
+
 
 </resources>

@@ -98,8 +98,40 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.addHealthInsurance(getHeaderMap(),map) }
     }
 
+    suspend fun addCarInsurance(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.addCarInsurance(getHeaderMap(),map) }
+    }
+
+    suspend fun addWcInsurance(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.addWcInsurance(getHeaderMap(),map) }
+    }
+
+    suspend fun addFireInsurance(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.addFireInsurance(getHeaderMap(),map) }
+    }
+
     suspend fun addFile(map: HashMap<String, RequestBody>): JsonObject {
         return apiRequest { api.addFile(getHeaderMap(),map) }
+    }
+
+    suspend fun deleteLifeInsurance(id: String): JsonObject {
+        return apiRequest { api.deleteLifeInsurance(getHeaderMap(),id) }
+    }
+
+    suspend fun deleteHealthInsurance(id: String): JsonObject {
+        return apiRequest { api.deleteHealthInsurance(getHeaderMap(),id) }
+    }
+
+    suspend fun deleteCarInsurance(id: String): JsonObject {
+        return apiRequest { api.deleteCarInsurance(getHeaderMap(),id) }
+    }
+
+    suspend fun deleteFireInsurance(id: String): JsonObject {
+        return apiRequest { api.deleteFireInsurance(getHeaderMap(),id) }
+    }
+
+    suspend fun deleteWcInsurance(id: String): JsonObject {
+        return apiRequest { api.deleteWcInsurance(getHeaderMap(),id) }
     }
 
     fun getHeaderMap(): HashMap<String, Any> {

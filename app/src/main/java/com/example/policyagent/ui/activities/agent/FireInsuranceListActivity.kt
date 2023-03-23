@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
+import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.carinsurancelist.CarInsuranceData
 import com.example.policyagent.data.responses.fireinsurancelist.FireInsuranceData
 import com.example.policyagent.data.responses.fireinsurancelist.FireInsuranceListResponse
@@ -17,6 +18,7 @@ import com.example.policyagent.ui.listeners.FireInsuranceListListener
 import com.example.policyagent.ui.viewmodels.agent.FireInsuranceListViewModel
 import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.launchActivity
+import com.example.policyagent.util.show
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -37,10 +39,13 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
         binding!!.appBar.ivBack.setOnClickListener {
             finish()
         }
+        binding!!.appBar.btnAddPolicy.show()
+        binding!!.appBar.btnAddPolicy.setOnClickListener {
+            launchActivity<AddFireInsuranceActivity> {  }
+        }
         policyAdapter = FireInsuranceListAdapter(this, this)
         binding!!.rvPolicies.adapter = policyAdapter
 
-        viewModel!!.getFireInsurance(this)
 
         binding!!.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -56,6 +61,11 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
             }
 
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel!!.getFireInsurance(this)
     }
 
     private fun filter(text: String) {
@@ -102,5 +112,16 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
         launchActivity<FireInsuranceDetailsActivity> {
             this.putExtra(AppConstants.FIRE_INSURANCE,data)
         }
+    }
+
+    override fun onDelete(id: String,position: Int) {
+        viewModel!!.deleteFireInsurance(this,id,position)
+    }
+
+    override fun onSuccessDelete(data: CommonResponse, position: Int) {
+        hideProgress()
+        showToastMessage(data.message!!)
+        policyList.removeAt(position)
+        policyAdapter!!.updateList(policyList)
     }
 }

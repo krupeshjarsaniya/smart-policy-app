@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.MemberModel
 import com.example.policyagent.databinding.ItemMemberBinding
-import com.example.policyagent.databinding.ItemMonthlyPremiumBinding
+import com.example.policyagent.ui.listeners.AddHealthInsuranceListener
+import com.example.policyagent.ui.listeners.AddLifeInsuranceListener
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<MemberAdapter.ViewHolderClass>() {
+class MemberAdapter (private val mContext: Context, val listener: Any): RecyclerView.Adapter<MemberAdapter.ViewHolderClass>() {
 
     private var mBinding: ItemMemberBinding? = null
     private var familyList = ArrayList<MemberModel>()
@@ -42,9 +43,38 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
     }
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
+        holder.setIsRecyclable(false)
         val genders = mContext.resources.getStringArray(R.array.gender)
         val genderAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, genders)
         mBinding!!.spGender.adapter = genderAdapter
+
+        if(familyList[position].first_name!!.isNotEmpty()){
+            mBinding!!.etFirstName.setText(familyList[position].first_name!!)
+        }
+        if(familyList[position].last_name!!.isNotEmpty()){
+            mBinding!!.etLastName.setText(familyList[position].last_name!!)
+        }
+        if(familyList[position].birth_date!!.isNotEmpty()){
+            mBinding!!.tvBirthDate.setText(familyList[position].birth_date!!)
+        }
+        if(familyList[position].f_gender!!.isNotEmpty()){
+            mBinding!!.spGender.setSelection(familyList[position].g_pos!!)
+        }
+        if(familyList[position].f_height!!.isNotEmpty()){
+            mBinding!!.etHeight.setText(familyList[position].f_height!!)
+        }
+        if(familyList[position].f_weight!!.isNotEmpty()){
+            mBinding!!.etWeight.setText(familyList[position].f_weight!!)
+        }
+        if(familyList[position].f_age!!.isNotEmpty()){
+            mBinding!!.etAge.setText(familyList[position].f_age!!)
+        }
+        if(familyList[position].relationship!!.isNotEmpty()){
+            mBinding!!.spRelationship.setSelection(familyList[position].r_pos!!)
+        }
+        if(familyList[position].pan!!.isNotEmpty()){
+            mBinding!!.etPan.setText(familyList[position].pan!!)
+        }
 
         val relations = mContext.resources.getStringArray(R.array.relations)
         val relationsAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, relations)
@@ -94,8 +124,39 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
             datePicker.show()
         }
 
-        familyList[position].f_gender = mBinding!!.spGender.selectedItem.toString()
         familyList[position].relationship = mBinding!!.spRelationship.selectedItem.toString()
+
+        mBinding!!.spGender.onItemSelectedListener = object : OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                positio: Int,
+                id: Long
+            ) {
+                familyList[position].f_gender = mBinding!!.spGender.selectedItem.toString()
+                familyList[position].g_pos = positio
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+
+        mBinding!!.spRelationship.onItemSelectedListener = object : OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                positio: Int,
+                id: Long
+            ) {
+                familyList[position].relationship = mBinding!!.spRelationship.selectedItem.toString()
+                familyList[position].r_pos = positio
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
 
         mBinding!!.etHeight.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -145,17 +206,13 @@ class MemberAdapter (private val mContext: Context): RecyclerView.Adapter<Member
             }
         })
 
-        /*mBinding!!.tvRelationship.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        mBinding!!.ivClose.setOnClickListener {
+            if(listener is AddLifeInsuranceListener){
+                listener.onRemoveFamily(position)
+            } else if(listener is AddHealthInsuranceListener){
+                listener.onRemoveFamily(position)
             }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(editable: Editable?) {
-                familyList[position].relationship = editable.toString()
-            }
-        })*/
+        }
 
     }
 

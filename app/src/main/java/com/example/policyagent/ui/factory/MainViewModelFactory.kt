@@ -95,6 +95,12 @@ class MainViewModelFactory(
             AddCarInsuranceViewModel::class.java -> {
                 AddCarInsuranceViewModel(repository) as T
             }
+            AddWcInsuranceViewModel::class.java -> {
+                AddWcInsuranceViewModel(repository) as T
+            }
+            AddFireInsuranceViewModel::class.java -> {
+                AddFireInsuranceViewModel(repository) as T
+            }
             else -> {
                 SplashViewModel(repository) as T
             }

@@ -55,17 +55,17 @@
                         app:boxStrokeWidthFocused="0dp"
                         >
                         <EditText
-                            android:id="@+id/et_rto"
+                            android:id="@+id/et_st"
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_45sdp"
                             android:layout_gravity="center_vertical"
                             android:background="@drawable/bg_edit_text"
                             android:gravity="center_vertical"
-                            android:hint="@string/rto"
+                            android:hint="@string/st"
                             android:fontFamily="@font/poppins_medium"
                             android:imeOptions="actionNext"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:paddingVertical="@dimen/_3sdp"
                             android:paddingEnd="@dimen/_4sdp"/>
                     </com.google.android.material.textfield.TextInputLayout>
@@ -82,6 +82,16 @@
                         />
 
                 </RelativeLayout>
+
+                <Spinner
+                    android:id="@+id/sp_policy_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    android:background="@drawable/bg_edit_text"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    />
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -175,156 +185,6 @@
 
                 </RelativeLayout>
 
-                <Spinner
-                    android:id="@+id/sp_insurance_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    android:background="@drawable/bg_edit_text"
-                    android:paddingHorizontal="@dimen/_8sdp"
-                    />
-
-                <Spinner
-                    android:id="@+id/sp_insurance_sub_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    android:background="@drawable/bg_edit_text"
-                    android:paddingHorizontal="@dimen/_8sdp"
-                    />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        >
-                        <EditText
-                            android:id="@+id/et_idv"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/idv"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:src="@drawable/ic_mobile"
-                        app:tint="@color/black"
-                        android:visibility="gone"
-                        />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        >
-                        <EditText
-                            android:id="@+id/et_ncb"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/ncb_val"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:src="@drawable/ic_mobile"
-                        app:tint="@color/black"
-                        android:visibility="gone"
-                        />
-
-                </RelativeLayout>
-
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        >
-                        <EditText
-                            android:id="@+id/et_dtc"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/discount_val"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:src="@drawable/ic_mobile"
-                        app:tint="@color/black"
-                        android:visibility="gone"
-                        />
-
-                </RelativeLayout>
-
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
@@ -368,7 +228,6 @@
 
                 </RelativeLayout>
 
-
                 <Spinner
                     android:id="@+id/sp_company_name"
                     android:layout_width="match_parent"
@@ -377,50 +236,6 @@
                     android:background="@drawable/bg_edit_text"
                     android:paddingHorizontal="@dimen/_8sdp"
                     />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        >
-                        <EditText
-                            android:id="@+id/et_plan_name"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/plan_name"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:src="@drawable/ic_mobile"
-                        app:tint="@color/black"
-                        android:visibility="gone"
-                        />
-
-                </RelativeLayout>
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -466,11 +281,9 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_gvw"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
                     android:layout_gravity="center_vertical"
-                    android:visibility="gone"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
@@ -482,14 +295,14 @@
                         app:boxStrokeWidthFocused="0dp"
                         >
                         <EditText
-                            android:id="@+id/et_gvw"
+                            android:id="@+id/et_net_amount"
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_45sdp"
                             android:layout_gravity="center_vertical"
                             android:background="@drawable/bg_edit_text"
                             android:gravity="center_vertical"
-                            android:hint="@string/gvw"
+                            android:hint="@string/net_amount"
                             android:fontFamily="@font/poppins_medium"
                             android:imeOptions="actionNext"
                             android:inputType="number"
@@ -508,221 +321,6 @@
                         android:visibility="gone"
                         />
 
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_seating_capacity"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        >
-                        <EditText
-                            android:id="@+id/et_seating_capacity"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/seating_capacity"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:src="@drawable/ic_mobile"
-                        app:tint="@color/black"
-                        android:visibility="gone"
-                        />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        >
-                        <EditText
-                            android:id="@+id/et_claim_details"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/claim_details"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:src="@drawable/ic_mobile"
-                        app:tint="@color/black"
-                        android:visibility="gone"
-                        />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        >
-                        <EditText
-                            android:id="@+id/et_own_damage_premium"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/own_damage_premium"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:src="@drawable/ic_mobile"
-                        app:tint="@color/black"
-                        android:visibility="gone"
-                        />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        >
-                        <EditText
-                            android:id="@+id/et_tp_premium"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/tp_premium"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:src="@drawable/ic_mobile"
-                        app:tint="@color/black"
-                        android:visibility="gone"
-                        />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        >
-                        <EditText
-                            android:id="@+id/et_net_premium"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/net_premium"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:src="@drawable/ic_mobile"
-                        app:tint="@color/black"
-                        android:visibility="gone"
-                        />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -811,14 +409,6 @@
 
                 </RelativeLayout>
 
-                <Spinner
-                    android:id="@+id/sp_calculate_commission"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginVertical="@dimen/_6sdp"
-                    android:background="@drawable/bg_edit_text"
-                    android:paddingHorizontal="@dimen/_8sdp"
-                    />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -946,6 +536,7 @@
 
                     </LinearLayout>
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

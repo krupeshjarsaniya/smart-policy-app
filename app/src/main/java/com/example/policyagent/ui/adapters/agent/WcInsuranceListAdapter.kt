@@ -48,6 +48,9 @@ class WcInsuranceListAdapter (private val mContext: Context, val listener: WcIns
         holder.itemView.setOnClickListener {
             listener.onItemClick(mPolicyList[position]!!)
         }
+        mBinding!!.ivDelete.setOnClickListener {
+            listener.onDelete(mPolicyList[position]!!.id!!.toString(),position)
+        }
     }
 
     override fun getItemCount(): Int {

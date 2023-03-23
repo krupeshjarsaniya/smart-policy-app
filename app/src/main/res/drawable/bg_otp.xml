@@ -2,7 +2,7 @@
     <item android:state_selected="true">
         <shape android:shape="rectangle">
             <gradient
-                android:angle="60"
+                android:angle="45"
                 android:endColor="@color/bg_edit_text"
                 android:startColor="@color/bg_edit_text"
                 android:type="linear" />
@@ -13,7 +13,7 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:angle="60"
+                android:angle="45"
                 android:endColor="@color/bg_edit_text"
                 android:startColor="@color/bg_edit_text"
                 android:type="linear" />

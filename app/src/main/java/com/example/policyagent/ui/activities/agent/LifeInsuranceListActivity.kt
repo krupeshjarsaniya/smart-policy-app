@@ -1,13 +1,12 @@
 package com.example.policyagent.ui.activities.agent
 
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
+import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceData
 import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceListResponse
 import com.example.policyagent.databinding.ActivityLifeInsuranceListBinding
@@ -46,7 +45,7 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         policyAdapter = LifeInsuranceListAdapter(this, this)
         binding!!.rvPolicies.adapter = policyAdapter
 
-        viewModel!!.getLifeInsurance(this)
+        //viewModel!!.getLifeInsurance(this)
 
         binding!!.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -95,9 +94,9 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
     }
 
     override fun onSuccess(data: LifeInsuranceListResponse) {
-        hideProgress()
         policyList = data.data!!
         policyAdapter!!.updateList(data.data)
+        hideProgress()
     }
 
 
@@ -108,6 +107,17 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
 
     override fun onError(errors: HashMap<String, Any>) {
         hideProgress()
+    }
+
+    override fun onDelete(id: String,position: Int) {
+        viewModel!!.deleteLifeInsurance(this,id,position)
+    }
+
+    override fun onSuccessDelete(data: CommonResponse,position: Int) {
+        hideProgress()
+        showToastMessage(data.message!!)
+        policyList!!.removeAt(position)
+        policyAdapter!!.updateList(policyList!!)
     }
 
     override fun onItemClick(data: LifeInsuranceData) {

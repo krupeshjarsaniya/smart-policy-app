@@ -4,8 +4,10 @@ import java.io.File
 
 data class AddCarInsurance(
     var client_id: String? = "",
+    var member_id: String? = "",
     var insurance_type: String? = "",
     var insurance_sub_type: String? = "",
+    var premium_type: String? = "",
     var registration_number_rto: String? = "",
     var risk_start_date: String? = "",
     var risk_end_date: String? = "",

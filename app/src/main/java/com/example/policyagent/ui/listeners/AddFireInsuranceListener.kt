@@ -1,10 +1,9 @@
 package com.example.policyagent.ui.listeners
 
 import com.example.policyagent.data.responses.CommonResponse
-interface AddHealthInsuranceListener {
+interface AddFireInsuranceListener {
     fun onStarted()
     fun onSuccess(data: CommonResponse)
     fun onFailure(message: String)
-    fun onRemoveFamily(position: Int)
     fun onError(errors: HashMap<String,Any>)
 }

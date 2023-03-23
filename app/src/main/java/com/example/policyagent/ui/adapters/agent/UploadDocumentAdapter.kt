@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,6 +49,7 @@ class UploadDocumentAdapter(private val mContext: Context, var listener: FilePic
     }
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
+        holder.setIsRecyclable(false)
         val genders = mContext.resources.getStringArray(R.array.documents)
         val genderAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, genders)
         mBinding!!.spDocumentType.adapter = genderAdapter
@@ -65,8 +67,13 @@ class UploadDocumentAdapter(private val mContext: Context, var listener: FilePic
             }
         })
         if (fileList[position].path.isNotEmpty()) {
-            val myBitmap = BitmapFactory.decodeFile(fileList[position].absolutePath)
-            mBinding!!.ivImage.setImageBitmap(myBitmap)
+        Log.e("filepath",fileList[position].path)
+            if(fileList[position].path.contains("pdf")){
+                mBinding!!.ivImage.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_pdf))
+            } else {
+                val myBitmap = BitmapFactory.decodeFile(fileList[position].absolutePath)
+                mBinding!!.ivImage.setImageBitmap(myBitmap)
+            }
         }
         mBinding!!.spDocumentType.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
@@ -86,6 +93,9 @@ class UploadDocumentAdapter(private val mContext: Context, var listener: FilePic
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
+        }
+        mBinding!!.ivClose.setOnClickListener {
+            listener.onremoveFile(position)
         }
 
         holder.itemView.setOnClickListener {

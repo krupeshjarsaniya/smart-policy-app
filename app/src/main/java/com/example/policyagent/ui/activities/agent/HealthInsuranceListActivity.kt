@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
+import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.fireinsurancelist.FireInsuranceData
 import com.example.policyagent.data.responses.healthinsurancelist.HealthInsuranceData
 import com.example.policyagent.data.responses.healthinsurancelist.HealthInsuranceListResponse
@@ -45,7 +46,6 @@ class HealthInsuranceListActivity : BaseActivity(), KodeinAware, HealthInsurance
         policyAdapter = HealthInsuranceListAdapter(this,this)
         binding!!.rvPolicies.adapter = policyAdapter
 
-        viewModel!!.getHealthInsurance(this)
 
         binding!!.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -61,6 +61,11 @@ class HealthInsuranceListActivity : BaseActivity(), KodeinAware, HealthInsurance
             }
 
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel!!.getHealthInsurance(this)
     }
 
     private fun filter(text: String) {
@@ -107,5 +112,16 @@ class HealthInsuranceListActivity : BaseActivity(), KodeinAware, HealthInsurance
         launchActivity<HealthInsuranceDetailsActivity> {
             this.putExtra(AppConstants.HEALTH_INSURANCE,data)
         }
+    }
+
+    override fun onDelete(id: String,position: Int) {
+        viewModel!!.deleteHealthInsurance(this,id,position)
+    }
+
+    override fun onSuccessDelete(data: CommonResponse,position: Int) {
+        hideProgress()
+        showToastMessage(data.message!!)
+        policyList.removeAt(position)
+        policyAdapter!!.updateList(policyList)
     }
 }

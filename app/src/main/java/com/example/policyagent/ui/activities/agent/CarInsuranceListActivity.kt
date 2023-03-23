@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
+import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.carinsurancelist.CarInsuranceData
 import com.example.policyagent.data.responses.carinsurancelist.CarInsuranceListResponse
 import com.example.policyagent.databinding.ActivityCarInsuranceListBinding
@@ -17,6 +18,7 @@ import com.example.policyagent.ui.listeners.CarInsuranceListListener
 import com.example.policyagent.ui.viewmodels.agent.CarInsuranceListViewModel
 import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.launchActivity
+import com.example.policyagent.util.show
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -38,10 +40,15 @@ class CarInsuranceListActivity : BaseActivity(), KodeinAware, CarInsuranceListLi
         binding!!.appBar.ivBack.setOnClickListener {
             finish()
         }
+        binding!!.appBar.btnAddPolicy.show()
+        binding!!.appBar.btnAddPolicy.setOnClickListener {
+            launchActivity<AddCarInsuranceActivity> {
+
+            }
+        }
         policyAdapter = CarInsuranceListAdapter(this, this)
         binding!!.rvPolicies.adapter = policyAdapter
 
-        viewModel!!.getCarInsurance(this)
 
     binding!!.etSearch.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -58,6 +65,11 @@ class CarInsuranceListActivity : BaseActivity(), KodeinAware, CarInsuranceListLi
 
     })
 }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel!!.getCarInsurance(this)
+    }
 
 private fun filter(text: String) {
     val filteredList: ArrayList<CarInsuranceData?> = arrayListOf()
@@ -103,5 +115,16 @@ private fun filter(text: String) {
         launchActivity<CarInsuranceDetailsActivity> {
             this.putExtra(AppConstants.CAR_INSURANCE,data)
         }
+    }
+
+    override fun onDelete(id: String,position: Int) {
+        viewModel!!.deleteCarInsurance(this,id,position)
+    }
+
+    override fun onSuccessDelete(data: CommonResponse,position: Int) {
+        hideProgress()
+        showToastMessage(data.message!!)
+        policyList!!.removeAt(position)
+        policyAdapter!!.updateList(policyList!!)
     }
 }

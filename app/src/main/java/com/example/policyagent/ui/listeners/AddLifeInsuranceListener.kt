@@ -5,5 +5,6 @@ interface AddLifeInsuranceListener {
     fun onStarted()
     fun onSuccess(data: CommonResponse)
     fun onFailure(message: String)
+    fun onRemoveFamily(position: Int)
     fun onError(errors: HashMap<String,Any>)
 }
