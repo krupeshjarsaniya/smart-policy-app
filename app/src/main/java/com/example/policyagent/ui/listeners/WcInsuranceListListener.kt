@@ -11,5 +11,6 @@ interface WcInsuranceListListener {
     fun onError(errors: HashMap<String,Any>)
     fun onItemClick(data: WcInsuranceData)
     fun onDelete(id: String,position: Int)
+    fun onEdit(data: WcInsuranceData)
     fun onSuccessDelete(data: CommonResponse, position: Int)
 }

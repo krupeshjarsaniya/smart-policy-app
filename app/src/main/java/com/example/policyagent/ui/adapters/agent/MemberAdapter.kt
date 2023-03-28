@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,6 @@ import com.example.policyagent.databinding.ItemMemberBinding
 import com.example.policyagent.ui.listeners.AddHealthInsuranceListener
 import com.example.policyagent.ui.listeners.AddLifeInsuranceListener
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MemberAdapter (private val mContext: Context, val listener: Any): RecyclerView.Adapter<MemberAdapter.ViewHolderClass>() {
@@ -47,6 +47,28 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
         val genders = mContext.resources.getStringArray(R.array.gender)
         val genderAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, genders)
         mBinding!!.spGender.adapter = genderAdapter
+        val relations = mContext.resources.getStringArray(R.array.relations)
+        val relationsAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, relations)
+        mBinding!!.spRelationship.adapter = relationsAdapter
+
+        if(familyList[position].family_id!!.isNotEmpty()){
+            mBinding!!.etFirstName.isFocusable = false
+            mBinding!!.etFirstName.isFocusableInTouchMode = false
+            mBinding!!.etLastName.isFocusable = false
+            mBinding!!.etLastName.isFocusableInTouchMode = false
+            mBinding!!.spGender.isFocusable = false
+            mBinding!!.spGender.isFocusableInTouchMode = false
+            mBinding!!.etHeight.isFocusable = false
+            mBinding!!.etHeight.isFocusableInTouchMode = false
+            mBinding!!.etWeight.isFocusable = false
+            mBinding!!.etWeight.isFocusableInTouchMode = false
+            mBinding!!.etAge.isFocusable = false
+            mBinding!!.etAge.isFocusableInTouchMode = false
+            mBinding!!.spRelationship.isFocusable = false
+            mBinding!!.spRelationship.isFocusableInTouchMode = false
+            mBinding!!.etPan.isFocusable = false
+            mBinding!!.etPan.isFocusableInTouchMode = false
+        }
 
         if(familyList[position].first_name!!.isNotEmpty()){
             mBinding!!.etFirstName.setText(familyList[position].first_name!!)
@@ -58,7 +80,10 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
             mBinding!!.tvBirthDate.setText(familyList[position].birth_date!!)
         }
         if(familyList[position].f_gender!!.isNotEmpty()){
-            mBinding!!.spGender.setSelection(familyList[position].g_pos!!)
+            val upperString: String =
+                familyList[position].f_gender!!.substring(0, 1).toUpperCase() + familyList[position].f_gender!!.substring(1).toLowerCase()
+            val genderPosition: Int = genderAdapter.getPosition(upperString)
+            mBinding!!.spGender.setSelection(genderPosition)
         }
         if(familyList[position].f_height!!.isNotEmpty()){
             mBinding!!.etHeight.setText(familyList[position].f_height!!)
@@ -70,15 +95,16 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
             mBinding!!.etAge.setText(familyList[position].f_age!!)
         }
         if(familyList[position].relationship!!.isNotEmpty()){
-            mBinding!!.spRelationship.setSelection(familyList[position].r_pos!!)
+            val upperString: String =
+                familyList[position].relationship!!.substring(0, 1).toUpperCase() + familyList[position].relationship!!.substring(1).toLowerCase()
+            val relationPosition: Int = relationsAdapter.getPosition(upperString.trim())
+            mBinding!!.spRelationship.setSelection(relationPosition)
         }
-        if(familyList[position].pan!!.isNotEmpty()){
-            mBinding!!.etPan.setText(familyList[position].pan!!)
+        if(familyList[position].pan_number!!.isNotEmpty()){
+            mBinding!!.etPan.setText(familyList[position].pan_number!!)
         }
 
-        val relations = mContext.resources.getStringArray(R.array.relations)
-        val relationsAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, relations)
-        mBinding!!.spRelationship.adapter = relationsAdapter
+
 
         mBinding!!.etFirstName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -103,28 +129,30 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
             }
         })
 
-        mBinding!!.tvBirthDate.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val yy = calendar.get(Calendar.YEAR)
-            val mm = calendar.get(Calendar.MONTH)
-            val dd = calendar.get(Calendar.DAY_OF_MONTH)
-            val datePicker = DatePickerDialog(
-                mContext,
-                { _, year, monthOfYear, dayOfMonth ->
-                    val date =
-                        (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
-                    mBinding!!.tvBirthDate.setText(date)
-                    familyList[position].birth_date = date
-                },
-                yy,
-                mm,
-                dd
-            )
-            datePicker.datePicker.maxDate = System.currentTimeMillis()
-            datePicker.show()
+        if(familyList[position].family_id!!.isEmpty()) {
+            mBinding!!.tvBirthDate.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val yy = calendar.get(Calendar.YEAR)
+                val mm = calendar.get(Calendar.MONTH)
+                val dd = calendar.get(Calendar.DAY_OF_MONTH)
+                val datePicker = DatePickerDialog(
+                    mContext,
+                    { _, year, monthOfYear, dayOfMonth ->
+                        val date =
+                            (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
+                        mBinding!!.tvBirthDate.setText(date)
+                        familyList[position].birth_date = date
+                    },
+                    yy,
+                    mm,
+                    dd
+                )
+                datePicker.datePicker.maxDate = System.currentTimeMillis()
+                datePicker.show()
+            }
         }
 
-        familyList[position].relationship = mBinding!!.spRelationship.selectedItem.toString()
+        //familyList[position].relationship = mBinding!!.spRelationship.selectedItem.toString()
 
         mBinding!!.spGender.onItemSelectedListener = object : OnItemSelectedListener{
             override fun onItemSelected(
@@ -134,7 +162,7 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
                 id: Long
             ) {
                 familyList[position].f_gender = mBinding!!.spGender.selectedItem.toString()
-                familyList[position].g_pos = positio
+                //familyList[position].g_pos = positio
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -150,7 +178,7 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
                 id: Long
             ) {
                 familyList[position].relationship = mBinding!!.spRelationship.selectedItem.toString()
-                familyList[position].r_pos = positio
+                //familyList[position].r_pos = positio
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -202,7 +230,7 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                familyList[position].pan = editable.toString()
+                familyList[position].pan_number = editable.toString()
             }
         })
 

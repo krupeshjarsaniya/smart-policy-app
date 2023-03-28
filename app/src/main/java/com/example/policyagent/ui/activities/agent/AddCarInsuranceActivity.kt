@@ -504,6 +504,8 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 callApi-=1
                 binding!!.etCommission.error = resources.getString(R.string.invalid_commission)
             }
+            addCarInsurance!!.seating_capacity = binding!!.etSeatingCapacity.editableText.toString()
+            addCarInsurance!!.gvw = binding!!.etGvw.editableText.toString()
 
             addCarInsurance!!.document = docJson.toString()
             addCarInsurance!!.file = fileList

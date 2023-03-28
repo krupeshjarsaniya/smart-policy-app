@@ -23,5 +23,8 @@ data class WcInsuranceData(
     val rsd: String? = "",
     val st: String? = "",
     val st_with_me: String? = "",
-    val total_premium: String? = ""
+    val total_premium: String? = "",
+    val commision: String? = "",
+    val member_name: String? = "",
+    val policy_file: String? = "",
 ) : java.io.Serializable

@@ -2,6 +2,7 @@ package com.example.policyagent.data.responses.lifeinsurancelist
 
 import com.example.policyagent.data.responses.commoninsurance.ClientPersonalDetails
 import com.example.policyagent.data.responses.commoninsurance.Document
+import com.example.policyagent.data.responses.commoninsurance.FamilyDetail
 
 data class LifeInsuranceData(
     val additional_rider: String? = "",
@@ -25,5 +26,9 @@ data class LifeInsuranceData(
     val premium_amount: String? = "",
     val psd: String? = "",
     val sum_insured: String? = "",
-    val yearly_bonus_amount: String? = ""
-) : java.io.Serializable
+    val yearly_bonus_amount: String? = "",
+    val commision: String? = "",
+    val member_name: String? = "",
+    val policy_file: String? = "",
+    val family: ArrayList<FamilyDetail?>? = arrayListOf(),
+    ) : java.io.Serializable

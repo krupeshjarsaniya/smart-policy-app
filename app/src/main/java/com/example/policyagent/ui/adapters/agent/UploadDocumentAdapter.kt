@@ -20,7 +20,6 @@ import com.example.policyagent.ui.listeners.FilePickerListener
 import com.example.policyagent.util.hide
 import com.example.policyagent.util.show
 import java.io.File
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -67,7 +66,6 @@ class UploadDocumentAdapter(private val mContext: Context, var listener: FilePic
             }
         })
         if (fileList[position].path.isNotEmpty()) {
-        Log.e("filepath",fileList[position].path)
             if(fileList[position].path.contains("pdf")){
                 mBinding!!.ivImage.setImageDrawable(mContext.resources.getDrawable(R.drawable.ic_pdf))
             } else {
@@ -82,7 +80,9 @@ class UploadDocumentAdapter(private val mContext: Context, var listener: FilePic
                 pos: Int,
                 id: Long,
             ) {
-                documentList[position].documentype = mBinding!!.spDocumentType.selectedItem.toString()
+                Log.d("selected",mBinding!!.spDocumentType.selectedItem.toString())
+                    documentList[position].documentype =
+                        mBinding!!.spDocumentType.selectedItem.toString()
                 if (mBinding!!.spDocumentType.selectedItem.toString() == "Other File") {
                     mBinding!!.tiOtherType.show()
                 } else {
@@ -93,6 +93,13 @@ class UploadDocumentAdapter(private val mContext: Context, var listener: FilePic
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
+        }
+        if(documentList[position].documentype!!.isNotEmpty()){
+            val upperString: String =
+                documentList[position].documentype!!.substring(0, 1)
+                    .toUpperCase() + documentList[position].documentype!!.substring(1).toLowerCase()
+            val pos: Int = genderAdapter.getPosition(upperString)
+            mBinding!!.spDocumentType.setSelection(pos)
         }
         mBinding!!.ivClose.setOnClickListener {
             listener.onremoveFile(position)

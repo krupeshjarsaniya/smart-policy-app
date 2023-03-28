@@ -33,6 +33,7 @@ class MonthlyPremiumAdapter(private val mContext: Context, val listener: YearlyP
     }
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
+        holder.setIsRecyclable(false)
         mBinding!!.tvMonth.text = monthList[position].month
         if(monthList[position].isSelected) {
             mBinding!!.tvMonth.setTextColor(mContext.resources.getColor(R.color.white))

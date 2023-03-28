@@ -305,7 +305,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                     ).show()
                     addData = false
                     break
-                } else if (familyList[i].pan == "") {
+                } else if (familyList[i].pan_number == "") {
                     Toast.makeText(
                         this,
                         "Please Add Pan No. For Member ${i + 1}",
@@ -443,7 +443,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                         Toast.LENGTH_LONG
                     ).show()
                     break
-                } else if (familyList[i].pan == "") {
+                } else if (familyList[i].pan_number == "") {
                     callApi-=1
                     Toast.makeText(
                         this,

@@ -93,6 +93,26 @@ interface MyApi {
     @GET("agent/form/wc-insurance/delete/{id}")
     suspend fun deleteWcInsurance(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
 
+    @Multipart
+    @POST("agent/form/life-insurance/update/{id}")
+    suspend fun editLifeInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/form/health-insurance/update/{id}")
+    suspend fun editHealthInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/form/fire-insurance/update/{id}")
+    suspend fun editFireInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/form/wc-insurance/update/{id}")
+    suspend fun editWcInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/form/car-insurance/update/{id}")
+    suspend fun editCarInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
+
 
 
 

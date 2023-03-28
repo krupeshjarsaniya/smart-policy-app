@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
+import com.example.policyagent.data.requests.edithealthinsurance.EditHealthInsurance
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.fireinsurancelist.FireInsuranceData
 import com.example.policyagent.data.responses.healthinsurancelist.HealthInsuranceData
@@ -110,6 +111,12 @@ class HealthInsuranceListActivity : BaseActivity(), KodeinAware, HealthInsurance
 
     override fun onItemClick(data: HealthInsuranceData) {
         launchActivity<HealthInsuranceDetailsActivity> {
+            this.putExtra(AppConstants.HEALTH_INSURANCE,data)
+        }
+    }
+
+    override fun onEdit(data: HealthInsuranceData) {
+        launchActivity<EditHealthInsuranceActivity> {
             this.putExtra(AppConstants.HEALTH_INSURANCE,data)
         }
     }

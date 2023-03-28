@@ -67,6 +67,12 @@ class AddLifeInsuranceViewModel (
                     })
                     map.put("file[$i]\"; filename=\"${addLifeInsurance.file[i].name}\"",imageBody)
                 }
+//                val reqFile: RequestBody =
+//                    RequestBody.create("image/*".toMediaTypeOrNull(), addLifeInsurance.policy_file!!)
+//                var uploaded_file =
+//                    MultipartBody.Part.createFormData("policy_file", addLifeInsurance.policy_file!!.name, reqFile)
+
+
 
                 if(addLifeInsurance.policy_file != null) {
                     val uri = Uri.fromFile(addLifeInsurance.policy_file)

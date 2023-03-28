@@ -113,6 +113,12 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         viewModel!!.deleteLifeInsurance(this,id,position)
     }
 
+    override fun onEdit(data: LifeInsuranceData) {
+        launchActivity<EditLifeInsuranceActivity> {
+            this.putExtra(AppConstants.LIFE_INSURANCE, data)
+        }
+    }
+
     override fun onSuccessDelete(data: CommonResponse,position: Int) {
         hideProgress()
         showToastMessage(data.message!!)

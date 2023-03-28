@@ -124,6 +124,12 @@ class WcInsuranceListActivity : BaseActivity(), KodeinAware, WcInsuranceListList
         viewModel!!.deleteWcInsurance(this,id,position)
     }
 
+    override fun onEdit(data: WcInsuranceData) {
+        launchActivity<EditWcInsuranceActivity> {
+            this.putExtra(AppConstants.WC_INSURANCE,data)
+        }
+    }
+
     override fun onSuccessDelete(data: CommonResponse, position: Int) {
         hideProgress()
         showToastMessage(data.message!!)

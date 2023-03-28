@@ -121,6 +121,12 @@ private fun filter(text: String) {
         viewModel!!.deleteCarInsurance(this,id,position)
     }
 
+    override fun onEdit(data: CarInsuranceData) {
+        launchActivity<EditCarInsuranceActivity> {
+            this.putExtra(AppConstants.CAR_INSURANCE,data)
+        }
+    }
+
     override fun onSuccessDelete(data: CommonResponse,position: Int) {
         hideProgress()
         showToastMessage(data.message!!)

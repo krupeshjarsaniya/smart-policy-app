@@ -31,5 +31,9 @@ data class CarInsuranceData(
     val rsd: String? = "",
     val seating_capacity: String? = "",
     val total_premium: String? = "",
-    val tp_premium: String? = ""
+    val tp_premium: String? = "",
+    val commision: String? = "",
+    val member_name: String? = "",
+    val policy_file: String? = "",
+    val premium_type: String? = "",
 ) : java.io.Serializable

@@ -51,6 +51,9 @@ class FireInsuranceListAdapter(private val mContext: Context, val listener: Fire
         mBinding!!.ivDelete.setOnClickListener {
             listener.onDelete(mPolicyList[position]!!.id!!.toString(),position)
         }
+        mBinding!!.ivEdit.setOnClickListener {
+            listener.onEdit(mPolicyList[position]!!)
+        }
     }
 
     override fun getItemCount(): Int {

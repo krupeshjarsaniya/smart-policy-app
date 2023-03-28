@@ -12,5 +12,6 @@ interface FireInsuranceListListener {
     fun onError(errors: HashMap<String,Any>)
     fun onItemClick(data: FireInsuranceData)
     fun onDelete(id: String,position: Int)
+    fun onEdit(data: FireInsuranceData)
     fun onSuccessDelete(data: CommonResponse, position: Int)
 }

@@ -62,6 +62,7 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
         val json = gson.toJson(user)
         viewModel!!.getPreference().setStringValue(AppConstants.COMPANIES,json)
         AppConstants.companies = user.data!!
+        finish()
         if(userType == "AGENT"){
             launchActivity<PolicyTypeActivity> {}
         } else {

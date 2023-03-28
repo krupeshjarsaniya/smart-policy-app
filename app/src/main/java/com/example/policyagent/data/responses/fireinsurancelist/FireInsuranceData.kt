@@ -25,5 +25,7 @@ data class FireInsuranceData(
     val red: String? = "",
     val rsd: String? = "",
     val st: String? = "",
-    val total_premium: String? = ""
+    val total_premium: String? = "",
+    val member_name: String? = "",
+    val policy_file: String? = "",
 ) : java.io.Serializable

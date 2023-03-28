@@ -3,71 +3,75 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_card_stroke"
-        android:layout_marginVertical="@dimen/_6sdp"
-        android:orientation="vertical"
-        android:padding="@dimen/_12sdp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginVertical="@dimen/_6sdp"
+            android:background="@drawable/bg_card_stroke"
+            android:orientation="vertical"
+            android:padding="@dimen/_12sdp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/name"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/normal"
-                    />
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/name"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/normal" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Vivek Batra"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Vivek Batra"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/normal"
-                    />
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/policy_no"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/normal" />
+
+                    <TextView
+                        android:id="@+id/tv_policy_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="12350144"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal" />
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_6sdp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/policy_no"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/normal"
-                    />
-                <TextView
-                    android:id="@+id/tv_policy_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="12350144"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/normal"
-                    />
-            </LinearLayout>
-        </LinearLayout>
 
 
-        <!--<LinearLayout
+            <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
@@ -125,70 +129,69 @@
         </LinearLayout>-->
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/satart_date"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/normal"
-                    />
-                <TextView
-                    android:id="@+id/tv_start_date"
-                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/satart_date"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/normal" />
+
+                    <TextView
+                        android:id="@+id/tv_start_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Aug 04, 2022"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Aug 04, 2022"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/normal"
-                    />
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/end_date"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/normal" />
+
+                    <TextView
+                        android:id="@+id/tv_end_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Aug 03, 2023"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_6sdp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/end_date"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/normal"
-                    />
-                <TextView
-                    android:id="@+id/tv_end_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Aug 03, 2023"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/normal"
-                    />
-            </LinearLayout>
 
-
-        </LinearLayout>
-
-
-
-
-        <!--<LinearLayout
+            <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
@@ -248,49 +251,63 @@
 
         </LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_6sdp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/plan_name"
-                    android:fontFamily="@font/poppins_medium"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/normal"
-                    />
-                <TextView
-                    android:id="@+id/tv_plan_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:text="Full Insurance"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/normal"
-                    />
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/plan_name"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/normal" />
+
+                    <TextView
+                        android:id="@+id/tv_plan_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Full Insurance"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal" />
+                </LinearLayout>
+
+
             </LinearLayout>
-
-
 
         </LinearLayout>
 
-    </LinearLayout>
-        <ImageView
-            android:id="@+id/iv_delete"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_6sdp"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_delete"/>
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/iv_edit"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_edit"/>
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_delete"/>
+        </LinearLayout>
     </FrameLayout>
 </layout>

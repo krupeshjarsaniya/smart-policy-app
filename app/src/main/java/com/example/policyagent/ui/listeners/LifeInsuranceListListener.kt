@@ -11,6 +11,7 @@ interface LifeInsuranceListListener {
     fun onFailure(message: String)
     fun onError(errors: HashMap<String,Any>)
     fun onDelete(id: String,position: Int)
+    fun onEdit(data: LifeInsuranceData)
     fun onSuccessDelete(data: CommonResponse,position: Int)
     fun onItemClick(data: LifeInsuranceData)
 }

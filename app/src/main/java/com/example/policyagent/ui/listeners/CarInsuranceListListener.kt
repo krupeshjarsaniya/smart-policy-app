@@ -12,5 +12,6 @@ interface CarInsuranceListListener {
     fun onError(errors: HashMap<String,Any>)
     fun onItemClick(data: CarInsuranceData)
     fun onDelete(id: String,position: Int)
+    fun onEdit(data: CarInsuranceData)
     fun onSuccessDelete(data: CommonResponse, position: Int)
 }

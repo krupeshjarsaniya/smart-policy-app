@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".AppApplication"
@@ -21,6 +20,21 @@
         android:theme="@style/Theme.PolicyAgent"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activities.agent.EditCarInsuranceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.agent.EditWcInsuranceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.agent.EditFireInsuranceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.agent.EditHealthInsuranceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.agent.EditLifeInsuranceActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.agent.AddFireInsuranceActivity"
             android:exported="false" />

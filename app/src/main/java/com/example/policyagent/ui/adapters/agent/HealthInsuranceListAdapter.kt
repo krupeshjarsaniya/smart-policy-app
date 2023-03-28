@@ -50,6 +50,10 @@ class HealthInsuranceListAdapter (private val mContext: Context, val listener: H
         mBinding!!.ivDelete.setOnClickListener {
             listener.onDelete(mPolicyList[position]!!.id!!.toString(),position)
         }
+
+        mBinding!!.ivEdit.setOnClickListener {
+            listener.onEdit(mPolicyList[position]!!)
+        }
     }
 
     override fun getItemCount(): Int {

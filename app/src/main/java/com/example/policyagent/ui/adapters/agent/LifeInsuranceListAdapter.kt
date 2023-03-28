@@ -51,6 +51,10 @@ class LifeInsuranceListAdapter (private val mContext: Context, val listener: Lif
         mBinding!!.ivDelete.setOnClickListener {
             listener.onDelete(mPolicyList[position]!!.id!!.toString(),position)
         }
+
+        mBinding!!.ivEdit.setOnClickListener {
+            listener.onEdit(mPolicyList[position]!!)
+        }
     }
 
     override fun getItemCount(): Int {

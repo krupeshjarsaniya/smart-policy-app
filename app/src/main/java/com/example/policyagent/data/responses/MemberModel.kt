@@ -10,7 +10,5 @@ data class MemberModel (
     var f_weight: String? = "",
     var f_age: String? = "",
     var relationship: String? = "",
-    var pan: String? = "",
-    var g_pos: Int? = 0,
-    var r_pos: Int? = 0,
+    var pan_number: String? = "",
 ) : java.io.Serializable

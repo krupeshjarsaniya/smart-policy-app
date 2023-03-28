@@ -134,6 +134,26 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.deleteWcInsurance(getHeaderMap(),id) }
     }
 
+    suspend fun editLifeInsurance(map: HashMap<String, RequestBody>, id: String): JsonObject {
+        return apiRequest { api.editLifeInsurance(getHeaderMap(),map,id) }
+    }
+
+    suspend fun editHealthInsurance(map: HashMap<String, RequestBody>, id: String): JsonObject {
+        return apiRequest { api.editHealthInsurance(getHeaderMap(),map,id) }
+    }
+
+    suspend fun editFireInsurance(map: HashMap<String, RequestBody>, id: String): JsonObject {
+        return apiRequest { api.editFireInsurance(getHeaderMap(),map,id) }
+    }
+
+    suspend fun editWcInsurance(map: HashMap<String, RequestBody>, id: String): JsonObject {
+        return apiRequest { api.editWcInsurance(getHeaderMap(),map,id) }
+    }
+
+    suspend fun editCarInsurance(map: HashMap<String, RequestBody>, id: String): JsonObject {
+        return apiRequest { api.editCarInsurance(getHeaderMap(),map,id) }
+    }
+
     fun getHeaderMap(): HashMap<String, Any> {
         val map = HashMap<String, Any>()
         map[AppConstants.Accept] = "application/json"

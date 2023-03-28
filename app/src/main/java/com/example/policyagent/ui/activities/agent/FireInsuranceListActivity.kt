@@ -118,6 +118,12 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
         viewModel!!.deleteFireInsurance(this,id,position)
     }
 
+    override fun onEdit(data: FireInsuranceData) {
+        launchActivity<EditFireInsuranceActivity> {
+            this.putExtra(AppConstants.FIRE_INSURANCE,data)
+        }
+    }
+
     override fun onSuccessDelete(data: CommonResponse, position: Int) {
         hideProgress()
         showToastMessage(data.message!!)

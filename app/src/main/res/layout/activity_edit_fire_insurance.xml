@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <include android:id="@+id/appBar"
+            layout="@layout/app_bar"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/sp_client_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    android:background="@drawable/bg_edit_text"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    />
+
+                <Spinner
+                    android:id="@+id/sp_family_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    android:background="@drawable/bg_edit_text"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/et_st"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:gravity="center_vertical"
+                            android:hint="@string/st"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <Spinner
+                    android:id="@+id/sp_policy_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    android:background="@drawable/bg_edit_text"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/tv_start_date"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:gravity="center_vertical"
+                            android:hint="@string/risk_start_date"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/tv_end_date"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:gravity="center_vertical"
+                            android:hint="@string/risk_end_date"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/et_policy_number"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:gravity="center_vertical"
+                            android:hint="@string/policy_number"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <Spinner
+                    android:id="@+id/sp_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    android:background="@drawable/bg_edit_text"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/et_premium_amount"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:gravity="center_vertical"
+                            android:hint="@string/premium_amount"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/et_net_amount"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:gravity="center_vertical"
+                            android:hint="@string/net_amount"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/et_gst"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:gravity="center_vertical"
+                            android:hint="@string/gst"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/et_total_premium"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:gravity="center_vertical"
+                            android:hint="@string/total_premium"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/et_commission"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:gravity="center_vertical"
+                            android:hint="@string/commission_per"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeWidth="0dp"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidthFocused="0dp"
+                        >
+                        <EditText
+                            android:id="@+id/et_view_commision"
+                            style="@style/EditTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/bg_edit_text"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:gravity="center_vertical"
+                            android:hint="0.0"
+                            android:fontFamily="@font/poppins_medium"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:paddingVertical="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_4sdp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/policy_file"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal"
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/ll_document"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_stroke"
+                        android:orientation="horizontal"
+                        >
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/iv_policy_file"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/_1sdp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_add_purple"
+                            app:shapeAppearanceOverlay="@style/roundedCorners"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/documents"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_add_document"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_add_member"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/add_document"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/primary_color"
+                        android:textSize="@dimen/normal"
+                        />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_document"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_20sdp"
+                    android:background="@drawable/round"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/save"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/medium" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+
+    </LinearLayout>
+</layout>
