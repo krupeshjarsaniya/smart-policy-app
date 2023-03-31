@@ -56,16 +56,14 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
             mBinding!!.etFirstName.isFocusableInTouchMode = false
             mBinding!!.etLastName.isFocusable = false
             mBinding!!.etLastName.isFocusableInTouchMode = false
-            mBinding!!.spGender.isFocusable = false
-            mBinding!!.spGender.isFocusableInTouchMode = false
+            mBinding!!.spGender.isEnabled = false
             mBinding!!.etHeight.isFocusable = false
             mBinding!!.etHeight.isFocusableInTouchMode = false
             mBinding!!.etWeight.isFocusable = false
             mBinding!!.etWeight.isFocusableInTouchMode = false
             mBinding!!.etAge.isFocusable = false
             mBinding!!.etAge.isFocusableInTouchMode = false
-            mBinding!!.spRelationship.isFocusable = false
-            mBinding!!.spRelationship.isFocusableInTouchMode = false
+            mBinding!!.spRelationship.isEnabled = false
             mBinding!!.etPan.isFocusable = false
             mBinding!!.etPan.isFocusableInTouchMode = false
         }

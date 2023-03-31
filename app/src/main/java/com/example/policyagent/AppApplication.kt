@@ -42,6 +42,5 @@ class AppApplication : Application(), KodeinAware {
         /*Following will generate the hash code*/
         val appSignature = AppSignatureHelper(this)
         appSignature.appSignatures
-
     }
 }

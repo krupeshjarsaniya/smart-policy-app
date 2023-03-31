@@ -48,6 +48,7 @@ class UploadDocumentAdapter(private val mContext: Context, var listener: FilePic
     }
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
+        var check = false
         holder.setIsRecyclable(false)
         val genders = mContext.resources.getStringArray(R.array.documents)
         val genderAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, genders)
@@ -80,14 +81,17 @@ class UploadDocumentAdapter(private val mContext: Context, var listener: FilePic
                 pos: Int,
                 id: Long,
             ) {
-                Log.d("selected",mBinding!!.spDocumentType.selectedItem.toString())
+                Log.d("selected",check.toString())
+                if(check) {
                     documentList[position].documentype =
                         mBinding!!.spDocumentType.selectedItem.toString()
-                if (mBinding!!.spDocumentType.selectedItem.toString() == "Other File") {
-                    mBinding!!.tiOtherType.show()
-                } else {
-                    mBinding!!.tiOtherType.hide()
+                    if (mBinding!!.spDocumentType.selectedItem.toString() == "Other File") {
+                        mBinding!!.tiOtherType.show()
+                    } else {
+                        mBinding!!.tiOtherType.hide()
+                    }
                 }
+                check = true
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -96,8 +100,7 @@ class UploadDocumentAdapter(private val mContext: Context, var listener: FilePic
         }
         if(documentList[position].documentype!!.isNotEmpty()){
             val upperString: String =
-                documentList[position].documentype!!.substring(0, 1)
-                    .toUpperCase() + documentList[position].documentype!!.substring(1).toLowerCase()
+                documentList[position].documentype!!
             val pos: Int = genderAdapter.getPosition(upperString)
             mBinding!!.spDocumentType.setSelection(pos)
         }

@@ -14,6 +14,7 @@ import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.fragments.BaseFragment
 import com.example.policyagent.ui.viewmodels.client.ClientDocumentViewModel
 import com.example.policyagent.ui.viewmodels.client.ClientHomeViewModel
+import com.example.policyagent.util.hide
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -34,6 +35,8 @@ class ClientDocumentFragment : BaseFragment(), KodeinAware {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_client_document, container, false)
         viewModel = ViewModelProvider(this, factory).get(ClientDocumentViewModel::class.java)
+        binding!!.appBar.tvTitle.text = resources.getString(R.string.policies)
+        binding!!.appBar.ivBack.hide()
         return binding!!.root
     }
 

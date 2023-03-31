@@ -289,6 +289,10 @@
     <string name="invalid_additional_rider">Enter Valid additional Rider</string>
     <string name="invalid_st_with_me">Enter Valid St With Me</string>
     <string name="invalid_no_of">Invalid No Of</string>
+    <string name="total_user">Total Users</string>
+    <string name="total_profit">Total Profit</string>
+    <string name="total_expenses">Total Expenses</string>
+    <string name="total_cost">Total Cost</string>
 
 
 </resources>

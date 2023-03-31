@@ -8,7 +8,6 @@ import com.example.policyagent.databinding.ActivityPolicyTypeBinding
 import com.example.policyagent.ui.activities.BaseActivity
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.viewmodels.agent.PolicyTypeViewModel
-import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.launchActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein

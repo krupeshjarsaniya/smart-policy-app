@@ -22,5 +22,15 @@
         <corners android:radius="@dimen/_12sdp" />
     </shape>
 </item>
+    <item android:state_enabled="false">
+    <shape android:shape="rectangle">
+        <gradient
+            android:angle="45"
+            android:endColor="@color/bg_edit_text"
+            android:startColor="@color/bg_edit_text"
+            android:type="linear" />
+        <corners android:radius="@dimen/_12sdp" />
+    </shape>
+</item>
 </selector>
 

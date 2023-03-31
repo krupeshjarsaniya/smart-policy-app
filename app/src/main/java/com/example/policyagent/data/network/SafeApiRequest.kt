@@ -23,6 +23,11 @@ abstract class SafeApiRequest {
                         val json = jsonParser.parse(it)
                         return json as T
                     }
+                    if(response.code() == 401){
+                        val jsonParser = JsonParser()
+                        val json = jsonParser.parse(it)
+                        return json as T
+                    }
                     try {
                         message.append(JSONObject(it).getString("message"))
                     } catch (e: JSONException) {
@@ -35,7 +40,6 @@ abstract class SafeApiRequest {
                 ex.printStackTrace()
                 if (ex.message != null && !ex.message!!.isEmpty()){
                     throw ApiException(ex.message.toString())
-
                 }
 
             }

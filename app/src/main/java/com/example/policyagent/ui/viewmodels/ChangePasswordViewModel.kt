@@ -6,11 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.example.policyagent.data.preferences.PreferenceProvider
 import com.example.policyagent.data.repositories.MainRepository
 import com.example.policyagent.data.responses.CommonResponse
+import com.example.policyagent.ui.activities.agent.AgentDashboardActivity
+import com.example.policyagent.ui.activities.client.ClientDashboardActivity
 import com.example.policyagent.ui.listeners.ChangePasswordListener
-import com.example.policyagent.util.ApiException
-import com.example.policyagent.util.Coroutines
-import com.example.policyagent.util.NoInternetException
-import com.example.policyagent.util.printLog
+import com.example.policyagent.util.*
 import com.google.gson.Gson
 import org.json.JSONObject
 
@@ -33,8 +32,13 @@ class ChangePasswordViewModel(
                 val map = HashMap<String, Any>()
                 map["current_password"] = currentPassword
                 map["password"] = password
-                val authResponse = Gson().fromJson( repository.clientChangePassword(map), CommonResponse::class.java)
-
+                var authResponse : CommonResponse
+                var userType = getPreference().getStringValue(AppConstants.USER_TYPE)
+                authResponse = if(userType == AppConstants.AGENT){
+                    Gson().fromJson(repository.agentChangePassword(map), CommonResponse::class.java)
+                } else{
+                    Gson().fromJson(repository.clientChangePassword(map), CommonResponse::class.java)
+                }
                 //Log.e("responsebody",authResponse.body().toString())
                 if (authResponse.status!!) {
                     authResponse.let {

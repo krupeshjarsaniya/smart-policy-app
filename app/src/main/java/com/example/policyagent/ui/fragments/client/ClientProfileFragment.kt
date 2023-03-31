@@ -19,6 +19,7 @@ import com.example.policyagent.ui.fragments.BaseFragment
 import com.example.policyagent.ui.listeners.ClientProfileListener
 import com.example.policyagent.ui.viewmodels.client.ClientProfileViewModel
 import com.example.policyagent.util.AppConstants
+import com.example.policyagent.util.hide
 import com.example.policyagent.util.launchActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -41,6 +42,8 @@ class ClientProfileFragment : BaseFragment(), KodeinAware, ClientProfileListener
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_client_profile, container, false)
         viewModel = ViewModelProvider(this, factory).get(ClientProfileViewModel::class.java)
         viewModel.listener = this
+        binding!!.appBar.tvTitle.text = resources.getString(R.string.policies)
+        binding!!.appBar.ivBack.hide()
         binding!!.llChangePassword.setOnClickListener {
             requireActivity().launchActivity<ChangePasswordActivity> {
             }

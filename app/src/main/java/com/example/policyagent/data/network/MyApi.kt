@@ -34,6 +34,9 @@ interface MyApi {
     @POST("client/change_password")
     suspend fun clientChangePassword(@HeaderMap map: HashMap<String, Any>, @Body body: HashMap<String, Any>): Response<JsonObject>
 
+    @POST("agent/auth/change/password")
+    suspend fun agentChangePassword(@HeaderMap map: HashMap<String, Any>, @Body body: HashMap<String, Any>): Response<JsonObject>
+
     @POST("client/auth/logout")
     suspend fun clientLogout(@HeaderMap map: HashMap<String, Any>): Response<JsonObject>
 

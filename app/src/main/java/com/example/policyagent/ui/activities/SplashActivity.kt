@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
 import com.example.policyagent.databinding.ActivitySplashBinding
-import com.example.policyagent.ui.activities.agent.PolicyTypeActivity
+import com.example.policyagent.ui.activities.agent.AgentDashboardActivity
 import com.example.policyagent.ui.activities.client.ClientDashboardActivity
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.viewmodels.SplashViewModel
@@ -35,7 +35,7 @@ class SplashActivity : BaseActivity(), KodeinAware {
             if(isLoggedIn!!){
                 userType = viewModel!!.getPreference().getStringValue(AppConstants.USER_TYPE)
                 if(userType == AppConstants.AGENT){
-                    launchActivity<PolicyTypeActivity> {}
+                    launchActivity<AgentDashboardActivity> {}
                 } else{
                     launchActivity<ClientDashboardActivity> {}
                 }

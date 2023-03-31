@@ -1,13 +1,14 @@
 package com.example.policyagent.ui.activities
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
 import com.example.policyagent.databinding.ActivityLoginSuccessBinding
-import com.example.policyagent.ui.activities.agent.PolicyTypeActivity
+import com.example.policyagent.ui.activities.agent.AgentDashboardActivity
 import com.example.policyagent.ui.activities.client.ClientDashboardActivity
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.listeners.LoginSuccessListener
@@ -31,7 +32,7 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_success)
         viewModel = ViewModelProvider(this, factory)[LoginSuccessViewModel::class.java]
         viewModel!!.listener = this
-        if(intent.hasExtra(AppConstants.USER_TYPE)){
+        if (intent.hasExtra(AppConstants.USER_TYPE)) {
             userType = intent.getStringExtra(AppConstants.USER_TYPE)
         }
         /*Handler().postDelayed({
@@ -42,17 +43,24 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
                 launchActivity<ClientDashboardActivity> {}
             }
         },1000)*/
-        viewModel!!.getClients(this)
+        if (userType == "AGENT") {
+            viewModel!!.getClients(this)
+        } else {
+            Handler().postDelayed({
+                finish()
+                launchActivity<ClientDashboardActivity> {}
+            }, 1000)
+        }
     }
 
     override fun onStarted() {
-        
+
     }
 
     override fun onSuccessClient(user: ClientListResponse) {
         val gson = Gson()
         val json = gson.toJson(user)
-        viewModel!!.getPreference().setStringValue(AppConstants.CLIENTS,json)
+        viewModel!!.getPreference().setStringValue(AppConstants.CLIENTS, json)
         AppConstants.clients = user.data!!
         viewModel!!.getCompanies(this)
     }
@@ -60,21 +68,21 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
     override fun onSuccessCompany(user: CompanyListResponse) {
         val gson = Gson()
         val json = gson.toJson(user)
-        viewModel!!.getPreference().setStringValue(AppConstants.COMPANIES,json)
+        viewModel!!.getPreference().setStringValue(AppConstants.COMPANIES, json)
         AppConstants.companies = user.data!!
         finish()
-        if(userType == "AGENT"){
-            launchActivity<PolicyTypeActivity> {}
+        if (userType == "AGENT") {
+            launchActivity<AgentDashboardActivity> {}
         } else {
             launchActivity<ClientDashboardActivity> {}
         }
     }
 
     override fun onFailure(message: String) {
-        
+
     }
 
     override fun onError(errors: HashMap<String, Any>) {
-        
+
     }
 }

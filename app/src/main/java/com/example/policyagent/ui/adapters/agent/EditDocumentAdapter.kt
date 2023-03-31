@@ -93,8 +93,7 @@ class EditDocumentAdapter(private val mContext: Context, var listener: FilePicke
             listener.onremoveFile(position)
         }
         if(documentList[position].hidden_id!!.isNotEmpty()){
-            mBinding!!.spDocumentType.isFocusable = false
-            mBinding!!.spDocumentType.isFocusableInTouchMode = false
+            mBinding!!.spDocumentType.isEnabled = false
             mBinding!!.tiOtherType.isFocusable = false
             mBinding!!.tiOtherType.isFocusableInTouchMode = false
         }

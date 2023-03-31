@@ -21,10 +21,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white_opacity">#33FFFFFF</color>
+    <color name="white_opacity_dark">#99FFFFFF</color>
     <color name="grey">#848484</color>
     <color name="light_grey">#f3f3f3</color>
     <color name="transparet">#00000000</color>
     <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
     <color name="app_back">#F4F4F4</color>
     <color name="purple_light">#f0ebf9</color>
 </resources>

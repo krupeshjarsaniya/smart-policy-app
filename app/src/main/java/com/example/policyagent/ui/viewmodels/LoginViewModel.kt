@@ -3,6 +3,7 @@ package com.example.policyagent.ui.viewmodels
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.policyagent.data.database.entities.CURRENT_USER_ID
 import com.example.policyagent.data.preferences.PreferenceProvider
 import com.example.policyagent.data.repositories.MainRepository
 import com.example.policyagent.data.responses.CommonResponse
@@ -45,6 +46,7 @@ class LoginViewModel(
                                 getPreference().setStringValue(AppConstants.USER_ID, it.data.id!!.toString())
                                 getPreference().setStringValue(AppConstants.USER_TYPE,it.user_type!!)
                                 authListener?.onSuccess(it.data)
+                                //CURRENT_USER_ID = it.data.id
                                 repository.saveUser(it.data)
                             }
                             return@main

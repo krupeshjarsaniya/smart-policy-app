@@ -116,6 +116,9 @@ class MainViewModelFactory(
             EditCarInsuranceViewModel::class.java -> {
                 EditCarInsuranceViewModel(repository) as T
             }
+            AgentHomeViewModel::class.java -> {
+                AgentHomeViewModel(repository) as T
+            }
             else -> {
                 SplashViewModel(repository) as T
             }

@@ -58,6 +58,10 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.clientChangePassword(getHeaderMap(),map)}
     }
 
+    suspend fun agentChangePassword(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.agentChangePassword(getHeaderMap(),map)}
+    }
+
     suspend fun clientLogout(): JsonObject {
         return apiRequest { api.clientLogout(getHeaderMap()) }
     }
