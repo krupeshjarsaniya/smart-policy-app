@@ -119,6 +119,9 @@ class MainViewModelFactory(
             AgentHomeViewModel::class.java -> {
                 AgentHomeViewModel(repository) as T
             }
+            EditPolicyViewModel::class.java -> {
+                EditPolicyViewModel(repository) as T
+            }
             else -> {
                 SplashViewModel(repository) as T
             }

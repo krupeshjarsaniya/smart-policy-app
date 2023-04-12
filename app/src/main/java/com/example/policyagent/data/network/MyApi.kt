@@ -58,6 +58,9 @@ interface MyApi {
     @GET("agent/client/show")
     suspend fun getClientList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
 
+    @GET("client/other-insurance/getfamily")
+    suspend fun getMemberList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+
     @GET("agent/companylist")
     suspend fun getCompanyList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
 
@@ -116,6 +119,19 @@ interface MyApi {
     @POST("agent/form/car-insurance/update/{id}")
     suspend fun editCarInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
 
+    @GET("client/other-insurance")
+    suspend fun getPolicyList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+
+    @Multipart
+    @POST("client/other-insurance/create")
+    suspend fun addPolicy(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
+
+    @Multipart
+    @POST("client/other-insurance/update/{id}")
+    suspend fun editPolicy(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
+
+    @GET("client/other-insurance/delete/{id}")
+    suspend fun deletePolicy(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
 
 
 

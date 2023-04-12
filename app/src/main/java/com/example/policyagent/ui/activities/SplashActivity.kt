@@ -43,6 +43,5 @@ class SplashActivity : BaseActivity(), KodeinAware {
                 launchActivity<LoginActivity> {}
             }
         },1000)
-
     }
 }

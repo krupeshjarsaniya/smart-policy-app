@@ -13,4 +13,6 @@ interface WcInsuranceListListener {
     fun onDelete(id: String,position: Int)
     fun onEdit(data: WcInsuranceData)
     fun onSuccessDelete(data: CommonResponse, position: Int)
+    fun onLogout(message: String)
+
 }

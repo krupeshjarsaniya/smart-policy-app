@@ -6,4 +6,5 @@ interface ClientProfileListener {
     fun onStarted()
     fun onSuccess(response: CommonResponse)
     fun onFailure(message: String)
+
 }

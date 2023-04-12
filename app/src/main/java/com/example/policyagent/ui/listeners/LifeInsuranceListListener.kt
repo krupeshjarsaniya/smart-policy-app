@@ -14,4 +14,6 @@ interface LifeInsuranceListListener {
     fun onEdit(data: LifeInsuranceData)
     fun onSuccessDelete(data: CommonResponse,position: Int)
     fun onItemClick(data: LifeInsuranceData)
+    fun onLogout(message: String)
+
 }

@@ -41,7 +41,7 @@
                         >
 
                         <EditText
-                            android:id="@+id/et_sum_insured"
+                            android:id="@+id/et_search"
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"

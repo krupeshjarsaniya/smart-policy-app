@@ -216,6 +216,13 @@
         <item>MISD</item>
     </string-array>
 
+    <string-array name="policy_type">
+        <item>Life insurance</item>
+        <item>Health insurance</item>
+        <item>Car insurance</item>
+        <item>Wc insurance</item>
+        <item>Fire insurance</item>
+    </string-array>
 
     <string-array name="gender">
         <item>Male</item>
@@ -234,11 +241,11 @@
     </string-array>
 
     <string-array name="documents">
-        <item>Adharcard</item>
+        <item>Aadhar-card</item>
         <item>Pancard</item>
-        <item>Driving Licance</item>
+        <item>Driving-Licance</item>
         <item>Mediclaim</item>
-        <item>Other File</item>
+        <item>Other-File</item>
     </string-array>
     <string name="title_activity_test">TestActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -293,6 +300,15 @@
     <string name="total_profit">Total Profit</string>
     <string name="total_expenses">Total Expenses</string>
     <string name="total_cost">Total Cost</string>
+    <string name="commission">Commission</string>
+    <string name="member_name">Member Name</string>
+    <string name="calculate_commission">Calculate Commission</string>
+    <string name="policy_type">Policy Type</string>
+    <string name="invalid_company_name">Enter Valid Company Name</string>
+    <string name="invalid_start_date">Enter Valid Start Date</string>
+    <string name="invalid_end_date">Enter Valid End Date</string>
+    <string name="invalid_sa">Enter Valid Sa</string>
+    <string name="edit_policy">Edit Policy</string>
 
 
 </resources>

@@ -25,6 +25,7 @@ import com.example.policyagent.data.responses.companylist.CompanyData
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
 import com.example.policyagent.databinding.ActivityAddHealthInsuranceBinding
 import com.example.policyagent.ui.activities.BaseActivity
+import com.example.policyagent.ui.activities.LoginActivity
 import com.example.policyagent.ui.adapters.agent.MemberAdapter
 import com.example.policyagent.ui.adapters.agent.UploadDocumentAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
@@ -35,6 +36,7 @@ import com.example.policyagent.ui.viewmodels.agent.AddHealthInsuranceViewModel
 import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.getFileChooserIntent
 import com.example.policyagent.util.getFileFromURI
+import com.example.policyagent.util.launchLoginActivity
 import com.google.gson.Gson
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -644,6 +646,14 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
         hideProgress()
         if(errors.containsKey("policy_number")){
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        }
+    }
+
+    override fun onLogout(message: String) {
+        hideProgress()
+        viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER,false)
+        if(message.contains("Unauthenticated")){
+            launchLoginActivity<LoginActivity> {  }
         }
     }
 }

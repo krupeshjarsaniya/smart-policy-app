@@ -210,4 +210,6 @@ class FireInsuranceDetailsActivity : AppCompatActivity(), LoadDocumentListener {
     override fun onLoadPdf(url: String) {
         loadPdf(this, url)
     }
+
+
 }

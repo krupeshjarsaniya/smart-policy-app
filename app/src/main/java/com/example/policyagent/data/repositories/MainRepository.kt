@@ -90,6 +90,10 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.getClientList(getHeaderMap()) }
     }
 
+    suspend fun getMembers(): JsonObject {
+        return apiRequest { api.getMemberList(getHeaderMap()) }
+    }
+
     suspend fun getCompanies(): JsonObject {
         return apiRequest { api.getCompanyList(getHeaderMap()) }
     }
@@ -156,6 +160,22 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
 
     suspend fun editCarInsurance(map: HashMap<String, RequestBody>, id: String): JsonObject {
         return apiRequest { api.editCarInsurance(getHeaderMap(),map,id) }
+    }
+
+    suspend fun getPolicyList(): JsonObject {
+        return apiRequest { api.getPolicyList(getHeaderMap()) }
+    }
+
+    suspend fun addPolicy(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.addPolicy(getHeaderMap(),map) }
+    }
+
+    suspend fun editPolicy(map: HashMap<String, RequestBody>, id: String): JsonObject {
+        return apiRequest { api.editPolicy(getHeaderMap(),map,id) }
+    }
+
+    suspend fun deletePolicy(id: String): JsonObject {
+        return apiRequest { api.deletePolicy(getHeaderMap(),id) }
     }
 
     fun getHeaderMap(): HashMap<String, Any> {

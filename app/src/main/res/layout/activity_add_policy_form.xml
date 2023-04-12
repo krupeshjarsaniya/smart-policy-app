@@ -24,6 +24,13 @@
                 android:layout_marginTop="@dimen/_12sdp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/insurance_type"
+                    android:textColor="@color/grey"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
@@ -31,29 +38,14 @@
                     android:layout_marginVertical="@dimen/_8sdp"
                     >
 
-                    <com.google.android.material.textfield.TextInputLayout
+
+                    <Spinner
+                        android:id="@+id/sp_insurance_type"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:hintTextAppearance="@style/Widget.Design.TextInputLayout"
-                        >
-                        <EditText
-                            android:id="@+id/et_insurance_type"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/insurance_type"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingStart="@dimen/_30sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/bg_edit_text"
+                        android:paddingStart="@dimen/_30sdp"
+                        />
 
                     <ImageView
                         android:id="@+id/iv_insurance_type"
@@ -67,6 +59,14 @@
 
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/member_name"
+                    android:textColor="@color/grey"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
@@ -74,29 +74,13 @@
                     android:layout_marginVertical="@dimen/_8sdp"
                     >
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <Spinner
+                        android:id="@+id/sp_member_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:hintTextAppearance="@style/Widget.Design.TextInputLayout"
-                        >
-                        <EditText
-                            android:id="@+id/et_user_name"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/user_name"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingStart="@dimen/_30sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/bg_edit_text"
+                        android:paddingStart="@dimen/_30sdp"
+                        />
 
                     <ImageView
                         android:id="@+id/iv_user_name"
@@ -112,33 +96,21 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_8sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:hintTextAppearance="@style/Widget.Design.TextInputLayout"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_policy_number"
-                            style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/policy_number"
-                            android:imeOptions="actionNext"
+                            style="@style/EditTextStyle"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
                             android:paddingStart="@dimen/_30sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -155,33 +127,21 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_8sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:hintTextAppearance="@style/Widget.Design.TextInputLayout"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_company_name"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/company_name"
-                            android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
                             android:paddingStart="@dimen/_30sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -198,33 +158,21 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_8sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:hintTextAppearance="@style/Widget.Design.TextInputLayout"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
-                            android:id="@+id/et_product_name"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_plan_name"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
-                            android:hint="@string/product_name"
-                            android:imeOptions="actionNext"
+                            android:hint="@string/plan_name"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
                             android:paddingStart="@dimen/_30sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -246,24 +194,26 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_45sdp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginVertical="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_6sdp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_edit_text"
                         >
-                    <TextView
-                        android:id="@+id/tv_start_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_45sdp"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/_12sdp"
-                       android:layout_marginStart="@dimen/_30sdp"
-                        android:text="@string/start_date"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/normal"
-                        android:fontFamily="@font/poppins_medium"/>
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextInputOuterFieldStyle"
+                            >
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tv_start_date"
+                                style="@style/EditTextStyle"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="@string/start_date"
+                                android:inputType="text"
+                                android:paddingStart="@dimen/_30sdp"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <ImageView
                             android:id="@+id/iv_start_date"
@@ -277,6 +227,40 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginVertical="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_6sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_text"
+                        >
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextInputOuterFieldStyle"
+                            >
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/tv_end_date"
+                                style="@style/EditTextStyle"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="@string/end_date"
+                                android:inputType="text"
+                                android:paddingStart="@dimen/_30sdp"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <ImageView
+                            android:id="@+id/iv_end_date"
+                            android:layout_width="@dimen/_18sdp"
+                            android:layout_height="@dimen/_18sdp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_8sdp"
+                            android:src="@drawable/ic_date"
+                            app:tint="@color/grey" />
+                    </RelativeLayout>
+
+                    <!--<RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_45sdp"
                         android:layout_gravity="center_vertical"
@@ -306,39 +290,27 @@
                             android:layout_marginLeft="@dimen/_8sdp"
                             android:src="@drawable/ic_date"
                             app:tint="@color/grey" />
-                    </RelativeLayout>
+                    </RelativeLayout>-->
 
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_8sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:hintTextAppearance="@style/Widget.Design.TextInputLayout"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_sa"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/sa"
-                            android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
                             android:paddingStart="@dimen/_30sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -355,33 +327,21 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_8sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:hintTextAppearance="@style/Widget.Design.TextInputLayout"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_premium"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/premium"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_30sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -396,12 +356,53 @@
 
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/policy_file"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normal"
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/ll_document"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_card_stroke"
+                        android:orientation="horizontal"
+                        >
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/iv_policy_file"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_height="@dimen/_100sdp"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/_1sdp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_add_purple"
+                            app:shapeAppearanceOverlay="@style/roundedCorners"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_add_policy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:cardCornerRadius="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginBottom="@dimen/_24sdp"
                     android:backgroundTint="@color/primary_color"
                     >
                     <LinearLayout

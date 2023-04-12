@@ -11,12 +11,14 @@ import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceDat
 import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceListResponse
 import com.example.policyagent.databinding.ActivityLifeInsuranceListBinding
 import com.example.policyagent.ui.activities.BaseActivity
+import com.example.policyagent.ui.activities.LoginActivity
 import com.example.policyagent.ui.adapters.agent.LifeInsuranceListAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.listeners.LifeInsuranceListListener
 import com.example.policyagent.ui.viewmodels.agent.LifeInsuranceListViewModel
 import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.launchActivity
+import com.example.policyagent.util.launchLoginActivity
 import com.example.policyagent.util.show
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -102,6 +104,10 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
 
     override fun onFailure(message: String) {
         hideProgress()
+        if(message.contains("Unauthenticated.")){
+            viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER,false)
+                launchLoginActivity<LoginActivity> {  }
+        }
         showToastMessage(message)
     }
 
@@ -129,6 +135,14 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
     override fun onItemClick(data: LifeInsuranceData) {
         launchActivity<LifeInsuranceDetailsActivity> {
             this.putExtra(AppConstants.LIFE_INSURANCE, data)
+        }
+    }
+
+    override fun onLogout(message: String) {
+        hideProgress()
+        viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER,false)
+        if(message.contains("Unauthenticated")){
+            launchLoginActivity<LoginActivity> {  }
         }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="EditTextStyle" parent="android:Widget.EditText">
+    <style name="EditTextStyleOtp" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:singleLine">true</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">@dimen/_4sdp</item>
@@ -12,6 +12,34 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="EditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/_45sdp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/black</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/normal</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+
+    <style name="TextInputOuterFieldStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="boxStrokeColor">@color/primary_color</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_12sdp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_12sdp</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_12sdp</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/_12sdp</item>
+        <item name="boxStrokeWidthFocused">@dimen/_1sdp</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="hintEnabled">true</item>
+        <item name="boxBackgroundColor">@color/bg_edit_text</item>
+        <item name="passwordToggleTint">@color/black</item>
+    </style>
+
 
     <style name="roundedCorners" parent="">
         <item name="cornerFamily">rounded</item>

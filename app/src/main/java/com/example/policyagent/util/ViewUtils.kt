@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.policyagent.BuildConfig
 import com.example.policyagent.R
@@ -141,6 +142,18 @@ inline fun <reified T : Any> Activity.launchActivity(
     } else {
         startActivityForResult(intent, requestCode)
     }
+}
+
+inline fun <reified T : Any> Activity.launchLoginActivity(
+    requestCode: Int = -1,
+    options: Bundle? = null,
+    noinline init: Intent.() -> Unit = {},
+) {
+    val intent = newIntent<T>(this)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+    startActivity(intent)
 }
 
 fun getDeviceId(mContext: Context):String{

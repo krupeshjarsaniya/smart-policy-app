@@ -34,9 +34,6 @@ class YearlyPremiumActivity : BaseActivity(), KodeinAware, YearlyPremiumListener
             finish()
         }
         binding!!.cvPolicy.setOnClickListener {
-            launchActivity<AddNewPolicyActivity> {
-
-            }
         }
         if(intent.hasExtra(AppConstants.YEAR)){
             year = intent.getStringExtra(AppConstants.YEAR)

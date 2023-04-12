@@ -44,7 +44,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
@@ -52,24 +52,12 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ti_mobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:boxStrokeWidth="0dp"
-                    app:hintEnabled="false"
-                    app:errorTextColor="@color/red"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:hintTextAppearance="@style/Widget.Design.TextInputLayout"
+                    style="@style/TextInputOuterFieldStyle"
                     >
-                <androidx.appcompat.widget.AppCompatEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_mobile"
                     style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/bg_edit_text"
-                    android:gravity="center_vertical"
                     android:hint="@string/user_id"
-                    android:imeOptions="actionNext"
                     android:inputType="text"
                     android:paddingVertical="@dimen/_3sdp"
                     android:paddingStart="@dimen/_30sdp"
@@ -89,31 +77,20 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginVertical="@dimen/_8sdp"
                >
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     app:passwordToggleEnabled="true"
-                    app:hintEnabled="false"
-                    app:boxStrokeWidth="0dp"
-                    app:passwordToggleTint="@color/black"
-                    app:boxStrokeWidthFocused="0dp"
+                   style="@style/TextInputOuterFieldStyle"
                     >
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_password"
                     style="@style/EditTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/bg_edit_text"
-                    android:gravity="center_vertical"
                     android:hint="@string/password"
-                    android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:paddingVertical="@dimen/_3sdp"
                     android:paddingStart="@dimen/_30sdp"
@@ -132,34 +109,6 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/chk_remember"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|end"
-                    android:button="@drawable/custom_checkbox"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:scaleX="0.6"
-                    android:scaleY="0.6"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/bold"
-                    android:text="@string/remember_me"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/medium" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/btn_sign_in"

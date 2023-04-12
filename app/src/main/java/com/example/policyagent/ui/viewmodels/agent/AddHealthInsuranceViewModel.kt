@@ -80,10 +80,16 @@ class AddHealthInsuranceViewModel (
                 if (response.status!!){
                     listener!!.onSuccess(response)
                     } else {
-                    if (response.status_code == 200) {
-                        listener!!.onFailure(response.message!!)
-                    } else {
-                        listener!!.onError(response.error!!)
+                    when (response.status_code) {
+                        200 -> {
+                            listener!!.onFailure(response.message!!)
+                        }
+                        422 -> {
+                            listener!!.onFailure(response.message!!)
+                        }
+                        else -> {
+                            listener!!.onLogout(response.message!!)
+                        }
                     }
                 }
             }catch (e: ApiException){

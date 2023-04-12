@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +21,13 @@
                 android:layout_marginTop="@dimen/_12sdp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/client_name"
+                    android:textColor="@color/grey"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    />
                 <Spinner
                     android:id="@+id/sp_client_name"
                     android:layout_width="match_parent"
@@ -31,6 +37,12 @@
                     android:paddingHorizontal="@dimen/_8sdp"
                     />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:text="@string/member_name"
+                    android:textColor="@color/grey" />
                 <Spinner
                     android:id="@+id/sp_family_member"
                     android:layout_width="match_parent"
@@ -42,32 +54,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_rto"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/rto"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -85,35 +85,22 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/tv_start_date"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:editable="false"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:gravity="center_vertical"
                             android:hint="@string/risk_start_date"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -131,35 +118,22 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/tv_end_date"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:editable="false"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:gravity="center_vertical"
                             android:hint="@string/risk_end_date"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -175,6 +149,12 @@
 
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:text="@string/insurance_type"
+                    android:textColor="@color/grey"/>
                 <Spinner
                     android:id="@+id/sp_insurance_type"
                     android:layout_width="match_parent"
@@ -184,6 +164,12 @@
                     android:paddingHorizontal="@dimen/_8sdp"
                     />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/insurance_sub_type"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textColor="@color/grey"/>
                 <Spinner
                     android:id="@+id/sp_insurance_sub_type"
                     android:layout_width="match_parent"
@@ -195,32 +181,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_idv"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/idv"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -238,32 +212,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_ncb"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/ncb_val"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -283,32 +245,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_dtc"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/discount_val"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -327,32 +277,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_policy_number"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/policy_number"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            android:inputType="text"
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -368,7 +306,12 @@
 
                 </RelativeLayout>
 
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/company_name"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textColor="@color/grey"/>
                 <Spinner
                     android:id="@+id/sp_company_name"
                     android:layout_width="match_parent"
@@ -380,32 +323,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_plan_name"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/plan_name"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -424,32 +355,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_premium_amount"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/premium_amount"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -468,33 +387,21 @@
                 <RelativeLayout
                     android:id="@+id/rl_gvw"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:visibility="gone"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_gvw"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/gvw"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -513,32 +420,20 @@
                 <RelativeLayout
                     android:id="@+id/rl_seating_capacity"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_seating_capacity"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/seating_capacity"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -556,32 +451,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_claim_details"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/claim_details"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -599,32 +482,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_own_damage_premium"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/own_damage_premium"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -642,32 +513,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_tp_premium"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/tp_premium"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -685,32 +544,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_net_premium"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/net_premium"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -727,32 +574,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_gst"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/gst"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -770,32 +605,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_total_premium"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/total_premium"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -811,6 +634,12 @@
 
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calculate_commission"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:textColor="@color/grey"/>
                 <Spinner
                     android:id="@+id/sp_calculate_commission"
                     android:layout_width="match_parent"
@@ -822,32 +651,20 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_commission"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
-                            android:gravity="center_vertical"
                             android:hint="@string/commission_per"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
                             android:inputType="number"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView
@@ -865,34 +682,22 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeWidth="0dp"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidthFocused="0dp"
+                        style="@style/TextInputOuterFieldStyle"
                         >
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_view_commision"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_edit_text"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
-                            android:gravity="center_vertical"
-                            android:hint="0.0"
-                            android:fontFamily="@font/poppins_medium"
-                            android:imeOptions="actionNext"
+                            android:hint="@string/commission"
                             android:inputType="text"
-                            android:paddingVertical="@dimen/_3sdp"
-                            android:paddingEnd="@dimen/_4sdp"/>
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageView

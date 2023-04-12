@@ -38,8 +38,12 @@ class AddLifeInsuranceViewModel (
                 val json = gson.toJson(addLifeInsurance)
                 Log.e("lifeinsurancerequest",json!!.replace("\\",""))
                 val map = HashMap<String, RequestBody>()
-                map["client_id"] = addLifeInsurance.client_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["member_id"] = addLifeInsurance.member_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+
+                map["member_id"] = addLifeInsurance.client_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                if(addLifeInsurance.client_id!!.isNotEmpty()) {
+                    map["member_id"] =
+                        addLifeInsurance.member_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                }
                 map["sum_insured"] = addLifeInsurance.sum_insured!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["policy_start_date"] = addLifeInsurance.policy_start_date!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["policy_end_date"] = addLifeInsurance.policy_end_date!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -92,8 +96,11 @@ class AddLifeInsuranceViewModel (
                     } else {
                     if (response.status_code == 200) {
                         listener!!.onFailure(response.message!!)
-                    } else {
-                        listener!!.onError(response.error!!)
+                    } else if (response.status_code == 422) {
+                        listener!!.onFailure(response.message!!)
+                    }
+                    else {
+                        listener!!.onLogout(response.message!!)
                     }
                 }
             }catch (e: ApiException){
@@ -128,10 +135,16 @@ class AddLifeInsuranceViewModel (
                 if (response.status!!){
                     listener!!.onSuccess(response)
                 } else {
-                    if (response.status_code == 200) {
-                        listener!!.onFailure(response.message!!)
-                    } else {
-                        listener!!.onError(response.error!!)
+                    when (response.status_code) {
+                        200 -> {
+                            listener!!.onFailure(response.message!!)
+                        }
+                        422 -> {
+                            listener!!.onFailure(response.message!!)
+                        }
+                        else -> {
+                            listener!!.onLogout(response.message!!)
+                        }
                     }
                 }
             }catch (e: ApiException){

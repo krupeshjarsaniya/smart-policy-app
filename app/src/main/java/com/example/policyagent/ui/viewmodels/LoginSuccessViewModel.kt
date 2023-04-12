@@ -7,6 +7,7 @@ import com.example.policyagent.data.repositories.MainRepository
 import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
 import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceListResponse
+import com.example.policyagent.data.responses.memberlist.MemberListResponse
 import com.example.policyagent.ui.listeners.LifeInsuranceListListener
 import com.example.policyagent.ui.listeners.LoginSuccessListener
 import com.example.policyagent.util.ApiException
@@ -36,6 +37,31 @@ class LoginSuccessViewModel (
                     if (response.data != null) {
                         response.let {
                             listener!!.onSuccessClient(it)
+                            return@main
+                        }
+                    }}
+                listener!!.onFailure("Something Went Wrong")
+            }catch (e: ApiException){
+                listener?.onFailure(e.message!!)
+            }catch (e: NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (ex: Exception){
+                printLog("exp-->", ex.message.toString())
+                listener?.onFailure(ex.message!!)
+            }
+        }
+    }
+
+    fun getMembers(mContext: Context){
+        listener?.onStarted()
+        Coroutines.main {
+            try {
+
+                val response = Gson().fromJson(repository.getMembers(), MemberListResponse::class.java)
+                if (response.status!!){
+                    if (response.data != null) {
+                        response.let {
+                            listener!!.onSuccessMember(it)
                             return@main
                         }
                     }}

@@ -303,7 +303,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/add_policy"
+                android:id="@+id/ll_add_policy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

@@ -49,6 +49,11 @@ class LoginActivity : BaseActivity(), KodeinAware, LoginListener {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
+    }
+
     override fun onStarted() {
         showProgress(true)
     }
@@ -56,8 +61,7 @@ class LoginActivity : BaseActivity(), KodeinAware, LoginListener {
     override fun onSuccess(user: User) {
         hideProgress()
         finish()
-        viewModel!!.getPreference()
-            .setBooleanValue(AppConstants.IS_REMEMBER, binding!!.chkRemember.isChecked)
+        viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER,true)
         launchActivity<LoginSuccessActivity> {
             this.putExtra(AppConstants.USER_TYPE, user.user_type)
         }

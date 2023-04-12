@@ -15,4 +15,6 @@ interface HealthInsuranceListListener {
     fun onEdit(data: HealthInsuranceData)
     fun onDelete(id: String,position: Int)
     fun onSuccessDelete(data: CommonResponse, position: Int)
+    fun onLogout(message: String)
+
 }

@@ -39,17 +39,22 @@ class ChangePasswordViewModel(
                 } else{
                     Gson().fromJson(repository.clientChangePassword(map), CommonResponse::class.java)
                 }
-                //Log.e("responsebody",authResponse.body().toString())
                 if (authResponse.status!!) {
                     authResponse.let {
                         listener?.onSuccess(it)
                         return@main
                     }
                 } else {
-                    if (authResponse.status_code == 200) {
-                        listener?.onFailure(authResponse.message!!)
-                    } else {
-                        listener?.onError(authResponse.error!!)
+                    when (authResponse.status_code) {
+                        200 -> {
+                            listener!!.onFailure(authResponse.message!!)
+                        }
+                        422 -> {
+                            listener!!.onFailure(authResponse.message!!)
+                        }
+                        else -> {
+                            listener!!.onLogout(authResponse.message!!)
+                        }
                     }
                 }
             } catch (e: ApiException) {

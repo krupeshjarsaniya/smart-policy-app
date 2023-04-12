@@ -33,6 +33,7 @@ import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceDat
 import com.example.policyagent.databinding.ActivityAddFireInsuranceBinding
 import com.example.policyagent.databinding.ActivityEditFireInsuranceBinding
 import com.example.policyagent.ui.activities.BaseActivity
+import com.example.policyagent.ui.activities.LoginActivity
 import com.example.policyagent.ui.adapters.agent.EditDocumentAdapter
 import com.example.policyagent.ui.adapters.agent.UploadDocumentAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
@@ -272,7 +273,6 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-
 
 
         binding!!.tvStartDate.setOnClickListener {
@@ -572,6 +572,14 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         hideProgress()
         if (errors.containsKey("policy_number")) {
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        }
+    }
+
+    override fun onLogout(message: String) {
+        hideProgress()
+        viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER,false)
+        if(message.contains("Unauthenticated")){
+            launchLoginActivity<LoginActivity> {  }
         }
     }
 }

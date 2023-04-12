@@ -2,16 +2,20 @@ package com.example.policyagent.util
 import com.example.policyagent.BuildConfig
 import com.example.policyagent.data.responses.clientlist.ClientData
 import com.example.policyagent.data.responses.companylist.CompanyData
+import com.example.policyagent.data.responses.memberlist.MemberData
 
 class AppConstants {
     companion object {
 
         val COMPANIES: String = "companies"
+        val MEMBERS: String = "members"
         val CLIENTS: String = "clients"
         var companies: ArrayList<CompanyData?>? = ArrayList()
         var clients: ArrayList<ClientData?>? = ArrayList()
+        var members: ArrayList<MemberData?>? = ArrayList()
 
         val FIRE_INSURANCE: String = "fire_insurance"
+        val POLICY: String = "policy"
         val WC_INSURANCE: String = "wc_insurance"
         val HEALTH_INSURANCE: String = "health_insurance"
         val LIFE_INSURANCE: String = "life_insurance"

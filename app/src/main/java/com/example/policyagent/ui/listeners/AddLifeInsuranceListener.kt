@@ -7,4 +7,6 @@ interface AddLifeInsuranceListener {
     fun onFailure(message: String)
     fun onRemoveFamily(position: Int)
     fun onError(errors: HashMap<String,Any>)
+    fun onLogout(message: String)
+
 }

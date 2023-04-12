@@ -14,4 +14,6 @@ interface CarInsuranceListListener {
     fun onDelete(id: String,position: Int)
     fun onEdit(data: CarInsuranceData)
     fun onSuccessDelete(data: CommonResponse, position: Int)
+    fun onLogout(message: String)
+
 }

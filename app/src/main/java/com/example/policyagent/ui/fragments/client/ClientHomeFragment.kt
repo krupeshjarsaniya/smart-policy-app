@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
 import com.example.policyagent.databinding.FragmentClientHomeBinding
+import com.example.policyagent.ui.activities.client.AddNewPolicyActivity
 import com.example.policyagent.ui.activities.client.MyInsurancePortfolioActivity
 import com.example.policyagent.ui.activities.client.PremiumCalendarActivity
 import com.example.policyagent.ui.adapters.client.HomeTopBannerAdapter
@@ -53,6 +54,9 @@ class ClientHomeFragment : BaseFragment(), KodeinAware {
 
         binding!!.llPremiumCalendar.setOnClickListener {
             requireActivity().launchActivity<PremiumCalendarActivity> {  }
+        }
+        binding!!.llAddPolicy.setOnClickListener {
+            requireActivity().launchActivity<AddNewPolicyActivity> {  }
         }
         return binding!!.root
     }

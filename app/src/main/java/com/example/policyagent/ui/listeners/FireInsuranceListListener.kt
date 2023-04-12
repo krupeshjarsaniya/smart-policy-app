@@ -14,4 +14,6 @@ interface FireInsuranceListListener {
     fun onDelete(id: String,position: Int)
     fun onEdit(data: FireInsuranceData)
     fun onSuccessDelete(data: CommonResponse, position: Int)
+    fun onLogout(message: String)
+
 }

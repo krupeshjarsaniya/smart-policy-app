@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.client.EditPolicyFormActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.agent.AgentDashboardActivity"
             android:exported="false" />
         <activity
@@ -127,7 +130,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.activities.LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".ui.activities.SplashActivity"
             android:exported="true">

@@ -28,7 +28,7 @@ import com.example.policyagent.data.responses.companylist.CompanyData
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
 import com.example.policyagent.databinding.ActivityAddCarInsuranceBinding
 import com.example.policyagent.ui.activities.BaseActivity
-import com.example.policyagent.ui.adapters.agent.MemberAdapter
+import com.example.policyagent.ui.activities.LoginActivity
 import com.example.policyagent.ui.adapters.agent.UploadDocumentAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.listeners.AddCarInsuranceListener
@@ -607,6 +607,14 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         hideProgress()
         if(errors.containsKey("policy_number")){
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        }
+    }
+
+    override fun onLogout(message: String) {
+        hideProgress()
+        viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER,false)
+        if(message.contains("Unauthenticated")){
+            launchLoginActivity<LoginActivity> {  }
         }
     }
 }

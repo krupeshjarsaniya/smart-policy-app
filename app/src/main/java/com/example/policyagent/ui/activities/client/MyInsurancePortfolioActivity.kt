@@ -14,13 +14,15 @@ import com.example.policyagent.databinding.ActivityMyInsurancePortfolioBinding
 import com.example.policyagent.ui.activities.BaseActivity
 import com.example.policyagent.ui.adapters.client.PolicyAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
+import com.example.policyagent.ui.listeners.PortfolioListener
 import com.example.policyagent.ui.viewmodels.client.MyInsurancePortfolioViewModel
+import com.google.gson.JsonObject
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
 
-class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware {
+class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware, PortfolioListener {
     override val kodein by kodein()
     private val factory: MainViewModelFactory by instance()
     private var binding: ActivityMyInsurancePortfolioBinding? = null
@@ -30,12 +32,7 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_insurance_portfolio)
         viewModel = ViewModelProvider(this, factory)[MyInsurancePortfolioViewModel::class.java]
-        /*val members = resources.getStringArray(R.array.family_members)
-        val memberAdapter = ArrayAdapter(this, R.layout.dropdown_item, members)
-        binding!!.tvFamilyMembers.setAdapter(memberAdapter)
-        val insurances = resources.getStringArray(R.array.insurance_type)
-        val insuranceAdapter = ArrayAdapter(this, R.layout.dropdown_item, insurances)
-        binding!!.tvType.setAdapter(insuranceAdapter)*/
+        viewModel!!.listener = this
         val members = resources.getStringArray(R.array.family_members)
         val memberAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, members)
         memberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -49,12 +46,11 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware {
                 id: Long
             ) {
                 (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.primary_color))
-                (parent!!.getChildAt(0) as TextView).gravity = Gravity.CENTER
+                (parent.getChildAt(0) as TextView).gravity = Gravity.CENTER
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-
         }
         val insurances = resources.getStringArray(R.array.insurance_type)
         val insuranceAdapter: ArrayAdapter<*> = ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, insurances)
@@ -68,7 +64,7 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware {
                 id: Long
             ) {
                 (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.primary_color))
-                (parent!!.getChildAt(0) as TextView).gravity = Gravity.CENTER
+                (parent.getChildAt(0) as TextView).gravity = Gravity.CENTER
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -81,5 +77,21 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware {
         binding!!.appBar.ivBack.setOnClickListener{
             finish()
         }
+    }
+
+    override fun onStarted() {
+
+    }
+
+    override fun onSuccess(data: JsonObject) {
+
+    }
+
+    override fun onFailure(message: String) {
+
+    }
+
+    override fun onError(errors: HashMap<String, Any>) {
+
     }
 }

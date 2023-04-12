@@ -59,8 +59,9 @@ class CarInsuranceListViewModel (
                         listener!!.onSuccessDelete(it,position)
                         return@main
                     }
+                } else{
+                listener!!.onFailure(response.message!!)
                 }
-                listener!!.onFailure("Something Went Wrong")
             }catch (e: ApiException){
                 listener?.onFailure(e.message!!)
             }catch (e: NoInternetException){

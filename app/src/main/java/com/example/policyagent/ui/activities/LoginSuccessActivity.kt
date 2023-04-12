@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.memberlist.MemberListResponse
 import com.example.policyagent.databinding.ActivityLoginSuccessBinding
 import com.example.policyagent.ui.activities.agent.AgentDashboardActivity
 import com.example.policyagent.ui.activities.client.ClientDashboardActivity
@@ -46,10 +47,7 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
         if (userType == "AGENT") {
             viewModel!!.getClients(this)
         } else {
-            Handler().postDelayed({
-                finish()
-                launchActivity<ClientDashboardActivity> {}
-            }, 1000)
+            viewModel!!.getMembers(this)
         }
     }
 
@@ -57,19 +55,28 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
 
     }
 
-    override fun onSuccessClient(user: ClientListResponse) {
+    override fun onSuccessClient(client: ClientListResponse) {
         val gson = Gson()
-        val json = gson.toJson(user)
+        val json = gson.toJson(client)
         viewModel!!.getPreference().setStringValue(AppConstants.CLIENTS, json)
-        AppConstants.clients = user.data!!
+        AppConstants.clients = client.data!!
         viewModel!!.getCompanies(this)
     }
 
-    override fun onSuccessCompany(user: CompanyListResponse) {
+    override fun onSuccessMember(member: MemberListResponse) {
         val gson = Gson()
-        val json = gson.toJson(user)
+        val json = gson.toJson(member)
+        viewModel!!.getPreference().setStringValue(AppConstants.MEMBERS, json)
+        AppConstants.members = member.data!!
+            finish()
+            launchActivity<ClientDashboardActivity> {}
+    }
+
+    override fun onSuccessCompany(company: CompanyListResponse) {
+        val gson = Gson()
+        val json = gson.toJson(company)
         viewModel!!.getPreference().setStringValue(AppConstants.COMPANIES, json)
-        AppConstants.companies = user.data!!
+        AppConstants.companies = company.data!!
         finish()
         if (userType == "AGENT") {
             launchActivity<AgentDashboardActivity> {}

@@ -6,4 +6,5 @@ interface AddCarInsuranceListener {
     fun onSuccess(data: CommonResponse)
     fun onFailure(message: String)
     fun onError(errors: HashMap<String,Any>)
+    fun onLogout(message: String)
 }

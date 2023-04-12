@@ -10,6 +10,8 @@ import com.example.policyagent.databinding.ActivityChangePasswordBinding
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.listeners.ChangePasswordListener
 import com.example.policyagent.ui.viewmodels.ChangePasswordViewModel
+import com.example.policyagent.util.AppConstants
+import com.example.policyagent.util.launchLoginActivity
 import com.google.gson.Gson
 import org.json.JSONObject
 import org.kodein.di.KodeinAware
@@ -74,6 +76,14 @@ class ChangePasswordActivity : BaseActivity(), KodeinAware, ChangePasswordListen
 //            binding!!.etNewPassword.setBackground(resources.getDrawable(R.drawable.bg_edit_text_error))
         } else {
             showToastMessage(resources.getString(R.string.invalid_data))
+        }
+    }
+
+    override fun onLogout(message: String) {
+        hideProgress()
+        viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER,false)
+        if(message.contains("Unauthenticated")){
+            launchLoginActivity<LoginActivity> {  }
         }
     }
 }
