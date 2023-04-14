@@ -29,6 +29,9 @@ class LifeInsuranceDetailsActivity : BaseActivity(), LoadDocumentListener {
             policy = intent.getSerializableExtra(AppConstants.LIFE_INSURANCE) as LifeInsuranceData
             clientDetails = policy!!.client_Personal_Details
         }
+        if(intent.hasExtra(AppConstants.PERSONAL_DETAILS)){
+            clientDetails = intent.getSerializableExtra(AppConstants.PERSONAL_DETAILS) as ClientPersonalDetails
+        }
         binding!!.appBar.tvTitle.text = clientDetails!!.firstname
         binding!!.appBar.ivBack.setOnClickListener {
             finish()

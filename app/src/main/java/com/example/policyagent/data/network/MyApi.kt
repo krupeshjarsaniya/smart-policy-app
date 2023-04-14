@@ -1,20 +1,15 @@
 package com.example.policyagent.data.network
 
-import com.example.policyagent.data.responses.CommonResponse
-import com.example.policyagent.data.responses.login.LoginResponse
 import com.example.policyagent.util.AppConstants
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
-import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
-import java.util.HashMap
 import java.util.concurrent.TimeUnit
 
 interface MyApi {
@@ -40,20 +35,23 @@ interface MyApi {
     @POST("client/auth/logout")
     suspend fun clientLogout(@HeaderMap map: HashMap<String, Any>): Response<JsonObject>
 
-    @GET("agent/form/life-insurance")
-    suspend fun getLifeInsurance(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+    /*@GET("agent/form/life-insurance")
+    suspend fun getLifeInsurance(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>*/
 
-    @GET("agent/form/health-insurance")
-    suspend fun getHealthInsurance(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+    @POST("agent/form/life-insurance")
+    suspend fun getLifeInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
 
-    @GET("agent/form/car-insurance")
-    suspend fun getCarInsurance(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+    @POST("agent/form/health-insurance")
+    suspend fun getHealthInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
 
-    @GET("agent/form/wc-insurance")
-    suspend fun getWcInsurance(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+    @POST("agent/form/car-insurance")
+    suspend fun getCarInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
 
-    @GET("agent/form/fire-insurance")
-    suspend fun getFireInsurance(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+    @POST("agent/form/wc-insurance")
+    suspend fun getWcInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
+
+    @POST("agent/form/fire-insurance")
+    suspend fun getFireInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
 
     @GET("agent/client/show")
     suspend fun getClientList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
@@ -119,8 +117,8 @@ interface MyApi {
     @POST("agent/form/car-insurance/update/{id}")
     suspend fun editCarInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
 
-    @GET("client/other-insurance")
-    suspend fun getPolicyList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+    @POST("client/other-insurance")
+    suspend fun getPolicyList(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
 
     @Multipart
     @POST("client/other-insurance/create")
@@ -132,6 +130,9 @@ interface MyApi {
 
     @GET("client/other-insurance/delete/{id}")
     suspend fun deletePolicy(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
+
+    @POST("client/portfolio")
+    suspend fun getPortfolio(@HeaderMap map: HashMap<String, Any>, @Body body: HashMap<String, Any>): Response<JsonObject>
 
 
 

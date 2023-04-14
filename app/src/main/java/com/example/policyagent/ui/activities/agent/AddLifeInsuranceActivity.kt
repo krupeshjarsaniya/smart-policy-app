@@ -122,6 +122,7 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 addLifeInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
+                familyMemberList!!.add("Select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }
@@ -145,7 +146,11 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 position: Int,
                 id: Long
             ) {
-                addLifeInsurance!!.member_id = families!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addLifeInsurance!!.member_id = families!![position]!!.id!!.toString()
+                } else{
+                    addLifeInsurance!!.member_id = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -650,8 +655,11 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
 
     override fun onError(errors: HashMap<String, Any>) {
         hideProgress()
+        Log.e("errors",errors.toString())
         if(errors.containsKey("policy_number")){
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        } else if(errors.containsKey("preminum_payment_term")){
+            binding!!.etPremiumPaymentTerm.error = errors["preminum_payment_term"].toString()
         }
     }
 

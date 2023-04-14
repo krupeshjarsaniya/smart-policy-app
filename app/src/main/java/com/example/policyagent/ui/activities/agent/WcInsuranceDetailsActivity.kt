@@ -33,6 +33,9 @@ class WcInsuranceDetailsActivity : BaseActivity(), LoadDocumentListener {
             policy = intent.getSerializableExtra(AppConstants.WC_INSURANCE) as WcInsuranceData
             clientDetails = policy!!.client_Personal_Details
         }
+        if(intent.hasExtra(AppConstants.PERSONAL_DETAILS)){
+            clientDetails = intent.getSerializableExtra(AppConstants.PERSONAL_DETAILS) as ClientPersonalDetails
+        }
         binding!!.appBar.tvTitle.text = clientDetails!!.firstname
         binding!!.appBar.ivBack.setOnClickListener {
             finish()

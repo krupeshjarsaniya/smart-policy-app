@@ -114,6 +114,7 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 addWcInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
+                familyMemberList!!.add("Select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }
@@ -137,7 +138,11 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 position: Int,
                 id: Long
             ) {
-                addWcInsurance!!.member_id = families!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addWcInsurance!!.member_id = families!![position]!!.id!!.toString()
+                } else{
+                    addWcInsurance!!.member_id = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

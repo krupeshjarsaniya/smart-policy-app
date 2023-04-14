@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.ViewTreeObserver
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.policylist.PolicyListResponse
@@ -17,7 +19,9 @@ import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.listeners.PolicyListListener
 import com.example.policyagent.ui.viewmodels.client.AddNewPolicyViewModel
 import com.example.policyagent.util.AppConstants
+import com.example.policyagent.util.hide
 import com.example.policyagent.util.launchActivity
+import com.example.policyagent.util.show
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -30,6 +34,8 @@ class AddNewPolicyActivity : BaseActivity(), KodeinAware,PolicyListListener {
     //var searchPolicyAdapter: SearchPolicyAdapter? = null
     var policyAdapter: SearchPolicyAdapter? = null
     var policyList: ArrayList<PolicyData?> = arrayListOf()
+    var page = 1
+    var hasMore = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_policy)
@@ -60,17 +66,38 @@ class AddNewPolicyActivity : BaseActivity(), KodeinAware,PolicyListListener {
             }
 
         })
+
+        binding!!.nestedScrollView.viewTreeObserver.addOnScrollChangedListener {
+            val view: View =
+                binding!!.nestedScrollView.getChildAt(binding!!.nestedScrollView.childCount - 1) as View
+            val diff: Int =
+                view.bottom - (binding!!.nestedScrollView.height + binding!!.nestedScrollView
+                    .scrollY)
+            if (diff == 0 && hasMore) {
+
+                viewModel!!.getPolicyList(this, page)
+            }
+        }
+
+        binding!!.swipeRefreshLayout.setOnRefreshListener {
+            binding!!.swipeRefreshLayout.isRefreshing = false
+            policyList.clear()
+            page = 1
+            viewModel!!.getPolicyList(this, page)
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel!!.getPolicyList(this)
+        policyList.clear()
+        page = 1
+        viewModel!!.getPolicyList(this, page)
     }
 
     private fun filter(text: String) {
         val filteredList: ArrayList<PolicyData?> = arrayListOf()
 
-        for (item in policyList!!) {
+        for (item in policyList) {
             if (item!!.memberDetails!!.firstname!!.toLowerCase().contains(text.toLowerCase())
                 || item.policy_number!!.toLowerCase().contains(text.toLowerCase())
                 || item.company_name!!.toLowerCase().contains(text.toLowerCase())
@@ -92,18 +119,21 @@ class AddNewPolicyActivity : BaseActivity(), KodeinAware,PolicyListListener {
     }
 
     override fun onStarted() {
-        showProgress(true)
-
+        binding!!.loader.show()
     }
 
     override fun onSuccess(data: PolicyListResponse) {
+        page++
+        hasMore = data.hasmore!!
+        binding!!.loader.hide()
+        policyList.addAll(data.data!!)
+        policyAdapter!!.updateList(policyList)
         hideProgress()
-        policyList = data.data!!
-        policyAdapter!!.updateList(data.data)
     }
 
     override fun onFailure(message: String) {
-        
+        hideProgress()
+        showToastMessage(message)
     }
 
     override fun onError(errors: HashMap<String, Any>) {

@@ -6,11 +6,7 @@ import com.example.policyagent.data.preferences.PreferenceProvider
 import com.example.policyagent.data.repositories.MainRepository
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.carinsurancelist.CarInsuranceListResponse
-import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceListResponse
-import com.example.policyagent.data.responses.login.LoginResponse
 import com.example.policyagent.ui.listeners.CarInsuranceListListener
-import com.example.policyagent.ui.listeners.LifeInsuranceListListener
-import com.example.policyagent.ui.listeners.LoginListener
 import com.example.policyagent.util.*
 import com.google.gson.Gson
 
@@ -25,11 +21,13 @@ class CarInsuranceListViewModel (
         return repository.getPrefernces()
     }
 
-    fun getCarInsurance(mContext: Context){
+    fun getCarInsurance(mContext: Context, page: Int){
         listener?.onStarted()
         Coroutines.main {
             try {
-                val response = Gson().fromJson(repository.getCarInsurance(), CarInsuranceListResponse::class.java)
+                val map = HashMap<String, Any>()
+                map["page_no"] = page.toString()
+                val response = Gson().fromJson(repository.getCarInsurance(map), CarInsuranceListResponse::class.java)
                 if (response.status!!){
                     if (response.data != null) {
                         response.let {

@@ -146,10 +146,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 )
             }
 
-            if (policy!!.member_name != "") {
-                val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
-                binding!!.spFamilyMember.setSelection(memberPosition)
-            }
+
         }
         binding!!.spFamilyMember.adapter = familyAdapter
 
@@ -214,6 +211,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 addFireInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
+                familyMemberList!!.add("select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }
@@ -223,6 +221,10 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                     familyMemberList!!
                 )
                 binding!!.spFamilyMember.adapter = familyAdapter
+                if (policy!!.member_name != "") {
+                    val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
+                    binding!!.spFamilyMember.setSelection(memberPosition)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -237,7 +239,11 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 position: Int,
                 id: Long
             ) {
-                addFireInsurance!!.member_id = families!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addFireInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
+                } else{
+                    addFireInsurance!!.member_id = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

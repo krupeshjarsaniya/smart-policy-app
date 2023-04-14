@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,14 @@
             android:id="@+id/app_bar"
             layout="@layout/app_bar" />
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -70,12 +77,19 @@
                     android:id="@+id/rv_policies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
                     android:layout_marginVertical="@dimen/_8sdp"
+                    android:nestedScrollingEnabled="false"
                     android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <ProgressBar
+                    android:id="@+id/loader"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </LinearLayout>

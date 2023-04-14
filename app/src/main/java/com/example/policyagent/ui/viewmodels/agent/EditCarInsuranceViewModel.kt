@@ -95,7 +95,7 @@ class EditCarInsuranceViewModel (
                             listener!!.onFailure(response.message!!)
                         }
                         422 -> {
-                            listener!!.onFailure(response.message!!)
+                            listener!!.onError(response.error!!)
                         }
                         else -> {
                             listener!!.onLogout(response.message!!)

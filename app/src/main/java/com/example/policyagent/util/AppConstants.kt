@@ -7,6 +7,7 @@ import com.example.policyagent.data.responses.memberlist.MemberData
 class AppConstants {
     companion object {
 
+        val PERSONAL_DETAILS: String? = "personal_details"
         val COMPANIES: String = "companies"
         val MEMBERS: String = "members"
         val CLIENTS: String = "clients"

@@ -147,10 +147,7 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 )
             }
 
-            if (policy!!.member_name != "") {
-                val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
-                binding!!.spFamilyMember.setSelection(memberPosition)
-            }
+
         binding!!.spFamilyMember.adapter = familyAdapter
         }
 
@@ -245,6 +242,7 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 addHealthInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
+                familyMemberList!!.add("select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }
@@ -254,6 +252,10 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                     familyMemberList!!
                 )
                 binding!!.spFamilyMember.adapter = familyAdapter
+                if (policy!!.member_name != "") {
+                    val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
+                    binding!!.spFamilyMember.setSelection(memberPosition)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -268,7 +270,11 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 position: Int,
                 id: Long
             ) {
-                addHealthInsurance!!.member_id = families!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addHealthInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
+                } else{
+                    addHealthInsurance!!.member_id = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

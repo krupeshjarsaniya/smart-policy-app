@@ -149,10 +149,7 @@ class EditCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 )
             }
 
-            if (policy!!.member_name != "") {
-                val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
-                binding!!.spFamilyMember.setSelection(memberPosition)
-            }
+
         }
         binding!!.spFamilyMember.adapter = familyAdapter
 
@@ -252,6 +249,7 @@ class EditCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 addCarInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
+                familyMemberList!!.add("select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }
@@ -261,6 +259,10 @@ class EditCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                     familyMemberList!!
                 )
                 binding!!.spFamilyMember.adapter = familyAdapter
+                if (policy!!.member_name != "") {
+                    val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
+                    binding!!.spFamilyMember.setSelection(memberPosition)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -275,7 +277,11 @@ class EditCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 position: Int,
                 id: Long
             ) {
-                addCarInsurance!!.member_id = families!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addCarInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
+                } else{
+                    addCarInsurance!!.member_id = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

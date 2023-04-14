@@ -3,11 +3,13 @@ package com.example.policyagent.ui.activities.agent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.CommonResponse
-import com.example.policyagent.data.responses.carinsurancelist.CarInsuranceData
 import com.example.policyagent.data.responses.fireinsurancelist.FireInsuranceData
 import com.example.policyagent.data.responses.fireinsurancelist.FireInsuranceListResponse
 import com.example.policyagent.databinding.ActivityFireInsuranceListBinding
@@ -17,10 +19,7 @@ import com.example.policyagent.ui.adapters.agent.FireInsuranceListAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.listeners.FireInsuranceListListener
 import com.example.policyagent.ui.viewmodels.agent.FireInsuranceListViewModel
-import com.example.policyagent.util.AppConstants
-import com.example.policyagent.util.launchActivity
-import com.example.policyagent.util.launchLoginActivity
-import com.example.policyagent.util.show
+import com.example.policyagent.util.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -32,6 +31,8 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
     private var viewModel: FireInsuranceListViewModel? = null
     var policyAdapter: FireInsuranceListAdapter? = null
     var policyList: ArrayList<FireInsuranceData?> = arrayListOf()
+    var page = 1
+    var hasMore = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fire_insurance_list)
@@ -43,7 +44,7 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
         }
         binding!!.appBar.btnAddPolicy.show()
         binding!!.appBar.btnAddPolicy.setOnClickListener {
-            launchActivity<AddFireInsuranceActivity> {  }
+            launchActivity<AddFireInsuranceActivity> { }
         }
         policyAdapter = FireInsuranceListAdapter(this, this)
         binding!!.rvPolicies.adapter = policyAdapter
@@ -61,20 +62,41 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
             override fun afterTextChanged(s: Editable?) {
                 filter(s.toString())
             }
+        })
 
+        binding!!.nestedScrollView.viewTreeObserver.addOnScrollChangedListener(ViewTreeObserver.OnScrollChangedListener {
+            val view: View =
+                binding!!.nestedScrollView.getChildAt(binding!!.nestedScrollView.getChildCount() - 1) as View
+            val diff: Int =
+                view.bottom - (binding!!.nestedScrollView.getHeight() + binding!!.nestedScrollView
+                    .scrollY)
+            if (diff == 0 && hasMore) {
+                binding!!.loader.show()
+                viewModel!!.getFireInsurance(this, page)
+            }
+        })
+
+        binding!!.swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            binding!!.swipeRefreshLayout.isRefreshing = false
+            policyList.clear()
+            page = 1
+            viewModel!!.getFireInsurance(this, page)
         })
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel!!.getFireInsurance(this)
+        policyList.clear()
+        page = 1
+        viewModel!!.getFireInsurance(this, page)
     }
 
     private fun filter(text: String) {
         val filteredList: ArrayList<FireInsuranceData?> = arrayListOf()
 
         for (item in policyList!!) {
-            if (item!!.client_Personal_Details!!.firstname!!.toLowerCase().contains(text.toLowerCase())
+            if (item!!.client_Personal_Details!!.firstname!!.toLowerCase()
+                    .contains(text.toLowerCase())
                 || item.policy_number!!.toLowerCase().contains(text.toLowerCase())
                 || item.plan_name!!.toLowerCase().contains(text.toLowerCase())
                 || item.rsd!!.toLowerCase().contains(text.toLowerCase())
@@ -86,26 +108,30 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
 
         if (filteredList.isNotEmpty()) {
             policyAdapter!!.updateList(filteredList)
-        } else{
+        } else {
             policyAdapter!!.updateList(policyList!!)
         }
     }
 
     override fun onStarted() {
-        showProgress(true)
+        binding!!.loader.show()
+        //showProgress(true)
     }
 
     override fun onSuccess(data: FireInsuranceListResponse) {
+        page++
+        hasMore = data.hasmore!!
+        binding!!.loader.hide()
+        policyList.addAll(data.data!!)
+        policyAdapter!!.updateList(policyList)
         hideProgress()
-        policyList = data.data!!
-        policyAdapter!!.updateList(data.data)
     }
 
     override fun onFailure(message: String) {
         hideProgress()
-        if(message.contains("Unauthenticated.")){
-            viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER,false)
-                launchLoginActivity<LoginActivity> {  }
+        if (message.contains("Unauthenticated.")) {
+            viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER, false)
+            launchLoginActivity<LoginActivity> { }
         }
         showToastMessage(message)
     }
@@ -116,17 +142,17 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
 
     override fun onItemClick(data: FireInsuranceData) {
         launchActivity<FireInsuranceDetailsActivity> {
-            this.putExtra(AppConstants.FIRE_INSURANCE,data)
+            this.putExtra(AppConstants.FIRE_INSURANCE, data)
         }
     }
 
-    override fun onDelete(id: String,position: Int) {
-        viewModel!!.deleteFireInsurance(this,id,position)
+    override fun onDelete(id: String, position: Int) {
+        viewModel!!.deleteFireInsurance(this, id, position)
     }
 
     override fun onEdit(data: FireInsuranceData) {
         launchActivity<EditFireInsuranceActivity> {
-            this.putExtra(AppConstants.FIRE_INSURANCE,data)
+            this.putExtra(AppConstants.FIRE_INSURANCE, data)
         }
     }
 
@@ -139,9 +165,9 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
 
     override fun onLogout(message: String) {
         hideProgress()
-        viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER,false)
-        if(message.contains("Unauthenticated")){
-            launchLoginActivity<LoginActivity> {  }
+        viewModel!!.getPreference().setBooleanValue(AppConstants.IS_REMEMBER, false)
+        if (message.contains("Unauthenticated")) {
+            launchLoginActivity<LoginActivity> { }
         }
     }
 }

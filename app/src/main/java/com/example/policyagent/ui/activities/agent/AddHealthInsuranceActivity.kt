@@ -124,6 +124,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                 addHealthInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
+                familyMemberList!!.add("Select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }
@@ -147,7 +148,11 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                 position: Int,
                 id: Long
             ) {
-                addHealthInsurance!!.member_id = families!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addHealthInsurance!!.member_id = families!![position]!!.id!!.toString()
+                } else{
+                    addHealthInsurance!!.member_id = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

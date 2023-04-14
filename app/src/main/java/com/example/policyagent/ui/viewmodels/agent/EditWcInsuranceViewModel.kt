@@ -78,7 +78,7 @@ class EditWcInsuranceViewModel (
                 if (response.status!!){
                     listener!!.onSuccess(response)
                     } else {
-                    if (response.status!!){
+                    if (response.status){
                         listener!!.onSuccess(response)
                     } else {
                         when (response.status_code) {
@@ -86,7 +86,7 @@ class EditWcInsuranceViewModel (
                                 listener!!.onFailure(response.message!!)
                             }
                             422 -> {
-                                listener!!.onFailure(response.message!!)
+                                listener!!.onError(response.error!!)
                             }
                             else -> {
                                 listener!!.onLogout(response.message!!)
@@ -104,5 +104,4 @@ class EditWcInsuranceViewModel (
             }
         }
     }
-
 }

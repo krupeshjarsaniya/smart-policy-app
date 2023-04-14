@@ -144,11 +144,6 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                     familyMemberList!!
                 )
             }
-
-            if (policy!!.member_name != "") {
-                val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
-                binding!!.spFamilyMember.setSelection(memberPosition)
-            }
         }
         binding!!.spFamilyMember.adapter = familyAdapter
 
@@ -241,6 +236,7 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 addLifeInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
+                familyMemberList!!.add("select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }
@@ -250,6 +246,10 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                     familyMemberList!!
                 )
                 binding!!.spFamilyMember.adapter = familyAdapter
+                if (policy!!.member_name != "") {
+                    val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
+                    binding!!.spFamilyMember.setSelection(memberPosition)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -264,7 +264,11 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 position: Int,
                 id: Long
             ) {
-                addLifeInsurance!!.member_id = families!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addLifeInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
+                } else{
+                    addLifeInsurance!!.member_id = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -810,6 +814,8 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         hideProgress()
         if (errors.containsKey("policy_number")) {
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        } else if(errors.containsKey("preminum_payment_term")){
+            binding!!.etPremiumPaymentTerm.error = errors["preminum_payment_term"].toString()
         }
     }
 

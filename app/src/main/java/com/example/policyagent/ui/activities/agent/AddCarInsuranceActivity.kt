@@ -114,6 +114,7 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 addCarInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
+                familyMemberList!!.add("Select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }
@@ -137,7 +138,11 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 position: Int,
                 id: Long
             ) {
-                addCarInsurance!!.member_id = families!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addCarInsurance!!.member_id = families!![position]!!.id!!.toString()
+                } else{
+                    addCarInsurance!!.member_id = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -141,10 +141,7 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 )
             }
 
-            if (policy!!.member_name != "") {
-                val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
-                binding!!.spFamilyMember.setSelection(memberPosition)
-            }
+
         }
         binding!!.spFamilyMember.adapter = familyAdapter
 
@@ -209,6 +206,7 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 addWcInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
+                familyMemberList!!.add("select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }
@@ -218,6 +216,10 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                     familyMemberList!!
                 )
                 binding!!.spFamilyMember.adapter = familyAdapter
+                if (policy!!.member_name != "") {
+                    val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
+                    binding!!.spFamilyMember.setSelection(memberPosition)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -232,7 +234,11 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 position: Int,
                 id: Long
             ) {
-                addWcInsurance!!.member_id = families!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addWcInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
+                } else{
+                    addWcInsurance!!.member_id = ""
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

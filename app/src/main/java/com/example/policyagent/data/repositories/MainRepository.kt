@@ -7,7 +7,7 @@ import com.example.policyagent.data.preferences.PreferenceProvider
 import com.example.policyagent.util.AppConstants
 import com.google.gson.JsonObject
 import okhttp3.RequestBody
-import java.util.*
+import kotlin.collections.HashMap
 
 class MainRepository(private val api: MyApi, private val db: AppDatabase, private val appPrefrences: PreferenceProvider) : SafeApiRequest() {
 
@@ -66,24 +66,28 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.clientLogout(getHeaderMap()) }
     }
 
-    suspend fun getLifeInsurance(): JsonObject {
+    /*suspend fun getLifeInsurance(): JsonObject {
         return apiRequest { api.getLifeInsurance(getHeaderMap()) }
+    }*/
+
+    suspend fun getLifeInsurance(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getLifeInsurance(getHeaderMap(),map) }
     }
 
-    suspend fun getHealthInsurance(): JsonObject {
-        return apiRequest { api.getHealthInsurance(getHeaderMap()) }
+    suspend fun getHealthInsurance(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getHealthInsurance(getHeaderMap(),map) }
     }
 
-    suspend fun getCarInsurance(): JsonObject {
-        return apiRequest { api.getCarInsurance(getHeaderMap()) }
+    suspend fun getCarInsurance(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getCarInsurance(getHeaderMap(),map) }
     }
 
-    suspend fun getWcInsurance(): JsonObject {
-        return apiRequest { api.getWcInsurance(getHeaderMap()) }
+    suspend fun getWcInsurance(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getWcInsurance(getHeaderMap(),map) }
     }
 
-    suspend fun getFireInsurance(): JsonObject {
-        return apiRequest { api.getFireInsurance(getHeaderMap()) }
+    suspend fun getFireInsurance(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getFireInsurance(getHeaderMap(),map) }
     }
 
     suspend fun getClients(): JsonObject {
@@ -162,8 +166,8 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.editCarInsurance(getHeaderMap(),map,id) }
     }
 
-    suspend fun getPolicyList(): JsonObject {
-        return apiRequest { api.getPolicyList(getHeaderMap()) }
+    suspend fun getPolicyList(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getPolicyList(getHeaderMap(),map) }
     }
 
     suspend fun addPolicy(map: HashMap<String, RequestBody>): JsonObject {
@@ -176,6 +180,10 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
 
     suspend fun deletePolicy(id: String): JsonObject {
         return apiRequest { api.deletePolicy(getHeaderMap(),id) }
+    }
+
+    suspend fun getPortfolio(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getPortfolio(getHeaderMap(),map) }
     }
 
     fun getHeaderMap(): HashMap<String, Any> {

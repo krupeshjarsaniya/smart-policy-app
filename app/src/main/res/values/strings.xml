@@ -309,6 +309,7 @@
     <string name="invalid_end_date">Enter Valid End Date</string>
     <string name="invalid_sa">Enter Valid Sa</string>
     <string name="edit_policy">Edit Policy</string>
+    <string name="total">Total</string>
 
 
 </resources>

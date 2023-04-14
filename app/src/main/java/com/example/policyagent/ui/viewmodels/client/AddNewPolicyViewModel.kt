@@ -26,11 +26,13 @@ class AddNewPolicyViewModel (
         return repository.getPrefernces()
     }
 
-    fun getPolicyList(mContext: Context){
+    fun getPolicyList(mContext: Context, page: Int){
         listener?.onStarted()
         Coroutines.main {
+            var map = HashMap<String,Any>()
+            map["page_no"] = page.toString()
             try {
-                val response = Gson().fromJson(repository.getPolicyList(), PolicyListResponse::class.java)
+                val response = Gson().fromJson(repository.getPolicyList(map), PolicyListResponse::class.java)
                 if (response.status!!){
                     if (response.data != null) {
                         response.let {

@@ -9,6 +9,7 @@ import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceLis
 import com.example.policyagent.ui.listeners.LifeInsuranceListListener
 import com.example.policyagent.util.*
 import com.google.gson.Gson
+import okhttp3.RequestBody
 
 class LifeInsuranceListViewModel (
     private val repository: MainRepository
@@ -21,12 +22,13 @@ class LifeInsuranceListViewModel (
         return repository.getPrefernces()
     }
 
-    fun getLifeInsurance(mContext: Context){
-        listener?.onStarted()
+    fun getLifeInsurance(mContext: Context,  page: Int){
+            listener?.onStarted()
         Coroutines.main {
             try {
-
-                val response = Gson().fromJson(repository.getLifeInsurance(), LifeInsuranceListResponse::class.java)
+                val map = HashMap<String, Any>()
+                map["page_no"] = page.toString()
+                val response = Gson().fromJson(repository.getLifeInsurance(map), LifeInsuranceListResponse::class.java)
                 if (response.status!!){
                     if (response.data != null) {
                         response.let {
