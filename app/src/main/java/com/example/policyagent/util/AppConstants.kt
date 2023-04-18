@@ -23,6 +23,8 @@ class AppConstants {
         val CAR_INSURANCE: String = "car_insurance"
         val POLICYNAME: String = "policy_name"
         val YEAR: String = "year"
+        val MEMBER_ID: String = "member_id"
+        val INSURANCE_TYPE: String = "insurance_type"
         val VERIFY: String = "verify"
         val MOBILE: String = "mobile"
         val RESEND: String = "resend"

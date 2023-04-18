@@ -63,15 +63,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_6sdp"
                         android:background="@drawable/bg_portfolio_dropdown"
-                        android:padding="@dimen/_8sdp" />
-
+                        />
                     <Spinner
                         android:id="@+id/tv_type"
-                        android:layout_width="@dimen/_70sdp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
                         android:layout_marginHorizontal="@dimen/_6sdp"
-                        android:background="@drawable/bg_portfolio_dropdown"
-                        android:padding="@dimen/_8sdp" />
+                        android:background="@drawable/bg_portfolio_dropdown"/>
 
                 </LinearLayout>
 

@@ -186,6 +186,13 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.getPortfolio(getHeaderMap(),map) }
     }
 
+    suspend fun getYearlyDue(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getYearlyDue(getHeaderMap(),map) }
+    }
+    suspend fun getMonthlyDue(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getMonthlyDue(getHeaderMap(),map) }
+    }
+
     fun getHeaderMap(): HashMap<String, Any> {
         val map = HashMap<String, Any>()
         map[AppConstants.Accept] = "application/json"

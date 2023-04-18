@@ -3,6 +3,7 @@ package com.example.policyagent.ui.activities.client
 import android.annotation.SuppressLint
 import android.graphics.*
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
@@ -12,7 +13,11 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
-import com.example.policyagent.data.responses.CommonResponse
+import com.example.policyagent.data.responses.memberlist.MemberData
+import com.example.policyagent.data.responses.memberlist.MemberListResponse
+import com.example.policyagent.data.responses.yearlydue.Chart
+import com.example.policyagent.data.responses.yearlydue.Year
+import com.example.policyagent.data.responses.yearlydue.YearlyDueResponse
 import com.example.policyagent.databinding.ActivityPremiumCalendarBinding
 import com.example.policyagent.ui.activities.BaseActivity
 import com.example.policyagent.ui.adapters.client.YearlyPremiumAdapter
@@ -23,14 +28,17 @@ import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.launchActivity
 import com.github.mikephil.charting.animation.ChartAnimator
 import com.github.mikephil.charting.buffer.BarBuffer
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.dataprovider.BarDataProvider
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.renderer.BarChartRenderer
 import com.github.mikephil.charting.utils.Transformer
 import com.github.mikephil.charting.utils.Utils
 import com.github.mikephil.charting.utils.ViewPortHandler
+import com.google.gson.Gson
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -44,11 +52,16 @@ class PremiumCalendarActivity : BaseActivity(), KodeinAware, PremiumCalendarList
     private var binding: ActivityPremiumCalendarBinding? = null
     private var viewModel: PremiumCalendarViewModel? = null
     var yearlyAdapter: YearlyPremiumAdapter? = null
-    var years: ArrayList<String> = ArrayList()
+    var years: ArrayList<Year?> = ArrayList()
     var barEntriesArrayList = ArrayList<BarEntry>()
     var barData: BarData? = null
     var barDataSet: BarDataSet? = null
     var barImage: Bitmap? = null
+    var selectedMember = ""
+    var selectedType = ""
+    var gson = Gson()
+    var clientList: ArrayList<String>? = ArrayList()
+    var clients: ArrayList<MemberData?>? = ArrayList()
     /*private val chart: CombinedChart? = null
     private val count = 12*/
 
@@ -57,25 +70,121 @@ class PremiumCalendarActivity : BaseActivity(), KodeinAware, PremiumCalendarList
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_premium_calendar)
         viewModel = ViewModelProvider(this, factory)[PremiumCalendarViewModel::class.java]
-        years.add("2023")
-        years.add("2022")
-        years.add("2021")
-        years.add("2020")
-        years.add("2019")
-        years.add("2018")
-        years.add("2017")
+        viewModel!!.listener = this
+
         yearlyAdapter = YearlyPremiumAdapter(this, this)
         binding!!.rvYearly.adapter = yearlyAdapter
-        yearlyAdapter!!.updateList(years)
+
 
         barImage = BitmapFactory.decodeResource(
             resources,
             R.drawable.ic_line
         )
-        getBarEntries()
+
+        val memberJson: String = viewModel!!.getPreference().getStringValue(AppConstants.MEMBERS)!!
+        val memberObj: MemberListResponse =
+            gson.fromJson(memberJson, MemberListResponse::class.java)
+        clients = memberObj.data
+        clientList!!.add("All")
+        for (i in 0 until clients!!.size) {
+            clientList!!.add(clients!![i]!!.firstname!!)
+        }
+        val memberAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
+        binding!!.tvFamilyMembers.adapter = memberAdapter
+        binding!!.tvFamilyMembers.onItemSelectedListener = object:
+            OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.primary_color))
+                (parent.getChildAt(0) as TextView).gravity = Gravity.CENTER
+                selectedMember = if(position != 0) {
+                    clients!![position - 1]!!.id!!.toString()
+                } else{
+                    "All"
+                }
+                filter()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
+        val insurances = resources.getStringArray(R.array.due_insurance_type)
+        val insuranceAdapter: ArrayAdapter<*> =
+            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, insurances)
+        insuranceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding!!.tvType.adapter = insuranceAdapter
+        binding!!.tvType.onItemSelectedListener = object: OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.primary_color))
+                (parent.getChildAt(0) as TextView).gravity = Gravity.CENTER
+                    selectedType = binding!!.tvType.selectedItem.toString().replace(" ","").toLowerCase()
+                    filter()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
+        binding!!.appBar.tvTitle.text = resources.getString(R.string.premium_calendar)
+        binding!!.appBar.ivBack.setOnClickListener {
+            finish()
+        }
+    }
+
+    fun filter(){
+        if(selectedMember.toUpperCase() == "ALL" && selectedType.toUpperCase() == "ALL"){
+            viewModel!!.getYearlyDue("","")
+        } else if(selectedMember.toUpperCase() == "ALL"){
+            viewModel!!.getYearlyDue("",selectedType)
+        } else if(selectedType.toUpperCase() == "ALL"){
+            viewModel!!.getYearlyDue(selectedMember,"")
+        } else{
+            viewModel!!.getYearlyDue(selectedMember,selectedType)
+        }
+    }
+
+    private fun setChart(chart: ArrayList<Chart?>) {
+        barEntriesArrayList = ArrayList()
+        for(i in 0 until chart.size) {
+            Log.e("month_no",chart[i]!!.month_no!!.toString())
+            barEntriesArrayList.add(BarEntry(
+                chart[i]!!.month_no!!.toFloat(),
+                chart[i]!!.value!!.toFloat()))
+        }
+        Log.e("barEntriesArraylist",barEntriesArrayList.size.toString())
+        binding!!.barChart.xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getAxisLabel(value: Float, axis: AxisBase): String {
+                var label = ""
+                when (value) {
+                    01f -> label = "Jan"
+                    02f -> label = "Fab"
+                    03f -> label = "Mar"
+                    04f -> label = "Apr"
+                    05f -> label = "May"
+                    06f -> label = "Jun"
+                    07f -> label = "Jul"
+                    08f -> label = "Aug"
+                    09f -> label = "Sep"
+                    10f -> label = "Oct"
+                    11f -> label = "Nov"
+                    12f -> label = "Dec"
+                }
+                return label
+            }
+        }
+
         barDataSet = BarDataSet(barEntriesArrayList, "")
         barData = BarData(barDataSet)
-        barData!!.dataSetLabels
 
         binding!!.barChart.data = barData
         barDataSet!!.color = resources.getColor(R.color.purple_light)
@@ -103,86 +212,49 @@ class PremiumCalendarActivity : BaseActivity(), KodeinAware, PremiumCalendarList
 
         barChartRender.setRadius(25)
         binding!!.barChart.renderer = barChartRender
-
-        val members = resources.getStringArray(R.array.family_members)
-        val memberAdapter: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, members)
-        memberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding!!.tvFamilyMembers.adapter = memberAdapter
-        binding!!.tvFamilyMembers.onItemSelectedListener = object: OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.primary_color))
-                (parent!!.getChildAt(0) as TextView).gravity = Gravity.CENTER
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-        }
-        val insurances = resources.getStringArray(R.array.insurance_type)
-        val insuranceAdapter: ArrayAdapter<*> =
-            ArrayAdapter<Any?>(this, android.R.layout.simple_spinner_item, insurances)
-        insuranceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding!!.tvType.adapter = insuranceAdapter
-        binding!!.tvType.onItemSelectedListener = object: OnItemSelectedListener{
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.primary_color))
-                (parent!!.getChildAt(0) as TextView).gravity = Gravity.CENTER
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-        }
-
-        binding!!.appBar.tvTitle.text = resources.getString(R.string.premium_calendar)
-        binding!!.appBar.ivBack.setOnClickListener {
-            finish()
-        }
-    }
-
-    private fun getBarEntries() {
-        barEntriesArrayList = ArrayList()
-        barEntriesArrayList.add(BarEntry(1f, 4f))
-        barEntriesArrayList.add(BarEntry(2f, 6f))
-        barEntriesArrayList.add(BarEntry(3f, 8f))
-        barEntriesArrayList.add(BarEntry(4f, 2f))
-        barEntriesArrayList.add(BarEntry(5f, 4f))
-        barEntriesArrayList.add(BarEntry(6f, 1f))
+        binding!!.barChart.notifyDataSetChanged()
+        binding!!.barChart.invalidate()
     }
 
     override fun onStarted() {
-
+        showProgress(true)
     }
 
-    override fun onSuccess(response: CommonResponse, type: String) {
-
+    override fun onSuccess(response: YearlyDueResponse) {
+        hideProgress()
+        years = response.data!!.years!!
+        yearlyAdapter!!.updateList(years)
+        barDataSet = BarDataSet(barEntriesArrayList, "")
+        barData = BarData(barDataSet)
+        binding!!.barChart.data = barData
+        setChart(response.data.chart!!)
     }
 
     override fun onFailure(message: String) {
-
+        hideProgress()
+        showToastMessage(message)
     }
 
     override fun onError(error: HashMap<String, Any>) {
-
+        hideProgress()
+        //showToastMessage("Error")
     }
 
     override fun onYearSelected(year: String) {
+        var memberId: String = ""
+        var type: String = ""
+       if(selectedMember.toUpperCase() != "ALL"){
+            memberId = selectedMember
+        }
+        if(selectedType.toUpperCase() != "ALL"){
+            type = selectedType
+        }
         launchActivity<YearlyPremiumActivity> {
             this.putExtra(AppConstants.YEAR, year)
+            this.putExtra(AppConstants.MEMBER_ID, memberId)
+            this.putExtra(AppConstants.INSURANCE_TYPE, type)
         }
     }
-
 }
 
 class CustomBarChartRender(

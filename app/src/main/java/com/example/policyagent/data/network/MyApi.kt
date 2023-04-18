@@ -134,6 +134,12 @@ interface MyApi {
     @POST("client/portfolio")
     suspend fun getPortfolio(@HeaderMap map: HashMap<String, Any>, @Body body: HashMap<String, Any>): Response<JsonObject>
 
+    @POST("client/premiumupcoming")
+    suspend fun getYearlyDue(@HeaderMap map: HashMap<String, Any>, @Body body: HashMap<String, Any>): Response<JsonObject>
+
+    @POST("client/premiumupcoming/year")
+    suspend fun getMonthlyDue(@HeaderMap map: HashMap<String, Any>, @Body body: HashMap<String, Any>): Response<JsonObject>
+
 
 
     @Multipart

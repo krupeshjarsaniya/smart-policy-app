@@ -169,6 +169,12 @@
         <item>Fire Insurance</item>
     </string-array>
 
+    <string-array name="due_insurance_type">
+        <item>All</item>
+        <item>Life Insurance</item>
+        <item>Health Insurance</item>
+    </string-array>
+
     <string-array name="clients">
         <item>Client 1</item>
         <item>Client 2</item>

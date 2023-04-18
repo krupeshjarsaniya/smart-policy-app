@@ -47,7 +47,7 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware, PortfolioListe
     private var viewModel: MyInsurancePortfolioViewModel? = null
     var policyAdapter: PolicyAdapter? = null
     private var portfolioList: ArrayList<Portfolio?>? = ArrayList()
-    var policyList: ArrayList<String?>? = ArrayList()
+    private var policyList: ArrayList<String?>? = ArrayList()
     var gson = Gson()
     var clientList: java.util.ArrayList<String>? = java.util.ArrayList()
     var clients: java.util.ArrayList<MemberData?>? = java.util.ArrayList()

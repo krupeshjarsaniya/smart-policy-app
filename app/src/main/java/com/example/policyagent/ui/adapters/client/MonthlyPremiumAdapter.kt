@@ -14,7 +14,7 @@ class MonthlyPremiumAdapter(private val mContext: Context, val listener: YearlyP
 
     private var mBinding: ItemMonthlyPremiumBinding? = null
     private var monthList = ArrayList<MonthSelection>()
-    var lastSelectedPosition: Int = -1
+    var lastSelectedPosition: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val inflater = LayoutInflater.from(parent.context)
@@ -51,7 +51,7 @@ class MonthlyPremiumAdapter(private val mContext: Context, val listener: YearlyP
             monthList[position].isSelected = true
             notifyDataSetChanged()
             lastSelectedPosition = position
-            listener.onMonthSelected(monthList[position].month)
+            listener.onMonthSelected(position)
         }
     }
 
