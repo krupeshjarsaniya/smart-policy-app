@@ -140,6 +140,14 @@ interface MyApi {
     @POST("client/premiumupcoming/year")
     suspend fun getMonthlyDue(@HeaderMap map: HashMap<String, Any>, @Body body: HashMap<String, Any>): Response<JsonObject>
 
+    @GET("agent/dashboard")
+    suspend fun getAgentDashboard(@HeaderMap map: HashMap<String, Any>): Response<JsonObject>
+
+    @GET("client/documents")
+    suspend fun getClientDocuments(@HeaderMap map: HashMap<String, Any>): Response<JsonObject>
+
+    @GET("client/document/delete/{id}")
+    suspend fun deleteDocument(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
 
 
     @Multipart

@@ -82,6 +82,10 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.getCarInsurance(getHeaderMap(),map) }
     }
 
+    suspend fun getAgentDashboard(): JsonObject {
+        return apiRequest { api.getAgentDashboard(getHeaderMap()) }
+    }
+
     suspend fun getWcInsurance(map: HashMap<String, Any>): JsonObject {
         return apiRequest { api.getWcInsurance(getHeaderMap(),map) }
     }
@@ -189,8 +193,17 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
     suspend fun getYearlyDue(map: HashMap<String, Any>): JsonObject {
         return apiRequest { api.getYearlyDue(getHeaderMap(),map) }
     }
+
     suspend fun getMonthlyDue(map: HashMap<String, Any>): JsonObject {
         return apiRequest { api.getMonthlyDue(getHeaderMap(),map) }
+    }
+
+    suspend fun getClientDocuments(): JsonObject {
+        return apiRequest { api.getClientDocuments(getHeaderMap()) }
+    }
+
+    suspend fun deleteDocument(id: String): JsonObject {
+        return apiRequest { api.deleteDocument(getHeaderMap(),id) }
     }
 
     fun getHeaderMap(): HashMap<String, Any> {

@@ -84,36 +84,13 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_fire_insurance)
         viewModel = ViewModelProvider(this, factory)[EditFireInsuranceViewModel::class.java]
         viewModel!!.listener = this
+        viewModel!!.getClients(this)
         binding!!.appBar.tvTitle.text = resources.getString(R.string.fire_insurance)
         documentAdapter = EditDocumentAdapter(this, this, this)
         binding!!.rvDocument.adapter = documentAdapter
         binding!!.appBar.ivBack.setOnClickListener {
             finish()
         }
-        val clientJson: String = viewModel!!.getPreference().getStringValue(AppConstants.CLIENTS)!!
-        val clientObj: ClientListResponse =
-            gson.fromJson(clientJson, ClientListResponse::class.java)
-        clients = clientObj.data
-        //resources.getStringArray(R.array.clients)
-        for (i in 0 until clients!!.size) {
-            clientList!!.add(clients!![i]!!.firstname!!)
-        }
-        val clientAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
-        binding!!.spClientName.setAdapter(clientAdapter)
-
-
-        val companyJson: String =
-            viewModel!!.getPreference().getStringValue(AppConstants.COMPANIES)!!
-        val companyObj: CompanyListResponse =
-            gson.fromJson(companyJson, CompanyListResponse::class.java)
-
-        companies = companyObj.data//resources.getStringArray(R.array.companies)
-        for (i in 0 until companies!!.size) {
-            companyList!!.add(companies!![i]!!.name!!)
-        }
-        val companyAdapter = ArrayAdapter(this, R.layout.dropdown_item, companyList!!)
-        binding!!.spCompanyName.adapter = companyAdapter
-
         val insuranceType = resources.getStringArray(R.array.fire_insurance_type)
         val insuranceTypeAdapter = ArrayAdapter(this, R.layout.dropdown_item, insuranceType)
         binding!!.spPolicyType.adapter = insuranceTypeAdapter
@@ -129,25 +106,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
 
         binding!!.etPolicyNumber.setText(policy!!.policy_number)
 
-        if (clientDetails!!.firstname!!.isNotEmpty()) {
-            val clientPosition: Int = clientAdapter.getPosition(clientDetails!!.firstname)
-            binding!!.spClientName.setSelection(clientPosition)
 
-            if (clientPosition >= 0) {
-                familyMemberList!!.clear();
-                families = clients!![clientPosition]!!.family_Details
-                for (i in 0 until families!!.size) {
-                    familyMemberList!!.add(families!![i]!!.firstname!!)
-                }
-                familyAdapter = ArrayAdapter(
-                    this@EditFireInsuranceActivity,
-                    R.layout.dropdown_item,
-                    familyMemberList!!
-                )
-            }
-
-
-        }
         binding!!.spFamilyMember.adapter = familyAdapter
 
         binding!!.tvStartDate.setText(policy!!.rsd)
@@ -168,8 +127,6 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         binding!!.etTotalPremium.setText(policy!!.total_premium)
 
 
-        val companyPosition: Int = companyAdapter.getPosition(policy!!.company_name)
-        binding!!.spCompanyName.setSelection(companyPosition)
 
 
         binding!!.etCommission.setText(policy!!.commision)
@@ -587,5 +544,64 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         if(message.contains("Unauthenticated")){
             launchLoginActivity<LoginActivity> {  }
         }
+    }
+
+    override fun onSuccessClient(client: ClientListResponse) {
+        val gson = Gson()
+        val json = gson.toJson(client)
+        viewModel!!.getPreference().setStringValue(AppConstants.CLIENTS, json)
+        AppConstants.clients = client.data!!
+        viewModel!!.getCompanies(this)
+    }
+
+    override fun onSuccessCompany(company: CompanyListResponse) {
+        hideProgress()
+        val gson = Gson()
+        val json = gson.toJson(company)
+        viewModel!!.getPreference().setStringValue(AppConstants.COMPANIES, json)
+        AppConstants.companies = company.data!!
+        val clientJson: String = viewModel!!.getPreference().getStringValue(AppConstants.CLIENTS)!!
+        val clientObj: ClientListResponse =
+            gson.fromJson(clientJson, ClientListResponse::class.java)
+        clients = clientObj.data
+        resources.getStringArray(R.array.clients)
+        for (i in 0 until clients!!.size) {
+            clientList!!.add(clients!![i]!!.firstname!!)
+        }
+        val clientAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
+        binding!!.spClientName.setAdapter(clientAdapter)
+
+
+        val companyJson: String =
+            viewModel!!.getPreference().getStringValue(AppConstants.COMPANIES)!!
+        val companyObj: CompanyListResponse =
+            gson.fromJson(companyJson, CompanyListResponse::class.java)
+
+        companies = companyObj.data//resources.getStringArray(R.array.companies)
+        for (i in 0 until companies!!.size) {
+            companyList!!.add(companies!![i]!!.name!!)
+        }
+        val companyAdapter = ArrayAdapter(this, R.layout.dropdown_item, companyList!!)
+        binding!!.spCompanyName.adapter = companyAdapter
+
+        if (clientDetails!!.firstname!!.isNotEmpty()) {
+            val clientPosition: Int = clientAdapter.getPosition(clientDetails!!.firstname)
+            binding!!.spClientName.setSelection(clientPosition)
+
+            if (clientPosition >= 0) {
+                familyMemberList!!.clear();
+                families = clients!![clientPosition]!!.family_Details
+                for (i in 0 until families!!.size) {
+                    familyMemberList!!.add(families!![i]!!.firstname!!)
+                }
+                familyAdapter = ArrayAdapter(
+                    this@EditFireInsuranceActivity,
+                    R.layout.dropdown_item,
+                    familyMemberList!!
+                )
+            }
+        }
+        val companyPosition: Int = companyAdapter.getPosition(policy!!.company_name)
+        binding!!.spCompanyName.setSelection(companyPosition)
     }
 }

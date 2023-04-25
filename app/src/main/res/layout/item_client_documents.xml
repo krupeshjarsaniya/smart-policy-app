@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/_6sdp"
+    android:background="@drawable/bg_document"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="@dimen/_12sdp">
+
+    <ImageView
+        android:id="@+id/iv_document"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:src="@drawable/ic_pan" />
+
+    <TextView
+        android:id="@+id/tv_document"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_weight="1"
+        android:fontFamily="@font/poppins_medium"
+        android:text="PAN Card"
+        android:textColor="@color/black"
+        android:textSize="@dimen/normal" />
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        android:src="@drawable/ic_delete" />
+
+</LinearLayout>
+</layout>

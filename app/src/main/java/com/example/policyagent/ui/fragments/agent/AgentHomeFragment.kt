@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
+import com.example.policyagent.data.responses.agentdashboard.AgentDashBoardResponse
 import com.example.policyagent.databinding.FragmentAgentHomeBinding
 import com.example.policyagent.databinding.FragmentClientHomeBinding
 import com.example.policyagent.ui.activities.client.MyInsurancePortfolioActivity
@@ -16,6 +17,7 @@ import com.example.policyagent.ui.activities.client.PremiumCalendarActivity
 import com.example.policyagent.ui.adapters.client.HomeTopBannerAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.fragments.BaseFragment
+import com.example.policyagent.ui.listeners.AgentDashBoardListener
 import com.example.policyagent.ui.viewmodels.agent.AgentHomeViewModel
 import com.example.policyagent.ui.viewmodels.client.ClientHomeViewModel
 import com.example.policyagent.util.launchActivity
@@ -25,7 +27,7 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
-class AgentHomeFragment : BaseFragment(), KodeinAware {
+class AgentHomeFragment : BaseFragment(), KodeinAware, AgentDashBoardListener {
     override val kodein by kodein()
     private lateinit var viewModel: AgentHomeViewModel
     private val factory: MainViewModelFactory by instance()
@@ -40,13 +42,41 @@ class AgentHomeFragment : BaseFragment(), KodeinAware {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_agent_home, container, false)
-        viewModel = ViewModelProvider(this, factory).get(AgentHomeViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory)[AgentHomeViewModel::class.java]
+        viewModel.listener = this
+        viewModel.getAgentDashboard(requireContext())
         viewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer { user ->
             if (user != null) {
                 binding!!.tvUsername.text = "${user.firstname} ${user.lastname}"
             }
         })
         return binding!!.root
+    }
+
+    override fun onStarted() {
+        showProgress(true)
+    }
+
+    override fun onSuccess(data: AgentDashBoardResponse) {
+        hideProgress()
+        if(data.status!!){
+            binding!!.tvTotalClients.text = data.data!!.total_client
+            binding!!.tvTotalInsurance.text = data.data.total_insurance
+            binding!!.tvTotalCommission.text = "₹ "+data.data.total_commision
+            binding!!.tvDuePayment.text = "₹ "+data.data.due_payment
+        }
+    }
+
+    override fun onFailure(message: String) {
+        hideProgress()
+    }
+
+    override fun onError(errors: HashMap<String, Any>) {
+        hideProgress()
+    }
+
+    override fun onLogout(message: String) {
+        
     }
 
 }

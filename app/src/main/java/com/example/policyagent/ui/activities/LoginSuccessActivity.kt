@@ -63,15 +63,6 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
         viewModel!!.getCompanies(this)
     }
 
-    override fun onSuccessMember(member: MemberListResponse) {
-        val gson = Gson()
-        val json = gson.toJson(member)
-        viewModel!!.getPreference().setStringValue(AppConstants.MEMBERS, json)
-        AppConstants.members = member.data!!
-            finish()
-            launchActivity<ClientDashboardActivity> {}
-    }
-
     override fun onSuccessCompany(company: CompanyListResponse) {
         val gson = Gson()
         val json = gson.toJson(company)
@@ -84,6 +75,17 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
             launchActivity<ClientDashboardActivity> {}
         }
     }
+
+    override fun onSuccessMember(member: MemberListResponse) {
+        val gson = Gson()
+        val json = gson.toJson(member)
+        viewModel!!.getPreference().setStringValue(AppConstants.MEMBERS, json)
+        AppConstants.members = member.data!!
+            finish()
+            launchActivity<ClientDashboardActivity> {}
+    }
+
+
 
     override fun onFailure(message: String) {
 

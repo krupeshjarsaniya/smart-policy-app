@@ -52,6 +52,31 @@ class LoginSuccessViewModel (
         }
     }
 
+    fun getCompanies(mContext: Context){
+        listener?.onStarted()
+        Coroutines.main {
+            try {
+
+                val response = Gson().fromJson(repository.getCompanies(), CompanyListResponse::class.java)
+                if (response.status!!){
+                    if (response.data != null) {
+                        response.let {
+                            listener!!.onSuccessCompany(it)
+                            return@main
+                        }
+                    }}
+                listener!!.onFailure("Something Went Wrong")
+            }catch (e: ApiException){
+                listener?.onFailure(e.message!!)
+            }catch (e: NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (ex: Exception){
+                printLog("exp-->", ex.message.toString())
+                listener?.onFailure(ex.message!!)
+            }
+        }
+    }
+
     fun getMembers(mContext: Context){
         listener?.onStarted()
         Coroutines.main {
@@ -77,29 +102,5 @@ class LoginSuccessViewModel (
         }
     }
 
-    fun getCompanies(mContext: Context){
-        listener?.onStarted()
-        Coroutines.main {
-            try {
-
-                val response = Gson().fromJson(repository.getCompanies(), CompanyListResponse::class.java)
-                if (response.status!!){
-                    if (response.data != null) {
-                        response.let {
-                            listener!!.onSuccessCompany(it)
-                            return@main
-                        }
-                    }}
-                listener!!.onFailure("Something Went Wrong")
-            }catch (e: ApiException){
-                listener?.onFailure(e.message!!)
-            }catch (e: NoInternetException){
-                listener?.onFailure(e.message!!)
-            }catch (ex: Exception){
-                printLog("exp-->", ex.message.toString())
-                listener?.onFailure(ex.message!!)
-            }
-        }
-    }
 
 }

@@ -29,6 +29,7 @@ import com.example.policyagent.data.responses.companylist.CompanyListResponse
 import com.example.policyagent.databinding.ActivityAddCarInsuranceBinding
 import com.example.policyagent.ui.activities.BaseActivity
 import com.example.policyagent.ui.activities.LoginActivity
+import com.example.policyagent.ui.activities.client.ClientDashboardActivity
 import com.example.policyagent.ui.adapters.agent.UploadDocumentAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.listeners.AddCarInsuranceListener
@@ -79,29 +80,8 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         binding!!.appBar.ivBack.setOnClickListener {
             finish()
         }
-        val clientJson: String = viewModel!!.getPreference().getStringValue(AppConstants.CLIENTS)!!
-        val clientObj: ClientListResponse =
-            gson.fromJson(clientJson, ClientListResponse::class.java)
-        clients = clientObj.data
-        resources.getStringArray(R.array.clients)
-        for (i in 0 until clients!!.size) {
-            clientList!!.add(clients!![i]!!.firstname!!)
-        }
-        val clientAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
-        binding!!.spClientName.setAdapter(clientAdapter)
+        viewModel!!.getClients(this)
 
-
-        val companyJson: String =
-            viewModel!!.getPreference().getStringValue(AppConstants.COMPANIES)!!
-        val companyObj: CompanyListResponse =
-            gson.fromJson(companyJson, CompanyListResponse::class.java)
-
-        companies = companyObj.data//resources.getStringArray(R.array.companies)
-        for (i in 0 until companies!!.size) {
-            companyList!!.add(companies!![i]!!.name!!)
-        }
-        val companyAdapter = ArrayAdapter(this, R.layout.dropdown_item, companyList!!)
-        binding!!.spCompanyName.adapter = companyAdapter
 
         binding!!.spClientName.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -621,5 +601,44 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         if(message.contains("Unauthenticated")){
             launchLoginActivity<LoginActivity> {  }
         }
+    }
+
+    override fun onSuccessClient(client: ClientListResponse) {
+        val gson = Gson()
+        val json = gson.toJson(client)
+        viewModel!!.getPreference().setStringValue(AppConstants.CLIENTS, json)
+        AppConstants.clients = client.data!!
+        viewModel!!.getCompanies(this)
+    }
+
+    override fun onSuccessCompany(company: CompanyListResponse) {
+        hideProgress()
+        val gson = Gson()
+        val json = gson.toJson(company)
+        viewModel!!.getPreference().setStringValue(AppConstants.COMPANIES, json)
+        AppConstants.companies = company.data!!
+        val clientJson: String = viewModel!!.getPreference().getStringValue(AppConstants.CLIENTS)!!
+        val clientObj: ClientListResponse =
+            gson.fromJson(clientJson, ClientListResponse::class.java)
+        clients = clientObj.data
+        resources.getStringArray(R.array.clients)
+        for (i in 0 until clients!!.size) {
+            clientList!!.add(clients!![i]!!.firstname!!)
+        }
+        val clientAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
+        binding!!.spClientName.setAdapter(clientAdapter)
+
+
+        val companyJson: String =
+            viewModel!!.getPreference().getStringValue(AppConstants.COMPANIES)!!
+        val companyObj: CompanyListResponse =
+            gson.fromJson(companyJson, CompanyListResponse::class.java)
+
+        companies = companyObj.data//resources.getStringArray(R.array.companies)
+        for (i in 0 until companies!!.size) {
+            companyList!!.add(companies!![i]!!.name!!)
+        }
+        val companyAdapter = ArrayAdapter(this, R.layout.dropdown_item, companyList!!)
+        binding!!.spCompanyName.adapter = companyAdapter
     }
 }

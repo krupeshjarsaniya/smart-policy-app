@@ -302,10 +302,10 @@
     <string name="invalid_additional_rider">Enter Valid additional Rider</string>
     <string name="invalid_st_with_me">Enter Valid St With Me</string>
     <string name="invalid_no_of">Invalid No Of</string>
-    <string name="total_user">Total Users</string>
-    <string name="total_profit">Total Profit</string>
-    <string name="total_expenses">Total Expenses</string>
-    <string name="total_cost">Total Cost</string>
+    <string name="total_clients">Total Clients</string>
+    <string name="total_insurance">Total Insurance</string>
+    <string name="total_commission">Total Commission</string>
+    <string name="due_payment">Due Payment</string>
     <string name="commission">Commission</string>
     <string name="member_name">Member Name</string>
     <string name="calculate_commission">Calculate Commission</string>

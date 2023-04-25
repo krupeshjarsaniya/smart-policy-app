@@ -10,6 +10,8 @@ import com.example.policyagent.data.requests.editcarinsurance.EditCarInsurance
 import com.example.policyagent.data.requests.editfireinsurance.EditFireInsurance
 import com.example.policyagent.data.requests.editlifeinsurance.EditLifeInsurance
 import com.example.policyagent.data.responses.CommonResponse
+import com.example.policyagent.data.responses.clientlist.ClientListResponse
+import com.example.policyagent.data.responses.companylist.CompanyListResponse
 import com.example.policyagent.ui.listeners.AddCarInsuranceListener
 import com.example.policyagent.ui.listeners.AddFireInsuranceListener
 import com.example.policyagent.ui.listeners.AddLifeInsuranceListener
@@ -102,6 +104,56 @@ class EditCarInsuranceViewModel (
                         }
                     }
                 }
+            }catch (e: ApiException){
+                listener?.onFailure(e.message!!)
+            }catch (e: NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (ex: Exception){
+                printLog("exp-->", ex.message.toString())
+                listener?.onFailure(ex.message!!)
+            }
+        }
+    }
+
+    fun getClients(mContext: Context){
+        listener?.onStarted()
+        Coroutines.main {
+            try {
+
+                val response = Gson().fromJson(repository.getClients(), ClientListResponse::class.java)
+                if (response.status!!){
+                    if (response.data != null) {
+                        response.let {
+                            listener!!.onSuccessClient(it)
+                            return@main
+                        }
+                    }}
+                listener!!.onFailure("Something Went Wrong")
+            }catch (e: ApiException){
+                listener?.onFailure(e.message!!)
+            }catch (e: NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (ex: Exception){
+                printLog("exp-->", ex.message.toString())
+                listener?.onFailure(ex.message!!)
+            }
+        }
+    }
+
+    fun getCompanies(mContext: Context){
+        listener?.onStarted()
+        Coroutines.main {
+            try {
+
+                val response = Gson().fromJson(repository.getCompanies(), CompanyListResponse::class.java)
+                if (response.status!!){
+                    if (response.data != null) {
+                        response.let {
+                            listener!!.onSuccessCompany(it)
+                            return@main
+                        }
+                    }}
+                listener!!.onFailure("Something Went Wrong")
             }catch (e: ApiException){
                 listener?.onFailure(e.message!!)
             }catch (e: NoInternetException){

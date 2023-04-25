@@ -113,7 +113,7 @@
                         android:layout_weight="1">
 
                         <LinearLayout
-                            android:id="@+id/ll_total_users"
+                            android:id="@+id/ll_total_clients"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_12sdp"
@@ -129,19 +129,19 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="@string/total_user"
+                                android:text="@string/total_clients"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/small" />
+                                android:textSize="@dimen/_9sdp" />
 
                             <TextView
-                                android:id="@+id/tv_total_user"
+                                android:id="@+id/tv_total_clients"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="@dimen/_8sdp"
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="10000"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/medium" />
+                                android:textSize="@dimen/_12sdp" />
 
                            <!-- <LinearLayout
                                 android:layout_width="wrap_content"
@@ -173,7 +173,7 @@
                                     android:textSize="@dimen/extra_small" />
                             </LinearLayout>-->
                         </LinearLayout>
-                        <LinearLayout
+                        <!--<LinearLayout
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
@@ -203,7 +203,7 @@
                                     android:textSize="@dimen/normal" />
 
                             </LinearLayout>
-                        </LinearLayout>
+                        </LinearLayout>-->
                     </FrameLayout>
 
                     <FrameLayout
@@ -212,7 +212,7 @@
                         android:layout_weight="1">
 
                         <LinearLayout
-                            android:id="@+id/ll_total_profit"
+                            android:id="@+id/ll_total_insurance"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_12sdp"
@@ -228,22 +228,22 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="@string/total_profit"
+                                android:text="@string/total_insurance"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/small" />
+                                android:textSize="@dimen/_9sdp" />
 
                             <TextView
-                                android:id="@+id/tv_total_profit"
+                                android:id="@+id/tv_total_insurance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="@dimen/_8sdp"
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="12000"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/medium" />
+                                android:textSize="@dimen/_12sdp" />
 
                         </LinearLayout>
-                        <LinearLayout
+                        <!--<LinearLayout
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
@@ -273,7 +273,7 @@
                                     android:textSize="@dimen/normal" />
 
                             </LinearLayout>
-                        </LinearLayout>
+                        </LinearLayout>-->
                     </FrameLayout>
 
                 </LinearLayout>
@@ -290,12 +290,11 @@
                         android:layout_weight="1">
 
                         <LinearLayout
-                            android:id="@+id/ll_total_expenses"
+                            android:id="@+id/ll_total_commission"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_12sdp"
                             android:layout_marginEnd="@dimen/_12sdp"
-                            android:layout_weight="1"
                             android:background="@drawable/bg_expenses"
                             android:gravity="start"
                             android:orientation="vertical"
@@ -306,23 +305,23 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="@string/total_expenses"
+                                android:text="@string/total_commission"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/small" />
+                                android:textSize="@dimen/_9sdp" />
 
                             <TextView
-                                android:id="@+id/tv_total_expenses"
+                                android:id="@+id/tv_total_commission"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="@dimen/_8sdp"
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="$21451"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/medium" />
+                                android:textSize="@dimen/_12sdp" />
 
                         </LinearLayout>
 
-                        <LinearLayout
+                        <!--<LinearLayout
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
@@ -352,15 +351,15 @@
                                     android:textSize="@dimen/normal" />
 
                             </LinearLayout>
-                        </LinearLayout>
+                        </LinearLayout>-->
                     </FrameLayout>
 
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                        android:layout_weight="2">
                     <LinearLayout
-                        android:id="@+id/ll_total_cost"
+                        android:id="@+id/ll_due_payment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_12sdp"
@@ -376,22 +375,22 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="@string/total_cost"
+                            android:text="@string/due_payment"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/small" />
+                            android:textSize="@dimen/_9sdp" />
 
                         <TextView
-                            android:id="@+id/tv_total_cost"
+                            android:id="@+id/tv_due_payment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="@dimen/_8sdp"
                             android:fontFamily="@font/poppins_semibold"
                             android:text="$87564"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/medium" />
+                            android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
-                        <LinearLayout
+                        <!--<LinearLayout
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
                             android:layout_gravity="end"
@@ -421,7 +420,7 @@
                                     android:textSize="@dimen/normal" />
 
                             </LinearLayout>
-                        </LinearLayout>
+                        </LinearLayout>-->
                     </FrameLayout>
 
                 </LinearLayout>

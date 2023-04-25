@@ -183,7 +183,7 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware, PortfolioListe
         for(portfolio in portfolioList!!){
             policyList!!.add("${resources.getString(R.string.policy)} #${portfolio!!.id}")
         }
-        val policySpAdapter: ArrayAdapter<*> = ArrayAdapter<String?>(this, R.layout.spinner_item, policyList!!)
+        val policySpAdapter: ArrayAdapter<*> = ArrayAdapter<String?>(this, R.layout.dropdown_item, policyList!!)
         binding!!.spPolicy.adapter = policySpAdapter
         binding!!.spPolicy.onItemSelectedListener = object : OnItemSelectedListener{
             override fun onItemSelected(
@@ -194,9 +194,10 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware, PortfolioListe
             ) {
 
                 (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.white))
+                (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.primary_color))
+                (parent.getChildAt(0) as TextView).gravity = Gravity.CENTER
                 selectedId = if(position != 0) {
-                    binding!!.spPolicy.selectedItem.toString()
-                        .substring(8, binding!!.spPolicy.selectedItem.toString().length)
+                    binding!!.spPolicy.selectedItem.toString().substring(8, binding!!.spPolicy.selectedItem.toString().length)
                 }else {
                     binding!!.spPolicy.selectedItem.toString()
                 }

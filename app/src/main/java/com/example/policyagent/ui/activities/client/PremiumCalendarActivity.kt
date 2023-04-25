@@ -156,12 +156,10 @@ class PremiumCalendarActivity : BaseActivity(), KodeinAware, PremiumCalendarList
     private fun setChart(chart: ArrayList<Chart?>) {
         barEntriesArrayList = ArrayList()
         for(i in 0 until chart.size) {
-            Log.e("month_no",chart[i]!!.month_no!!.toString())
             barEntriesArrayList.add(BarEntry(
                 chart[i]!!.month_no!!.toFloat(),
                 chart[i]!!.value!!.toFloat()))
         }
-        Log.e("barEntriesArraylist",barEntriesArrayList.size.toString())
         binding!!.barChart.xAxis.valueFormatter = object : ValueFormatter() {
             override fun getAxisLabel(value: Float, axis: AxisBase): String {
                 var label = ""
@@ -198,7 +196,7 @@ class PremiumCalendarActivity : BaseActivity(), KodeinAware, PremiumCalendarList
         binding!!.barChart.xAxis.axisLineColor = Color.TRANSPARENT
         binding!!.barChart.axisLeft.axisLineColor = Color.TRANSPARENT
         binding!!.barChart.axisRight.isEnabled = false
-        binding!!.barChart.setScaleEnabled(false)
+        binding!!.barChart.setScaleEnabled(true)
         binding!!.barChart.setDrawGridBackground(false)
         binding!!.barChart.xAxis.setDrawGridLines(false)
         binding!!.barChart.axisLeft.setDrawGridLines(false)
@@ -365,7 +363,7 @@ class CustomBarChartRender(
             val path2: Path = roundRect(
                 RectF(
                     buffer.buffer[j], 50f, buffer.buffer[j + 2],
-                    buffer.buffer[j+3] - 35f
+                    buffer.buffer[j+3]
                 ), mRadius.toFloat(), mRadius.toFloat()
             )
             c.drawPath(path2, mRenderPaint)
@@ -373,7 +371,7 @@ class CustomBarChartRender(
                 val path: Path = roundRect(
                     RectF(
                         buffer.buffer[j], 50f, buffer.buffer[j + 2],
-                        buffer.buffer[j+3] - 35f
+                        buffer.buffer[j+3]
                     ), mRadius.toFloat(), mRadius.toFloat()
                 )
                 c.drawPath(path, mBarBorderPaint)
@@ -392,7 +390,7 @@ class CustomBarChartRender(
         val firstLeft = buffer.buffer[0]
         val firstRight = buffer.buffer[2]
         val firstWidth = Math.ceil((firstRight - firstLeft).toDouble()).toInt()
-        return Bitmap.createScaledBitmap(barImage!!, 90, 25, false)
+        return Bitmap.createScaledBitmap(barImage!!, 50, 15, false)
     }
 
     fun drawImage(c: Canvas, image: Bitmap?, x: Float, y: Float) {

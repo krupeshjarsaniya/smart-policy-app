@@ -8,8 +8,8 @@ import com.example.policyagent.data.responses.memberlist.MemberListResponse
 interface LoginSuccessListener {
     fun onStarted()
     fun onSuccessClient(client: ClientListResponse)
-    fun onSuccessMember(member: MemberListResponse)
     fun onSuccessCompany(company: CompanyListResponse)
+    fun onSuccessMember(member: MemberListResponse)
     fun onFailure(message: String)
     fun onError(errors: HashMap<String,Any>)
 }
