@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.MemberModel
 import com.example.policyagent.databinding.ItemMemberBinding
+import com.example.policyagent.ui.listeners.AddClientListener
 import com.example.policyagent.ui.listeners.AddHealthInsuranceListener
 import com.example.policyagent.ui.listeners.AddLifeInsuranceListener
 import java.util.*
@@ -236,6 +237,8 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
             if(listener is AddLifeInsuranceListener){
                 listener.onRemoveFamily(position)
             } else if(listener is AddHealthInsuranceListener){
+                listener.onRemoveFamily(position)
+            } else if(listener is AddClientListener){
                 listener.onRemoveFamily(position)
             }
         }

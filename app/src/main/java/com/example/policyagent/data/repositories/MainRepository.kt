@@ -77,6 +77,9 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
     suspend fun getHealthInsurance(map: HashMap<String, Any>): JsonObject {
         return apiRequest { api.getHealthInsurance(getHeaderMap(),map) }
     }
+    suspend fun getClientList(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getClientList(getHeaderMap(),map) }
+    }
 
     suspend fun getCarInsurance(map: HashMap<String, Any>): JsonObject {
         return apiRequest { api.getCarInsurance(getHeaderMap(),map) }
@@ -98,6 +101,10 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.getClientList(getHeaderMap()) }
     }
 
+    suspend fun deleteClient(id: String): JsonObject {
+        return apiRequest { api.deleteClient(getHeaderMap(),id) }
+    }
+
     suspend fun getMembers(): JsonObject {
         return apiRequest { api.getMemberList(getHeaderMap()) }
     }
@@ -106,8 +113,16 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.getCompanyList(getHeaderMap()) }
     }
 
+    suspend fun getState(): JsonObject {
+        return apiRequest { api.getStateList(getHeaderMap()) }
+    }
+
     suspend fun addLifeInsurance(map: HashMap<String, RequestBody>): JsonObject {
         return apiRequest { api.addLifeInsurance(getHeaderMap(),map) }
+    }
+
+    suspend fun addClient(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.addClient(getHeaderMap(),map) }
     }
 
     suspend fun addHealthInsurance(map: HashMap<String, RequestBody>): JsonObject {
@@ -152,6 +167,9 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
 
     suspend fun editLifeInsurance(map: HashMap<String, RequestBody>, id: String): JsonObject {
         return apiRequest { api.editLifeInsurance(getHeaderMap(),map,id) }
+    }
+    suspend fun editClient(map: HashMap<String, RequestBody>, id: String): JsonObject {
+        return apiRequest { api.editClient(getHeaderMap(),map,id) }
     }
 
     suspend fun editHealthInsurance(map: HashMap<String, RequestBody>, id: String): JsonObject {

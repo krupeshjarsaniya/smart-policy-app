@@ -122,6 +122,15 @@ class MainViewModelFactory(
             EditPolicyViewModel::class.java -> {
                 EditPolicyViewModel(repository) as T
             }
+            ClientListViewModel::class.java -> {
+                ClientListViewModel(repository) as T
+            }
+            AddClientViewModel::class.java -> {
+                AddClientViewModel(repository) as T
+            }
+            EditClientViewModel::class.java -> {
+                EditClientViewModel(repository) as T
+            }
             else -> {
                 SplashViewModel(repository) as T
             }

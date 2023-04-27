@@ -12,6 +12,7 @@ import com.example.policyagent.R
 import com.example.policyagent.data.responses.agentdashboard.AgentDashBoardResponse
 import com.example.policyagent.databinding.FragmentAgentHomeBinding
 import com.example.policyagent.databinding.FragmentClientHomeBinding
+import com.example.policyagent.ui.activities.agent.ClientListActivity
 import com.example.policyagent.ui.activities.client.MyInsurancePortfolioActivity
 import com.example.policyagent.ui.activities.client.PremiumCalendarActivity
 import com.example.policyagent.ui.adapters.client.HomeTopBannerAdapter
@@ -50,6 +51,11 @@ class AgentHomeFragment : BaseFragment(), KodeinAware, AgentDashBoardListener {
                 binding!!.tvUsername.text = "${user.firstname} ${user.lastname}"
             }
         })
+        binding!!.llTotalClients.setOnClickListener {
+            requireActivity().launchActivity<ClientListActivity> {
+
+            }
+        }
         return binding!!.root
     }
 

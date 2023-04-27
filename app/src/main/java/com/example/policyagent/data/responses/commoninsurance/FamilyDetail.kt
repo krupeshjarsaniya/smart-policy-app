@@ -23,4 +23,4 @@ data class FamilyDetail(
     val status: String? = "",
     val weight: String? = "",
     val pan_number: String? = "",
-): java.io.Serializable
+) : java.io.Serializable

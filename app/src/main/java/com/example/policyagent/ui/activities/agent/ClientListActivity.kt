@@ -5,49 +5,49 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver.OnScrollChangedListener
+import android.view.ViewTreeObserver
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.CommonResponse
-import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceData
-import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceListResponse
-import com.example.policyagent.databinding.ActivityLifeInsuranceListBinding
+import com.example.policyagent.data.responses.clientlist.ClientData
+import com.example.policyagent.data.responses.clientlist.ClientListResponse
+import com.example.policyagent.databinding.ActivityClientListBinding
 import com.example.policyagent.ui.activities.BaseActivity
 import com.example.policyagent.ui.activities.LoginActivity
-import com.example.policyagent.ui.adapters.agent.LifeInsuranceListAdapter
+import com.example.policyagent.ui.adapters.agent.ClientListAdapter
 import com.example.policyagent.ui.factory.MainViewModelFactory
-import com.example.policyagent.ui.listeners.LifeInsuranceListListener
-import com.example.policyagent.ui.viewmodels.agent.LifeInsuranceListViewModel
+import com.example.policyagent.ui.listeners.ClientListListener
+import com.example.policyagent.ui.viewmodels.agent.ClientListViewModel
 import com.example.policyagent.util.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceListListener {
+class ClientListActivity : BaseActivity(), KodeinAware, ClientListListener {
     override val kodein by kodein()
     private val factory: MainViewModelFactory by instance()
-    private var binding: ActivityLifeInsuranceListBinding? = null
-    private var viewModel: LifeInsuranceListViewModel? = null
-    var policyAdapter: LifeInsuranceListAdapter? = null
-    var policyList: ArrayList<LifeInsuranceData?>? = ArrayList()
+    private var binding: ActivityClientListBinding? = null
+    private var viewModel: ClientListViewModel? = null
+    var policyAdapter: ClientListAdapter? = null
+    var policyList: ArrayList<ClientData?>? = ArrayList()
     var page = 1
     var hasMore = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_life_insurance_list)
-        viewModel = ViewModelProvider(this, factory)[LifeInsuranceListViewModel::class.java]
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_client_list)
+        viewModel = ViewModelProvider(this, factory)[ClientListViewModel::class.java]
         viewModel!!.listener = this
-        binding!!.appBar.tvTitle.text = resources.getString(R.string.life_insurance)
+        binding!!.appBar.tvTitle.text = resources.getString(R.string.client)
         binding!!.appBar.ivBack.setOnClickListener {
             finish()
         }
         binding!!.appBar.btnAddPolicy.show()
         binding!!.appBar.btnAddPolicy.setOnClickListener {
-            launchActivity<AddLifeInsuranceActivity> { }
+            launchActivity<AddClientActivity> { }
         }
-        policyAdapter = LifeInsuranceListAdapter(this, this)
+        policyAdapter = ClientListAdapter(this, this)
         binding!!.rvPolicies.adapter = policyAdapter
 
 
@@ -66,7 +66,7 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         })
 
         binding!!.nestedScrollView.viewTreeObserver.addOnScrollChangedListener(
-            OnScrollChangedListener {
+            ViewTreeObserver.OnScrollChangedListener {
                 val view: View =
                     binding!!.nestedScrollView.getChildAt(binding!!.nestedScrollView.childCount - 1) as View
                 val diff: Int =
@@ -74,15 +74,15 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
                         .scrollY)
                 if (diff == 0 && hasMore) {
 
-                    viewModel!!.getLifeInsurance(this, page)
+                    viewModel!!.getClientList(this, page)
                 }
             })
 
-        binding!!.swipeRefreshLayout.setOnRefreshListener(OnRefreshListener {
+        binding!!.swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             binding!!.swipeRefreshLayout.isRefreshing = false
             policyList!!.clear()
             page = 1
-            viewModel!!.getLifeInsurance(this, page)
+            viewModel!!.getClientList(this, page)
         })
 
     }
@@ -92,19 +92,21 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         policyList!!.clear()
         Log.e("resume", "resume")
         page = 1
-        viewModel!!.getLifeInsurance(this, page)
+        viewModel!!.getClientList(this, page)
     }
 
     private fun filter(text: String) {
-        val filteredList: ArrayList<LifeInsuranceData?> = arrayListOf()
+        val filteredList: ArrayList<ClientData?> = arrayListOf()
 
         for (item in policyList!!) {
-            if (item!!.client_Personal_Details!!.firstname!!.toLowerCase()
+                if (item!!.firstname!!.toLowerCase()
                     .contains(text.toLowerCase())
-                || item.policy_number!!.toLowerCase().contains(text.toLowerCase())
-                || item.plan_name!!.toLowerCase().contains(text.toLowerCase())
-                || item.psd!!.toLowerCase().contains(text.toLowerCase())
-                || item.ped!!.toLowerCase().contains(text.toLowerCase())
+                || item.client_id!!.toLowerCase().contains(text.toLowerCase())
+                || item.pan_number!!.toLowerCase().contains(text.toLowerCase())
+                || item.gst!!.toLowerCase().contains(text.toLowerCase())
+                || item.password!!.toLowerCase().contains(text.toLowerCase())
+                || item.mobile!!.toLowerCase().contains(text.toLowerCase())
+                || item.status!!.toLowerCase().contains(text.toLowerCase())
             ) {
                 filteredList.add(item)
             }
@@ -119,10 +121,9 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
 
     override fun onStarted() {
         binding!!.loader.show()
-        //showProgress(true)
     }
 
-    override fun onSuccess(data: LifeInsuranceListResponse) {
+    override fun onSuccess(data: ClientListResponse) {
         page++
         hasMore = data.hasmore!!
         binding!!.loader.hide()
@@ -130,7 +131,6 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         policyAdapter!!.updateList(policyList!!)
         hideProgress()
     }
-
 
     override fun onFailure(message: String) {
         hideProgress()
@@ -145,14 +145,20 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         hideProgress()
     }
 
-    override fun onDelete(id: String, position: Int) {
-        viewModel!!.deleteLifeInsurance(this, id, position)
+    override fun onItemClick(data: ClientData) {
+        launchActivity<ClientDetailsActivity> {
+            this.putExtra(AppConstants.CLIENT, data)
+        }
     }
 
-    override fun onEdit(data: LifeInsuranceData) {
-        launchActivity<EditLifeInsuranceActivity> {
-            this.putExtra(AppConstants.LIFE_INSURANCE, data)
+    override fun onEdit(data: ClientData) {
+        launchActivity<EditClientActivity> {
+            this.putExtra(AppConstants.CLIENT, data)
         }
+    }
+
+    override fun onDelete(id: String, position: Int) {
+        viewModel!!.deleteClient(this, id, position)
     }
 
     override fun onSuccessDelete(data: CommonResponse, position: Int) {
@@ -160,12 +166,6 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         showToastMessage(data.message!!)
         policyList!!.removeAt(position)
         policyAdapter!!.updateList(policyList!!)
-    }
-
-    override fun onItemClick(data: LifeInsuranceData) {
-        launchActivity<LifeInsuranceDetailsActivity> {
-            this.putExtra(AppConstants.LIFE_INSURANCE, data)
-        }
     }
 
     override fun onLogout(message: String) {

@@ -20,7 +20,6 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.policyagent.BuildConfig
 import com.example.policyagent.R
@@ -394,22 +393,6 @@ fun printLog(s: String, toString: String) {
     }
 }
 
-/*fun openCustomWebIntent(mContext: Context, url: String) {
-    try {
-        var newUrl = url
-        if (!newUrl.startsWith("http")){
-            newUrl = "http://"+newUrl
-        }
-        val builder = CustomTabsIntent.Builder()
-        builder.setToolbarColor(ContextCompat.getColor(mContext, R.color.colorAccentNew))
-        val customTabsIntent = builder.build()
-        customTabsIntent.intent.setPackage("com.android.chrome")
-        customTabsIntent.launchUrl(mContext, Uri.parse(newUrl))
-        printLog("===newurl===",url)
-    }catch (ex:Exception){
-        ex.printStackTrace()
-    }
-}*/
 
 fun rateApp(mContext: Context) {
     try {
@@ -426,66 +409,13 @@ fun rateApp(mContext: Context) {
 }
 
 
-/*fun createDiectory(mContext: Context): String {
-    val path: String =
-        mContext.getExternalFilesDir(null)!!.absolutePath.toString() + AppConstants.APPDIRECTORY
-    // create a File object for the parent directory
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-    val wallpaperDirectory = File(path)
-    // have the object build the directory structure, if needed.
-    wallpaperDirectory.mkdirs()
-    // create a File object for the output file
-    val outputFile = File(wallpaperDirectory, "/photo_" + timeStamp + ".jpg.nomedia")
-    // now attach the OutputStream to the file object, instead of a String representation
-    try {
-        FileOutputStream(outputFile)
-    } catch (e: FileNotFoundException) {
-        e.printStackTrace()
-    }
-    Log.e("outputPAth : ", "  " + outputFile.path)
-    return outputFile.path
-}*/
+fun isValidMail(email: String): Boolean {
+    return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+}
 
-
-
-/*fun showAppErrorMessage(message: String, mContext: Context) {
-    if (mContext != null) {
-        try {
-            val dialog = Dialog(mContext)
-            // no tile for the dialog
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setContentView(R.layout.dialog_alert)
-            if (dialog.window != null) {
-                dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-                dialog.window!!.clearFlags(0)
-                val window: Window = dialog.window!!
-                val wlp: WindowManager.LayoutParams = window.attributes
-                wlp.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER
-                wlp.flags = wlp.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
-                wlp.dimAmount = 0.2f
-                window.attributes = wlp
-            }
-            dialog.setCancelable(false)
-            dialog.setCanceledOnTouchOutside(false)
-            dialog.tv_cancel.visibility = View.GONE
-            dialog.tv_yes.setText(android.R.string.ok)
-            dialog.tv_title.text = mContext.getString(R.string.alert)
-            dialog.tv_message.text = message
-            dialog.tv_yes.setOnClickListener(View.OnClickListener {
-                dialog.dismiss()
-            })
-            if (dialog != null && !dialog.isShowing) {
-                dialog.show()
-            }
-        }catch (ex:Exception){
-            ex.printStackTrace()
-        }
-    }
-}*/
-
-
-
-
+fun isValidMobile(phone: String): Boolean {
+    return Patterns.PHONE.matcher(phone).matches()
+}
 fun getResizedBitmap(image: Bitmap, maxSize: Int):Bitmap {
     var width = image.width
     var height = image.height

@@ -24,5 +24,7 @@ data class ClientData(
     val relationship: String? = "",
     val state: String? = "",
     val status: String? = "",
-    val weight: String? = ""
+    val weight: String? = "",
+    val pan_number: String? = "",
+    val gst: String? = "",
 ) : java.io.Serializable

@@ -160,6 +160,11 @@
         <item>Member 2</item>
     </string-array>
 
+    <string-array name="marital_status_list">
+        <item>Married</item>
+        <item>Unmarried</item>
+    </string-array>
+
     <string-array name="insurance_type">
         <item>All</item>
         <item>Life Insurance</item>
@@ -316,6 +321,23 @@
     <string name="invalid_sa">Enter Valid Sa</string>
     <string name="edit_policy">Edit Policy</string>
     <string name="total">Total</string>
+    <string name="client">Client</string>
+    <string name="client_id">Client Id</string>
+    <string name="pan_number">Pan No.</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="gst_number">GST No.</string>
+    <string name="invalid_first_name">Enter Valid First Name</string>
+    <string name="invalid_last_name">Enter Valid Last Name</string>
+    <string name="invalid_middle_name">Enter Valid Middle Name</string>
+    <string name="invalid_mobile">Enter Valid Mobile Number</string>
+    <string name="invalid_email">Enter Valid Email</string>
+    <string name="invalid_city">Enter Valid City</string>
+    <string name="invalid_birth_date">Enter Valid Birthdate</string>
+    <string name="invalid_age">Enter Valid Age</string>
+    <string name="invalid_height">Enter Valid Height</string>
+    <string name="invalid_weight">Enter Valid Weight</string>
+    <string name="invalid_pan_number">Enter Valid PAN</string>
+    <string name="invalid_address">Enter Valid Address</string>
 
 
 </resources>

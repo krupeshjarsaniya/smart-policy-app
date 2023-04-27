@@ -44,6 +44,9 @@ interface MyApi {
     @POST("agent/form/health-insurance")
     suspend fun getHealthInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
 
+    @POST("agent/client/index")
+    suspend fun getClientList(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
+
     @POST("agent/form/car-insurance")
     suspend fun getCarInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
 
@@ -56,15 +59,25 @@ interface MyApi {
     @GET("agent/client/show")
     suspend fun getClientList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
 
+    @GET("agent/client/delete/{id}")
+    suspend fun deleteClient(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
+
     @GET("client/other-insurance/getfamily")
     suspend fun getMemberList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
 
     @GET("agent/companylist")
     suspend fun getCompanyList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
 
+    @GET("agent/statelist")
+    suspend fun getStateList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+
     @Multipart
     @POST("agent/form/life-insurance/create")
     suspend fun addLifeInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/client/create")
+    suspend fun addClient(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
 
     @Multipart
     @POST("agent/form/health-insurance/create")
@@ -100,6 +113,10 @@ interface MyApi {
     @Multipart
     @POST("agent/form/life-insurance/update/{id}")
     suspend fun editLifeInsurance(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/client/update/{id}")
+    suspend fun editClient(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>,@Path("id") id:String): Response<JsonObject>
 
     @Multipart
     @POST("agent/form/health-insurance/update/{id}")

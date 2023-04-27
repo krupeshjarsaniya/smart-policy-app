@@ -28,6 +28,7 @@ import org.kodein.di.generic.instance
 
 class ClientDocumentFragment : BaseFragment(), KodeinAware, ClientDocumentListener, LoadDocumentListener {
     override val kodein by kodein()
+
     private lateinit var viewModel: ClientDocumentViewModel
     private val factory: MainViewModelFactory by instance()
     var binding: FragmentClientDocumentBinding? = null
@@ -36,7 +37,6 @@ class ClientDocumentFragment : BaseFragment(), KodeinAware, ClientDocumentListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
