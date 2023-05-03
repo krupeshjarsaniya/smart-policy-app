@@ -19,6 +19,7 @@ import com.example.policyagent.databinding.ItemMemberBinding
 import com.example.policyagent.ui.listeners.AddClientListener
 import com.example.policyagent.ui.listeners.AddHealthInsuranceListener
 import com.example.policyagent.ui.listeners.AddLifeInsuranceListener
+import com.example.policyagent.util.getAge
 import java.util.*
 
 
@@ -51,7 +52,7 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
         val relations = mContext.resources.getStringArray(R.array.relations)
         val relationsAdapter = ArrayAdapter(mContext, R.layout.dropdown_item, relations)
         mBinding!!.spRelationship.adapter = relationsAdapter
-
+        Log.e("familyid",familyList[position].family_id!!.toString())
         if(familyList[position].family_id!!.isNotEmpty()){
             mBinding!!.etFirstName.isFocusable = false
             mBinding!!.etFirstName.isFocusableInTouchMode = false
@@ -141,6 +142,8 @@ class MemberAdapter (private val mContext: Context, val listener: Any): Recycler
                             (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
                         mBinding!!.tvBirthDate.setText(date)
                         familyList[position].birth_date = date
+                        var age = getAge(year,monthOfYear,dayOfMonth)
+                        mBinding!!.etAge.setText(age.toString())
                     },
                     yy,
                     mm,

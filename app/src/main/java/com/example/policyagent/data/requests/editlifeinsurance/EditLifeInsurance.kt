@@ -14,6 +14,8 @@ data class EditLifeInsurance(
     var plan_name: String? = "",
     var payment_mode: String? = "",
     var premium_amount: String? = "",
+    var net_premium: String? = "",
+    var gst: String? = "",
     var maturity_amount: String? = "",
     var policy_term: String? = "",
     var maturity_benefit: String? = "",

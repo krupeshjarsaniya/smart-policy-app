@@ -10,6 +10,7 @@ class AppConstants {
         val CLIENT: String? = ""
         val PERSONAL_DETAILS: String? = "personal_details"
         val COMPANIES: String = "companies"
+        val GST: String = "gst"
         val MEMBERS: String = "members"
         val CLIENTS: String = "clients"
         var companies: ArrayList<CompanyData?>? = ArrayList()

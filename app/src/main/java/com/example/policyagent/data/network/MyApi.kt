@@ -59,6 +59,9 @@ interface MyApi {
     @GET("agent/client/show")
     suspend fun getClientList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
 
+    @GET("agent/policygst")
+    suspend fun getGst(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+
     @GET("agent/client/delete/{id}")
     suspend fun deleteClient(@HeaderMap map: HashMap<String, Any>,@Path("id") id:String): Response<JsonObject>
 

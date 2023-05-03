@@ -349,6 +349,70 @@
                     style="@style/TextInputOuterFieldStyle"
                     >
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_net_premium"
+                        style="@style/EditTextStyle"
+                        android:hint="@string/net_premium"
+                        android:inputType="number"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputOuterFieldStyle"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_gst"
+                        style="@style/EditTextStyle"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/gst"
+                        android:inputType="number"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@drawable/ic_mobile"
+                    app:tint="@color/black"
+                    android:visibility="gone"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="@dimen/_6sdp"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/TextInputOuterFieldStyle"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_maturity_amount"
                         style="@style/EditTextStyle"
                         android:hint="@string/maturity_amount"
@@ -383,7 +447,7 @@
                         android:id="@+id/et_policy_term"
                         style="@style/EditTextStyle"
                         android:hint="@string/policy_term"
-                        android:inputType="text"
+                        android:inputType="number"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -435,6 +499,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:visibility="gone"
                 android:layout_marginVertical="@dimen/_6sdp"
                 >
 

@@ -10,6 +10,7 @@ import com.example.policyagent.data.requests.edithealthinsurance.EditHealthInsur
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.ui.listeners.AddHealthInsuranceListener
 import com.example.policyagent.util.*
 import com.google.gson.Gson
@@ -57,9 +58,11 @@ class EditHealthInsuranceViewModel (
                 map["sum_insured"] = addHealthInsurance.sum_insured!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["total_sum_insured"] = addHealthInsurance.total_sum_insured!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["commision"] = addHealthInsurance.commision!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["net_premium"] = addHealthInsurance.net_premium.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["gst"] = addHealthInsurance.gst.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["familayRemove"] = addHealthInsurance.familayRemove!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["documentsRemoveDataArray"] = addHealthInsurance.documentsRemoveDataArray!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["document"] = addHealthInsurance.document!!.replace("\\","").toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["document"] = addHealthInsurance.document.replace("\\","").toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 for(i in 0 until addHealthInsurance.file.size) {
                     val uri = Uri.fromFile(addHealthInsurance.file[i])
                     var  imageBody = addHealthInsurance.file[i].asRequestBody(mContext.contentResolver.getType(uri)?.let {
@@ -146,6 +149,31 @@ class EditHealthInsuranceViewModel (
                     if (response.data != null) {
                         response.let {
                             listener!!.onSuccessCompany(it)
+                            return@main
+                        }
+                    }}
+                listener!!.onFailure("Something Went Wrong")
+            }catch (e: ApiException){
+                listener?.onFailure(e.message!!)
+            }catch (e: NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (ex: Exception){
+                printLog("exp-->", ex.message.toString())
+                listener?.onFailure(ex.message!!)
+            }
+        }
+    }
+
+    fun getGst(mContext: Context){
+        listener?.onStarted()
+        Coroutines.main {
+            try {
+
+                val response = Gson().fromJson(repository.getGst(), GstResponse::class.java)
+                if (response.status!!){
+                    if (response.data != null) {
+                        response.let {
+                            listener!!.onSuccessGst(it)
                             return@main
                         }
                     }}

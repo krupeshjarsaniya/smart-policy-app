@@ -20,6 +20,8 @@ data class HealthInsuranceData(
     val policy_number: String? = "",
     val policy_term: String? = "",
     val premium_amount: String? = "",
+    val net_premium: String? = "",
+    val gst: String? = "",
     val red: String? = "",
     val rsd: String? = "",
     val st: String? = "",

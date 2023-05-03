@@ -101,6 +101,10 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.getClientList(getHeaderMap()) }
     }
 
+    suspend fun getGst(): JsonObject {
+        return apiRequest { api.getGst(getHeaderMap()) }
+    }
+
     suspend fun deleteClient(id: String): JsonObject {
         return apiRequest { api.deleteClient(getHeaderMap(),id) }
     }

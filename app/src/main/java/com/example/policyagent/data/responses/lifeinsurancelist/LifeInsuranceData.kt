@@ -24,6 +24,8 @@ data class LifeInsuranceData(
     val pre_exist_decease: String? = "",
     val preminum_payment_term: String? = "",
     val premium_amount: String? = "",
+    val net_premium: String? = "",
+    val gst: String? = "",
     val psd: String? = "",
     val sum_insured: String? = "",
     val yearly_bonus_amount: String? = "",

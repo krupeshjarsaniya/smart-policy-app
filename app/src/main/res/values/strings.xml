@@ -63,7 +63,7 @@
     <string name="payment_mode">Payment Mode</string>
     <string name="premium_amount">Premium Amount</string>
     <string name="maturity_amount">Maturity Amount</string>
-    <string name="policy_term">Policy Term</string>
+    <string name="policy_term">Policy Term(Y)</string>
     <string name="premium_payment_term">Premium Payment Term</string>
     <string name="maturity_benefit">Maturity Benefit</string>
     <string name="maturity_term">Maturity Term</string>
@@ -77,8 +77,8 @@
     <string name="last_name">Last Name</string>
     <string name="birth_date">Birth Date</string>
     <string name="gender">Gender</string>
-    <string name="height">Height</string>
-    <string name="weight">Weight</string>
+    <string name="height">Height(Feet)</string>
+    <string name="weight">Weight(Kg)</string>
     <string name="age">Age</string>
     <string name="reletionship">Relationship</string>
     <string name="please_enter_valid_otp">Invalid Otp</string>
@@ -127,8 +127,8 @@
     <string name="rto">Registration Number/RTO</string>
     <string name="gvw">GVW</string>
     <string name="claim_details">Claim Details</string>
-    <string name="risk_start_date">Risk Start Date</string>
-    <string name="risk_end_date">Risk End Date</string>
+    <string name="risk_start_date">PSD (Policy Start Date)</string>
+    <string name="risk_end_date">PED (Policy End Date)</string>
     <string name="gst">GST</string>
     <string name="own_damage_premium">Own Damage Premium</string>
     <string name="tp_premium">TP Premium</string>
@@ -196,6 +196,10 @@
         <item>Quartely</item>
         <item>Monthly</item>
         <item>Single</item>
+        <item>2-YEAR</item>
+        <item>3-YEAR</item>
+        <item>4-YEAR</item>
+        <item>5-YEAR</item>
     </string-array>
 
     <string-array name="commission_type">
@@ -273,8 +277,8 @@
     <string name="st_with_me">ST With Me</string>
     <string name="net_amount">Net Amount</string>
     <string name="invalid_rto">Enter Valid Registration Number/RTO</string>
-    <string name="invalid_risk_start_date">Enter Valid Risk Start Date</string>
-    <string name="invalid_risk_end_date">Enter Valid Risk End Date</string>
+    <string name="invalid_risk_start_date">Enter Valid Policy Start Date</string>
+    <string name="invalid_risk_end_date">Enter Valid Policy End Date</string>
     <string name="invalid_idv">Enter Valid IDV</string>
     <string name="invalid_ncb">Enter Valid NCB</string>
     <string name="invalid_discount">Enter Valid Discount</string>
@@ -312,7 +316,7 @@
     <string name="total_commission">Total Commission</string>
     <string name="due_payment">Due Payment</string>
     <string name="commission">Commission</string>
-    <string name="member_name">Member Name</string>
+    <string name="member_name">Policy Holder</string>
     <string name="calculate_commission">Calculate Commission</string>
     <string name="policy_type">Policy Type</string>
     <string name="invalid_company_name">Enter Valid Company Name</string>

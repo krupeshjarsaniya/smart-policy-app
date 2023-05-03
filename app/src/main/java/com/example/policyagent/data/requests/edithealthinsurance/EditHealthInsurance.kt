@@ -24,6 +24,8 @@ data class EditHealthInsurance(
     var policy_file: File? = null,
     var family: String? = "",
     var document: String = "",
+    var net_premium: String = "",
+    var gst: String = "",
     var file: ArrayList<File> = ArrayList(),
     var familayRemove: String? = "",
     var documentsRemoveDataArray: String? = "",

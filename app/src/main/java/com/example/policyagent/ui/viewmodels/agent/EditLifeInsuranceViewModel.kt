@@ -60,6 +60,8 @@ class EditLifeInsuranceViewModel (
                 map["nominee_details"] = editLifeInsurance.nominee_details!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["additional_rider"] = editLifeInsurance.additional_rider!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["additional_rider"] = editLifeInsurance.additional_rider!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["net_premium"] = editLifeInsurance.net_premium!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["gst"] = editLifeInsurance.gst!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["familayRemove"] = editLifeInsurance.familayRemove!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["documentsRemoveDataArray"] = editLifeInsurance.documentsRemoveDataArray!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["document"] = editLifeInsurance.document!!.replace("\\","").toRequestBody("multipart/form-data".toMediaTypeOrNull())

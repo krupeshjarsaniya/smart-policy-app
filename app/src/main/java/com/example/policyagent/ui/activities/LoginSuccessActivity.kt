@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.data.responses.memberlist.MemberListResponse
 import com.example.policyagent.databinding.ActivityLoginSuccessBinding
 import com.example.policyagent.ui.activities.agent.AgentDashboardActivity
@@ -45,7 +46,7 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
             }
         },1000)*/
         if (userType == "AGENT") {
-            viewModel!!.getClients(this)
+            viewModel!!.getGst(this)
         } else {
             viewModel!!.getMembers(this)
         }
@@ -61,6 +62,10 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
         viewModel!!.getPreference().setStringValue(AppConstants.CLIENTS, json)
         AppConstants.clients = client.data!!
         viewModel!!.getCompanies(this)
+    }
+
+    override fun onSuccessGst(client: GstResponse) {
+        viewModel!!.getPreference().setStringValue(AppConstants.GST, client.data!!.gst.toString()+"%")
     }
 
     override fun onSuccessCompany(company: CompanyListResponse) {

@@ -10,6 +10,7 @@ import com.example.policyagent.data.requests.addlifeinsurance.AddLifeInsurance
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.ui.listeners.AddLifeInsuranceListener
 import com.example.policyagent.util.*
 import com.google.gson.Gson
@@ -60,6 +61,8 @@ class AddLifeInsuranceViewModel (
                 map["maturity_term"] = addLifeInsurance.maturity_term!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["yearly_bonus_amount"] = addLifeInsurance.yearly_bonus_amount!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["commision"] = addLifeInsurance.commision!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["net_premium"] = addLifeInsurance.net_premium!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["gst"] = addLifeInsurance.gst!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["nominee_details"] = addLifeInsurance.nominee_details!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["additional_rider"] = addLifeInsurance.additional_rider!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["document"] = addLifeInsurance.document.replace("\\","").toRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -148,6 +151,31 @@ class AddLifeInsuranceViewModel (
                     if (response.data != null) {
                         response.let {
                             listener!!.onSuccessCompany(it)
+                            return@main
+                        }
+                    }}
+                listener!!.onFailure("Something Went Wrong")
+            }catch (e: ApiException){
+                listener?.onFailure(e.message!!)
+            }catch (e: NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (ex: Exception){
+                printLog("exp-->", ex.message.toString())
+                listener?.onFailure(ex.message!!)
+            }
+        }
+    }
+
+    fun getGst(mContext: Context){
+        listener?.onStarted()
+        Coroutines.main {
+            try {
+
+                val response = Gson().fromJson(repository.getGst(), GstResponse::class.java)
+                if (response.status!!){
+                    if (response.data != null) {
+                        response.let {
+                            listener!!.onSuccessGst(it)
                             return@main
                         }
                     }}

@@ -3,6 +3,7 @@ package com.example.policyagent.ui.listeners
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.gst.GstResponse
 
 interface AddHealthInsuranceListener {
     fun onStarted()
@@ -13,5 +14,6 @@ interface AddHealthInsuranceListener {
     fun onRemoveFamily(position: Int)
     fun onError(errors: HashMap<String,Any>)
     fun onLogout(message: String)
+    fun onSuccessGst(gst: GstResponse)
 
 }

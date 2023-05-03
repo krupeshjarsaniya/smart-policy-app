@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.text.*
+import android.text.format.DateFormat
 import android.util.Base64
 import android.util.Base64OutputStream
 import android.util.Log
@@ -29,9 +30,13 @@ import java.io.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.math.abs
+import kotlin.math.ceil
 
 
 fun Context.toast(message: String) {
@@ -435,6 +440,22 @@ fun getResizedBitmap(image: Bitmap, maxSize: Int):Bitmap {
 
 fun getLocationMode(context: Context):Int {
     return Settings.Secure.getInt(context.contentResolver, Settings.Secure.LOCATION_MODE)
+}
+fun getAge(year: Int, month: Int, day: Int): Int {
+    //calculating age from dob
+    val dob = Calendar.getInstance()
+    val today = Calendar.getInstance()
+    dob[year, month] = day
+    var age = today[Calendar.YEAR] - dob[Calendar.YEAR]
+    if (today[Calendar.DAY_OF_YEAR] < dob[Calendar.DAY_OF_YEAR]) {
+        age--
+    }
+    return age
+}
+
+fun dateDifference(startDate: Date, endDate: Date): Int {
+    var year = abs((startDate.time - endDate.time) / 86400000 / 365)
+    return ceil(year.toDouble()).toInt()
 }
 
 fun strinToBitmap(str: String):Bitmap{

@@ -23,6 +23,8 @@ data class AddLifeInsurance(
     var commision: String? = "",
     var nominee_details: String? = "",
     var additional_rider: String? = "",
+    var gst: String? = "",
+    var net_premium: String? = "",
     var policy_file: File? = null,
     var family: String? = "",
     var document: String = "",

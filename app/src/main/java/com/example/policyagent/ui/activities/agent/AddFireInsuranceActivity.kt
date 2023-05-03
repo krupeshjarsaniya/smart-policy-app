@@ -97,7 +97,7 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 addFireInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
-                familyMemberList!!.add("Select")
+                familyMemberList!!.add("Self")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!!)
                 }

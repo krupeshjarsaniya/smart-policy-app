@@ -24,5 +24,7 @@ data class AddHealthInsurance(
     var policy_file: File? = null,
     var family: String? = "",
     var document: String = "",
+    var gst: String = "",
+    var net_premium: String = "",
     var file: ArrayList<File> = ArrayList(),
     ) : java.io.Serializable
