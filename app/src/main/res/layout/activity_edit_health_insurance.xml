@@ -60,6 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:visibility="gone"
                     android:layout_marginVertical="@dimen/_6sdp"
                     >
 
@@ -434,6 +435,38 @@
                         style="@style/TextInputOuterFieldStyle"
                         >
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_total_net_premium"
+                            style="@style/EditTextStyle"
+                            android:hint="@string/total_net_premium"
+                            android:inputType="number"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextInputOuterFieldStyle"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_policy_term"
                             style="@style/EditTextStyle"
                             android:hint="@string/policy_term"
@@ -701,21 +734,29 @@
                         android:textSize="@dimen/normal"
                         />
 
-                    <TextView
-                        android:id="@+id/tv_add_member"
+                    <Spinner
+                        android:id="@+id/sp_new_member"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_add_member"
-                        android:padding="@dimen/_8sdp"
-                        android:text=   "@string/add_member"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="@color/primary_color"
-                        android:textSize="@dimen/normal"
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/bg_edit_text"
+                        android:paddingHorizontal="@dimen/_8sdp"
                         />
 
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_add_member"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_add_member"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@string/add_member"
+                    android:gravity="end"
+                    android:layout_gravity="end"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/primary_color"
+                    android:textSize="@dimen/normal"
+                    />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_family"

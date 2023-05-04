@@ -28,6 +28,7 @@ import com.example.policyagent.data.responses.commoninsurance.FamilyDetail
 import com.example.policyagent.data.responses.companylist.CompanyData
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
 import com.example.policyagent.data.responses.fireinsurancelist.FireInsuranceData
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.data.responses.wcinsurancelist.WcInsuranceData
 import com.example.policyagent.databinding.ActivityAddWcInsuranceBinding
 import com.example.policyagent.databinding.ActivityEditFireInsuranceBinding
@@ -113,21 +114,26 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
 
         binding!!.etNoOf.setText(policy!!.no_of)
 
-        binding!!.etPremiumAmount.setText(policy!!.premium_amount)
+        addWcInsurance!!.gst = policy!!.gst!!
 
-        binding!!.etNetAmount.setText(policy!!.net_preminum)
+        //binding!!.etPremiumAmount.setText(policy!!.premium_amount)
 
-        binding!!.etGst.setText(policy!!.gst)
+        binding!!.etNetAmount.setText(policy!!.premium_amount)
+
+        binding!!.etGst.setText(policy!!.gst+"%")
 
         binding!!.etTotalPremium.setText(policy!!.total_premium)
-
-
 
         binding!!.etCommission.setText(policy!!.commision)
 
         if(policy!!.commision!!.isNotEmpty() && policy!!.premium_amount!!.isNotEmpty()){
             var commission = policy!!.commision!!.toDouble() * policy!!.premium_amount!!.toDouble() / 100
             binding!!.etViewCommision.setText(String.format("%.2f",commission))
+        }
+
+        if(policy!!.gst!!.isNotEmpty() && policy!!.premium_amount!!.isNotEmpty()){
+            var commission = policy!!.premium_amount!!.toDouble() + (policy!!.gst!!.toDouble() * policy!!.premium_amount!!.toDouble() / 100)
+            binding!!.etTotalPremium.setText(String.format("%.2f",commission))
         }
 
 
@@ -161,19 +167,19 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 addWcInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
-                familyMemberList!!.add("select")
-                for (i in 0 until families!!.size) {
-                    familyMemberList!!.add(families!![i]!!.firstname!!)
-                }
+                familyMemberList!!.add("Self")
                 familyAdapter = ArrayAdapter(
                     this@EditWcInsuranceActivity,
                     R.layout.dropdown_item,
                     familyMemberList!!
                 )
                 binding!!.spFamilyMember.adapter = familyAdapter
-                if (policy!!.member_name != "") {
-                    val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
-                    binding!!.spFamilyMember.setSelection(memberPosition)
+                for (i in 0 until families!!.size) {
+                    familyMemberList!!.add(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
+                    if (policy!!.member_name == families!![i]!!.firstname) {
+                        val memberPosition: Int = familyAdapter!!.getPosition(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
+                        binding!!.spFamilyMember.setSelection(memberPosition)
+                    }
                 }
             }
 
@@ -301,20 +307,57 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (binding!!.etPremiumAmount.editableText.toString()
-                        .isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()
-                ) {
-                    var commission = binding!!.etPremiumAmount.editableText.toString()
+                if(binding!!.etNetAmount.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
+                    var commission = binding!!.etNetAmount.editableText.toString()
                         .toDouble() * binding!!.etCommission.editableText.toString()
                         .toDouble() / 100
-                    binding!!.etViewCommision.setText(String.format("%.2f", commission))
-                } else {
+                    binding!!.etViewCommision.setText(String.format("%.2f",commission))
+                } else{
                     binding!!.etViewCommision.setText("0.00")
                 }
             }
         })
 
-        binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
+        binding!!.etNetAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var netPremium: Double? = 0.0
+                var totalPremium: Double? = 0.0
+                var gst: Double? = 0.0
+                var commission: Double? = 0.0
+                var viewCommission: Double? = 0.0
+                gst = if(binding!!.etGst.editableText.toString().isNotEmpty()){
+                    addWcInsurance!!.gst!!.toDouble()
+                } else{
+                    0.0
+                }
+                netPremium = if(binding!!.etNetAmount.editableText.toString().isNotEmpty()){
+                    binding!!.etNetAmount.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                commission = if(binding!!.etCommission.editableText.toString().isNotEmpty()){
+                    binding!!.etCommission.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                viewCommission = netPremium
+                    .toDouble() * commission
+                    .toDouble() / 100
+                binding!!.etViewCommision.setText(String.format("%.2f",viewCommission))
+                totalPremium = netPremium + (netPremium * gst / 100)
+                binding!!.etTotalPremium.setText(totalPremium.toString())
+            }
+        })
+
+        /*binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -336,7 +379,7 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 }
             }
 
-        })
+        })*/
 
         binding!!.btnSave.setOnClickListener {
             var sendFiles: java.util.ArrayList<File>? = java.util.ArrayList()
@@ -381,13 +424,13 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 callApi -= 1
                 binding!!.etNoOf.error = resources.getString(R.string.invalid_no_of)
             }
-            if (binding!!.etGst.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etGst.editableText.toString().isNotEmpty()) {
                 callApi += 1
                 addWcInsurance!!.gst = binding!!.etGst.editableText.toString()
             } else {
                 callApi -= 1
                 binding!!.etGst.error = resources.getString(R.string.invalid_gst)
-            }
+            }*/
             if (binding!!.etCommission.editableText.toString().isNotEmpty()) {
                 callApi += 1
                 addWcInsurance!!.commision = binding!!.etCommission.editableText.toString()
@@ -416,21 +459,20 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 callApi -= 1
                 binding!!.etPolicyNumber.error = resources.getString(R.string.invalid_policy_number)
             }
-            if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
                 callApi += 1
                 addWcInsurance!!.premium_amount =
                     binding!!.etPremiumAmount.editableText.toString()
             } else {
                 callApi -= 1
-                binding!!.etPremiumAmount.error =
-                    resources.getString(R.string.invalid_premium_amount)
-            }
+                binding!!.etPremiumAmount.error = resources.getString(R.string.invalid_premium_amount)
+            }*/
             if (binding!!.etNetAmount.editableText.toString().isNotEmpty()) {
                 callApi += 1
                 addWcInsurance!!.net_preminum = binding!!.etNetAmount.editableText.toString()
             } else {
                 callApi -= 1
-                binding!!.etNetAmount.error = resources.getString(R.string.invalid_net_amount)
+                binding!!.etNetAmount.error = resources.getString(R.string.invalid_net_premium)
             }
             if (binding!!.etTotalPremium.editableText.toString().isNotEmpty()) {
                 callApi += 1
@@ -446,7 +488,7 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
             }
 
             var commaseparatedlistD = strD.toString()
-            if (commaseparatedlistD.length > 0) commaseparatedlistD = commaseparatedlistD.substring(
+            if (commaseparatedlistD.isNotEmpty()) commaseparatedlistD = commaseparatedlistD.substring(
                 0, commaseparatedlistD.length - 1
             )
 
@@ -454,7 +496,7 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
             addWcInsurance!!.documentsRemoveDataArray = removeD
             addWcInsurance!!.document = docJson.toString()
             addWcInsurance!!.file = sendFiles!!
-            if (callApi >= 11) {
+            if (callApi >= 9) {
                 viewModel!!.editWcInsurance(addWcInsurance!!, policy!!.id!!.toString(),this)
             } else {
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -535,6 +577,10 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         }
     }
 
+    override fun onSuccessGst(gst: GstResponse) {
+
+    }
+
     override fun onSuccessClient(client: ClientListResponse) {
         val gson = Gson()
         val json = gson.toJson(client)
@@ -555,10 +601,10 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         clients = clientObj.data
         resources.getStringArray(R.array.clients)
         for (i in 0 until clients!!.size) {
-            clientList!!.add(clients!![i]!!.firstname!!)
+            clientList!!.add(clients!![i]!!.firstname!! + " " + clients!![i]!!.lastname!!)
         }
         val clientAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
-        binding!!.spClientName.setAdapter(clientAdapter)
+        binding!!.spClientName.adapter = clientAdapter
 
 
         val companyJson: String =
@@ -574,7 +620,7 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         binding!!.spCompanyName.adapter = companyAdapter
 
         if (clientDetails!!.firstname!!.isNotEmpty()) {
-            val clientPosition: Int = clientAdapter.getPosition(clientDetails!!.firstname)
+            val clientPosition: Int = clientAdapter.getPosition(clientDetails!!.firstname + " " + clientDetails!!.lastname)
             binding!!.spClientName.setSelection(clientPosition)
 
             if (clientPosition >= 0) {

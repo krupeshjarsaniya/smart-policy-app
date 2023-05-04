@@ -22,6 +22,7 @@ import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.commoninsurance.FamilyDetail
 import com.example.policyagent.data.responses.companylist.CompanyData
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.databinding.ActivityAddWcInsuranceBinding
 import com.example.policyagent.ui.activities.BaseActivity
 import com.example.policyagent.ui.activities.LoginActivity
@@ -40,6 +41,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -65,12 +67,25 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
     var companies: ArrayList<CompanyData?>? = ArrayList()
     var clientList: ArrayList<String>? = ArrayList()
     var clients: ArrayList<ClientData?>? = ArrayList()
+    var selectedClient: ClientData? = null
+    var currentDate = Calendar.getInstance().time
+    var aYearAfter = Calendar.getInstance()
+    var df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_wc_insurance)
         viewModel = ViewModelProvider(this, factory)[AddWcInsuranceViewModel::class.java]
         viewModel!!.listener = this
         viewModel!!.getClients(this)
+
+        var formattedDate = df.format(currentDate)
+
+        aYearAfter.add(Calendar.YEAR, 1)
+        var yearFormattedDate = df.format(aYearAfter.time)
+
+        binding!!.tvStartDate.setText(formattedDate)
+        binding!!.tvEndDate.setText(yearFormattedDate)
 
         binding!!.appBar.tvTitle.text = resources.getString(R.string.wc_insurance)
         documentAdapter = UploadDocumentAdapter(this, this)
@@ -96,7 +111,7 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 families = clients!![position]!!.family_Details
                 familyMemberList!!.add("Self")
                 for (i in 0 until families!!.size) {
-                    familyMemberList!!.add(families!![i]!!.firstname!!)
+                    familyMemberList!!.add(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
                 }
                 val familyAdapter = ArrayAdapter(
                     this@AddWcInsuranceActivity,
@@ -119,7 +134,7 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 id: Long
             ) {
                 if(position != 0) {
-                    addWcInsurance!!.member_id = families!![position]!!.id!!.toString()
+                    addWcInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
                 } else{
                     addWcInsurance!!.member_id = ""
                 }
@@ -143,7 +158,7 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
-        
+
 
 
         binding!!.tvStartDate.setOnClickListener {
@@ -230,8 +245,8 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if(binding!!.etPremiumAmount.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
-                    var commission = binding!!.etPremiumAmount.editableText.toString()
+                if(binding!!.etNetAmount.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
+                    var commission = binding!!.etNetAmount.editableText.toString()
                         .toDouble() * binding!!.etCommission.editableText.toString()
                         .toDouble() / 100
                     binding!!.etViewCommision.setText(String.format("%.2f",commission))
@@ -241,7 +256,46 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
             }
         })
 
-        binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
+        binding!!.etNetAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var netPremium: Double? = 0.0
+                var totalPremium: Double? = 0.0
+                var gst: Double? = 0.0
+                var commission: Double? = 0.0
+                var viewCommission: Double? = 0.0
+                gst = if(binding!!.etGst.editableText.toString().isNotEmpty()){
+                    addWcInsurance!!.gst!!.toDouble()
+                } else{
+                    0.0
+                }
+                netPremium = if(binding!!.etNetAmount.editableText.toString().isNotEmpty()){
+                    binding!!.etNetAmount.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                commission = if(binding!!.etCommission.editableText.toString().isNotEmpty()){
+                    binding!!.etCommission.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                viewCommission = netPremium
+                    .toDouble() * commission
+                    .toDouble() / 100
+                binding!!.etViewCommision.setText(String.format("%.2f",viewCommission))
+                totalPremium = netPremium + (netPremium * gst / 100)
+                binding!!.etTotalPremium.setText(totalPremium.toString())
+            }
+        })
+
+        /*binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -261,7 +315,7 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 }
             }
 
-        })
+        })*/
 
         binding!!.btnSave.setOnClickListener {
             familyJson!!.clear()
@@ -304,13 +358,13 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 callApi-=1
                 binding!!.etNoOf.error = resources.getString(R.string.invalid_no_of)
             }
-            if (binding!!.etGst.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etGst.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addWcInsurance!!.gst = binding!!.etGst.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etGst.error = resources.getString(R.string.invalid_gst)
-            }
+            }*/
             if (binding!!.etCommission.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addWcInsurance!!.commision = binding!!.etCommission.editableText.toString()
@@ -339,20 +393,20 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 callApi-=1
                 binding!!.etPolicyNumber.error = resources.getString(R.string.invalid_policy_number)
             }
-            if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addWcInsurance!!.premium_amount =
                     binding!!.etPremiumAmount.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPremiumAmount.error = resources.getString(R.string.invalid_premium_amount)
-            }
+            }*/
             if (binding!!.etNetAmount.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addWcInsurance!!.net_preminum = binding!!.etNetAmount.editableText.toString()
             } else {
                 callApi-=1
-                binding!!.etNetAmount.error = resources.getString(R.string.invalid_net_amount)
+                binding!!.etNetAmount.error = resources.getString(R.string.invalid_net_premium)
             }
             if (binding!!.etTotalPremium.editableText.toString().isNotEmpty()) {
                 callApi+=1
@@ -365,7 +419,7 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
 
             addWcInsurance!!.document = docJson.toString()
             addWcInsurance!!.file = fileList
-            if(callApi >= 11) {
+            if(callApi >= 9) {
                 viewModel!!.addWcInsurance(addWcInsurance!!, this)
             } else{
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -443,12 +497,22 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
         }
     }
 
+    override fun onSuccessGst(gst: GstResponse) {
+        if(gst.status!!) {
+            addWcInsurance!!.gst = gst.data!!.gst.toString()
+            binding!!.etGst.setText("${gst.data!!.gst} %")
+        } else{
+            binding!!.etGst.setText("0%")
+        }
+        viewModel!!.getCompanies(this)
+    }
+
     override fun onSuccessClient(client: ClientListResponse) {
         val gson = Gson()
         val json = gson.toJson(client)
         viewModel!!.getPreference().setStringValue(AppConstants.CLIENTS, json)
         AppConstants.clients = client.data!!
-        viewModel!!.getCompanies(this)
+        viewModel!!.getGst(this)
     }
 
     override fun onSuccessCompany(company: CompanyListResponse) {
@@ -463,7 +527,7 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
         clients = clientObj.data
         resources.getStringArray(R.array.clients)
         for (i in 0 until clients!!.size) {
-            clientList!!.add(clients!![i]!!.firstname!!)
+            clientList!!.add(clients!![i]!!.firstname!! + " "+ clients!![i]!!.lastname!!)
         }
         val clientAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
         binding!!.spClientName.setAdapter(clientAdapter)

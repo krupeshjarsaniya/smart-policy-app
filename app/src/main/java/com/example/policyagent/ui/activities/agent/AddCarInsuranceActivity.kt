@@ -26,6 +26,7 @@ import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.commoninsurance.FamilyDetail
 import com.example.policyagent.data.responses.companylist.CompanyData
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.databinding.ActivityAddCarInsuranceBinding
 import com.example.policyagent.ui.activities.BaseActivity
 import com.example.policyagent.ui.activities.LoginActivity
@@ -42,6 +43,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -67,6 +69,9 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
     var families: ArrayList<FamilyDetail?>? = ArrayList()
     var clientList: ArrayList<String>? = ArrayList()
     var clients: ArrayList<ClientData?>? = ArrayList()
+    var currentDate = Calendar.getInstance().time
+    var aYearAfter = Calendar.getInstance()
+    var df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +79,15 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_car_insurance)
         viewModel = ViewModelProvider(this, factory)[AddCarInsuranceViewModel::class.java]
         viewModel!!.listener = this
+
+        var formattedDate = df.format(currentDate)
+
+        aYearAfter.add(Calendar.YEAR, 1)
+        var yearFormattedDate = df.format(aYearAfter.time)
+
+        binding!!.tvStartDate.setText(formattedDate)
+        binding!!.tvEndDate.setText(yearFormattedDate)
+
         binding!!.appBar.tvTitle.text = resources.getString(R.string.car_insurance)
         documentAdapter = UploadDocumentAdapter(this, this)
         binding!!.rvDocument.adapter = documentAdapter
@@ -96,7 +110,7 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 families = clients!![position]!!.family_Details
                 familyMemberList!!.add("Self")
                 for (i in 0 until families!!.size) {
-                    familyMemberList!!.add(families!![i]!!.firstname!!)
+                    familyMemberList!!.add(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
                 }
                 val familyAdapter = ArrayAdapter(
                     this@AddCarInsuranceActivity,
@@ -119,7 +133,7 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 id: Long
             ) {
                 if(position != 0) {
-                    addCarInsurance!!.member_id = families!![position]!!.id!!.toString()
+                    addCarInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
                 } else{
                     addCarInsurance!!.member_id = ""
                 }
@@ -158,6 +172,29 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 id: Long
             ) {
                 addCarInsurance!!.insurance_type = binding!!.spInsuranceType.selectedItem.toString().toUpperCase()
+                if(addCarInsurance!!.insurance_type == "LIABILITY"){
+                    binding!!.etIdv.setText("")
+                    binding!!.etNcb.setText("")
+                    binding!!.etDtc.setText("")
+                    binding!!.etClaimDetails.setText("")
+                    binding!!.etOwnDamagePremium.setText("")
+                    binding!!.rlIdv.hide()
+                    binding!!.rlNcb.hide()
+                    binding!!.rlDiscount.hide()
+                    binding!!.rlClaimDetails.hide()
+                    binding!!.rlOwnDamagePremium.hide()
+                    binding!!.spCalculateCommission.hide()
+                    addCarInsurance!!.premium_type = "NET-PREMIUM"
+                    binding!!.etNetPremium.setText(binding!!.etTpPremium.editableText.toString())
+                    checkCommision()
+                } else{
+                    binding!!.rlIdv.show()
+                    binding!!.rlNcb.show()
+                    binding!!.rlDiscount.show()
+                    binding!!.rlClaimDetails.show()
+                    binding!!.rlOwnDamagePremium.show()
+                    binding!!.spCalculateCommission.show()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -318,6 +355,11 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
             }
 
             override fun afterTextChanged(s: Editable?) {
+                if(binding!!.etOwnDamagePremium.editableText.toString().isNotEmpty() && binding!!.etTpPremium.editableText.toString().isNotEmpty()) {
+                    var netPremium = binding!!.etOwnDamagePremium.editableText.toString()
+                        .toDouble() + binding!!.etTpPremium.editableText.toString().toDouble()
+                    binding!!.etNetPremium.setText(netPremium.toString())
+                }
                 checkCommision()
             }
         })
@@ -332,6 +374,11 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
             }
 
             override fun afterTextChanged(s: Editable?) {
+                if(binding!!.etOwnDamagePremium.editableText.toString().isNotEmpty() && binding!!.etTpPremium.editableText.toString().isNotEmpty()) {
+                    var netPremium = binding!!.etOwnDamagePremium.editableText.toString()
+                        .toDouble() + binding!!.etTpPremium.editableText.toString().toDouble()
+                    binding!!.etNetPremium.setText(netPremium.toString())
+                }
                checkCommision()
             }
         })
@@ -346,6 +393,21 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
             }
 
             override fun afterTextChanged(s: Editable?) {
+                var netPremium: Double? = 0.0
+                var totalPremium: Double? = 0.0
+                var gst: Double? = 0.0
+                gst = if(binding!!.etGst.editableText.toString().isNotEmpty()){
+                    addCarInsurance!!.gst!!.toDouble()
+                } else{
+                    0.0
+                }
+                netPremium = if(binding!!.etNetPremium.editableText.toString().isNotEmpty()){
+                    binding!!.etNetPremium.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                totalPremium = netPremium + (netPremium * gst / 100)
+                binding!!.etTotalPremium.setText(totalPremium.toString())
                 checkCommision()
             }
         })
@@ -390,27 +452,27 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 callApi-=1
                 binding!!.tvEndDate.error = resources.getString(R.string.invalid_risk_end_date)
             }
-            if (binding!!.etIdv.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etIdv.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addCarInsurance!!.idv_vehical_value = binding!!.etIdv.text.toString()
             } else {
                 callApi-=1
                 binding!!.etIdv.error = resources.getString(R.string.invalid_idv)
-            }
-            if (binding!!.etNcb.editableText.toString().isNotEmpty()) {
+            }*/
+            /*if (binding!!.etNcb.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addCarInsurance!!.no_claim_bonus = binding!!.etNcb.text.toString()
             } else {
                 callApi-=1
                 binding!!.etNcb.error = resources.getString(R.string.invalid_ncb)
-            }
-            if (binding!!.etDtc.editableText.toString().isNotEmpty()) {
+            }*/
+            /*if (binding!!.etDtc.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addCarInsurance!!.discount = binding!!.etDtc.text.toString()
             } else {
                 callApi-=1
                 binding!!.etDtc.error = resources.getString(R.string.invalid_discount)
-            }
+            }*/
             if (binding!!.etPolicyNumber.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addCarInsurance!!.policy_number = binding!!.etPolicyNumber.editableText.toString()
@@ -425,30 +487,29 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 callApi-=1
                 binding!!.etPlanName.error = resources.getString(R.string.invalid_plan_name)
             }
-            if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addCarInsurance!!.premium_amount =
                     binding!!.etPremiumAmount.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPremiumAmount.error = resources.getString(R.string.invalid_premium_amount)
-            }
-            if (binding!!.etClaimDetails.editableText.toString().isNotEmpty()) {
+            }*/
+            /*if (binding!!.etClaimDetails.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addCarInsurance!!.claim_details =
                     binding!!.etClaimDetails.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etClaimDetails.error = resources.getString(R.string.invalid_claim_details)
-            }
-            if (binding!!.etOwnDamagePremium.editableText.toString().isNotEmpty()) {
+            }*/
+            /*if (binding!!.etOwnDamagePremium.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addCarInsurance!!.own_damage_premium =
-                    binding!!.etOwnDamagePremium.editableText.toString()
+                addCarInsurance!!.own_damage_premium = binding!!.etOwnDamagePremium.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etOwnDamagePremium.error = resources.getString(R.string.invalid_own_damage_premium)
-            }
+            }*/
             if (binding!!.etTpPremium.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addCarInsurance!!.tp_premium =
@@ -465,14 +526,14 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 callApi-=1
                 binding!!.etNetPremium.error = resources.getString(R.string.invalid_net_premium)
             }
-            if (binding!!.etGst.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etGst.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addCarInsurance!!.gst =
                     binding!!.etGst.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etGst.error = resources.getString(R.string.invalid_gst)
-            }
+            }*/
             if (binding!!.etTotalPremium.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addCarInsurance!!.total_premium =
@@ -492,9 +553,15 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
             addCarInsurance!!.seating_capacity = binding!!.etSeatingCapacity.editableText.toString()
             addCarInsurance!!.gvw = binding!!.etGvw.editableText.toString()
 
+            addCarInsurance!!.idv_vehical_value = binding!!.etIdv.editableText.toString()
+            addCarInsurance!!.no_claim_bonus = binding!!.etNcb.editableText.toString()
+            addCarInsurance!!.claim_details = binding!!.etClaimDetails.editableText.toString()
+            addCarInsurance!!.own_damage_premium = binding!!.etOwnDamagePremium.editableText.toString()
+            addCarInsurance!!.discount = binding!!.etDtc.text.toString()
+
             addCarInsurance!!.document = docJson.toString()
             addCarInsurance!!.file = fileList
-            if(callApi >= 16) {
+            if(callApi >= 9) {
                 viewModel!!.addCarInsurance(addCarInsurance!!, this)
             } else{
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -503,34 +570,40 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
     }
 
     fun checkCommision(){
-        if(addCarInsurance!!.premium_type == "Own-Damage-Premium".toUpperCase()){
-            if(binding!!.etOwnDamagePremium.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
+        if(addCarInsurance!!.premium_type == "Own-Damage-Premium".toUpperCase()) {
+            if (binding!!.etOwnDamagePremium.editableText.toString()
+                    .isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()
+            ) {
                 var commission = binding!!.etOwnDamagePremium.editableText.toString()
                     .toDouble() * binding!!.etCommission.editableText.toString()
                     .toDouble() / 100
-                binding!!.etViewCommision.setText(String.format("%.2f",commission))
-            } else{
-                binding!!.etViewCommision.setText("0.00")
-            }
-        } else if(addCarInsurance!!.premium_type == "TP-Premium".toUpperCase()){
-            if(binding!!.etTpPremium.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
-                var commission = binding!!.etTpPremium.editableText.toString()
-                    .toDouble() * binding!!.etCommission.editableText.toString()
-                    .toDouble() / 100
-                binding!!.etViewCommision.setText(String.format("%.2f",commission))
-            } else{
-                binding!!.etViewCommision.setText("0.00")
-            }
-        } else if(addCarInsurance!!.premium_type == "Net-Premium".toUpperCase()){
-            if(binding!!.etNetPremium.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
-                var commission = binding!!.etNetPremium.editableText.toString()
-                    .toDouble() * binding!!.etCommission.editableText.toString()
-                    .toDouble() / 100
-                binding!!.etViewCommision.setText(String.format("%.2f",commission))
-            } else{
+                binding!!.etViewCommision.setText(String.format("%.2f", commission))
+            } else {
                 binding!!.etViewCommision.setText("0.00")
             }
         }
+//        else if(addCarInsurance!!.premium_type == "TP-Premium".toUpperCase()){
+//            if(binding!!.etTpPremium.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
+//                var commission = binding!!.etTpPremium.editableText.toString()
+//                    .toDouble() * binding!!.etCommission.editableText.toString()
+//                    .toDouble() / 100
+//                binding!!.etViewCommision.setText(String.format("%.2f",commission))
+//            } else{
+//                binding!!.etViewCommision.setText("0.00")
+//            }
+//        }
+            else if (addCarInsurance!!.premium_type == "Net-Premium".toUpperCase()) {
+                if (binding!!.etNetPremium.editableText.toString()
+                        .isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()
+                ) {
+                    var commission = binding!!.etNetPremium.editableText.toString()
+                        .toDouble() * binding!!.etCommission.editableText.toString()
+                        .toDouble() / 100
+                    binding!!.etViewCommision.setText(String.format("%.2f", commission))
+                } else {
+                    binding!!.etViewCommision.setText("0.00")
+                }
+            }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -603,12 +676,22 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         }
     }
 
+    override fun onSuccessGst(gst: GstResponse) {
+        if(gst.status!!) {
+            addCarInsurance!!.gst = gst.data!!.gst.toString()
+            binding!!.etGst.setText("${gst.data!!.gst} %")
+        } else{
+            binding!!.etGst.setText("0%")
+        }
+        viewModel!!.getCompanies(this)
+    }
+
     override fun onSuccessClient(client: ClientListResponse) {
         val gson = Gson()
         val json = gson.toJson(client)
         viewModel!!.getPreference().setStringValue(AppConstants.CLIENTS, json)
         AppConstants.clients = client.data!!
-        viewModel!!.getCompanies(this)
+        viewModel!!.getGst(this)
     }
 
     override fun onSuccessCompany(company: CompanyListResponse) {
@@ -623,7 +706,7 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         clients = clientObj.data
         resources.getStringArray(R.array.clients)
         for (i in 0 until clients!!.size) {
-            clientList!!.add(clients!![i]!!.firstname!!)
+            clientList!!.add(clients!![i]!!.firstname!! + " "+ clients!![i]!!.lastname!!)
         }
         val clientAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
         binding!!.spClientName.setAdapter(clientAdapter)

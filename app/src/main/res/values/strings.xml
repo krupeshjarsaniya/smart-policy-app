@@ -40,7 +40,7 @@
     <string name="family_members">Family Members</string>
     <string name="type">Type</string>
     <string name="summary">Summary</string>
-    <string name="no_of_policies">Number Of</string>
+    <string name="no_of_workers">Number Of Workers</string>
     <string name="annual_premium">Annual Premium</string>
     <string name="risk_cover">Risk Cover</string>
     <string name="current_password">Current Password</string>
@@ -51,7 +51,7 @@
     <string name="health_insurance">Health Insurance</string>
     <string name="car_insurance">Car/Motor Insurance</string>
     <string name="wc_insurance">Wc Insurance</string>
-    <string name="fire_insurance">Fire Insurance</string>
+    <string name="fire_insurance">Other Insurance</string>
     <string name="client_name">Client Name</string>
     <string name="sume_insured">SI(Sum Insured)</string>
     <string name="policy_start_date">PSD (Policy Start Date)</string>
@@ -171,7 +171,7 @@
         <item>Health Insurance</item>
         <item>Car/Motor Insurance</item>
         <item>Wc Insurance</item>
-        <item>Fire Insurance</item>
+        <item>Other Insurance</item>
     </string-array>
 
     <string-array name="due_insurance_type">
@@ -202,9 +202,59 @@
         <item>5-YEAR</item>
     </string-array>
 
+    <string-array name="payment_mode_one">
+        <item>Yearly</item>
+        <item>Half-Yearly</item>
+        <item>Quartely</item>
+        <item>Monthly</item>
+        <item>Single</item>
+    </string-array>
+
+    <string-array name="payment_mode_two">
+        <item>Yearly</item>
+        <item>Half-Yearly</item>
+        <item>Quartely</item>
+        <item>Monthly</item>
+        <item>Single</item>
+        <item>2-YEAR</item>
+    </string-array>
+
+    <string-array name="payment_mode_three">
+        <item>Yearly</item>
+        <item>Half-Yearly</item>
+        <item>Quartely</item>
+        <item>Monthly</item>
+        <item>Single</item>
+        <item>2-YEAR</item>
+        <item>3-YEAR</item>
+    </string-array>
+
+    <string-array name="payment_mode_four">
+        <item>Yearly</item>
+        <item>Half-Yearly</item>
+        <item>Quartely</item>
+        <item>Monthly</item>
+        <item>Single</item>
+        <item>2-YEAR</item>
+        <item>3-YEAR</item>
+        <item>4-YEAR</item>
+    </string-array>
+
+    <string-array name="payment_mode_five">
+        <item>Yearly</item>
+        <item>Half-Yearly</item>
+        <item>Quartely</item>
+        <item>Monthly</item>
+        <item>Single</item>
+        <item>2-YEAR</item>
+        <item>3-YEAR</item>
+        <item>4-YEAR</item>
+        <item>5-YEAR</item>
+    </string-array>
+
+
     <string-array name="commission_type">
         <item>Own-Damage-Premium</item>
-        <item>TP-Premium</item>
         <item>Net-Premium</item>
     </string-array>
 
@@ -236,7 +286,7 @@
         <item>Health insurance</item>
         <item>Car insurance</item>
         <item>Wc insurance</item>
-        <item>Fire insurance</item>
+        <item>Other insurance</item>
     </string-array>
 
     <string-array name="gender">
@@ -253,6 +303,8 @@
         <item>Son</item>
         <item>Mother</item>
         <item>Father</item>
+        <item>Mother-In-Law</item>
+        <item>Father-In-Law</item>
     </string-array>
 
     <string-array name="documents">
@@ -342,6 +394,7 @@
     <string name="invalid_weight">Enter Valid Weight</string>
     <string name="invalid_pan_number">Enter Valid PAN</string>
     <string name="invalid_address">Enter Valid Address</string>
+    <string name="total_net_premium">Total Net Premium</string>
 
 
 </resources>

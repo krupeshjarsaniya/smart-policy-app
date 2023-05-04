@@ -66,6 +66,8 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
     var gson = Gson()
     var addLifeInsurance: EditLifeInsurance? = EditLifeInsurance()
     var familyMemberList: ArrayList<String>? = ArrayList()
+    private var familyIdList = ArrayList<String>()
+    var newMemberList: ArrayList<String>? = ArrayList()
     var families: ArrayList<FamilyDetail?>? = ArrayList()
     var companyList: ArrayList<String>? = ArrayList()
     var companies: ArrayList<CompanyData?>? = ArrayList()
@@ -80,6 +82,8 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
     var currentDate = Calendar.getInstance().time
     var aYearAfter = Calendar.getInstance()
     var df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    var selectedStartDate: Date? = null
+    var selectedEndDate: Date? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,6 +134,10 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
 
         binding!!.tvEndDate.setText(policy!!.ped)
 
+        selectedStartDate = df.parse(policy!!.psd!!)
+
+        selectedEndDate = df.parse(policy!!.ped!!)
+
         binding!!.etPlanName.setText(policy!!.plan_name)
 
         val paymentPosition: Int = paymentAdapter.getPosition(policy!!.payment_mode)
@@ -165,9 +173,14 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
 
         binding!!.etCommission.setText(policy!!.commision)
 
-        if(policy!!.commision!!.isNotEmpty() && policy!!.premium_amount!!.isNotEmpty()){
-            var commission = policy!!.commision!!.toDouble() * policy!!.premium_amount!!.toDouble() / 100
+        if(policy!!.commision!!.isNotEmpty() && policy!!.net_premium!!.isNotEmpty()){
+            var commission = policy!!.commision!!.toDouble() * policy!!.net_premium!!.toDouble() / 100
             binding!!.etViewCommision.setText(String.format("%.2f",commission))
+        }
+
+        if(policy!!.gst!!.isNotEmpty() && policy!!.net_premium!!.isNotEmpty()){
+            var commission = policy!!.net_premium!!.toDouble() + (policy!!.gst!!.toDouble() * policy!!.net_premium!!.toDouble() / 100)
+            binding!!.etTotalNetPremium.setText(String.format("%.2f",commission))
         }
 
 
@@ -186,6 +199,7 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 detail.pan_number
             )
             familyList.add(family)
+            familyIdList.add(family.family_id!!)
         }
 
         for (i in 0 until policy!!.insurance_Documents!!.size){
@@ -217,9 +231,11 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             ) {
                 addLifeInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
+                newMemberList!!.clear();
                 families = clients!![position]!!.family_Details
                 selectedClient = clients!![position]!!
                 familyMemberList!!.add("Self")
+                newMemberList!!.add("Select")
                 familyAdapter = ArrayAdapter(
                     this@EditLifeInsuranceActivity,
                     R.layout.dropdown_item,
@@ -228,11 +244,18 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 binding!!.spFamilyMember.adapter = familyAdapter
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
+                    newMemberList!!.add(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
                     if (policy!!.member_name == families!![i]!!.firstname) {
                         val memberPosition: Int = familyAdapter!!.getPosition(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
                         binding!!.spFamilyMember.setSelection(memberPosition)
                     }
                 }
+                val newAdapter = ArrayAdapter(
+                    this@EditLifeInsuranceActivity,
+                    R.layout.dropdown_item,
+                    newMemberList!!
+                )
+                binding!!.spNewMember.adapter = newAdapter
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -247,10 +270,11 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 position: Int,
                 id: Long
             ) {
+                var member = MemberModel()
                 if(position != 0) {
                     addLifeInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
-                    familyList[0] = MemberModel(
-                        "",
+                    member = MemberModel(
+                        families!![position - 1]!!.id.toString(),
                         families!![position - 1]!!.firstname,
                         families!![position - 1]!!.lastname,
                         families!![position - 1]!!.birthdate,
@@ -261,9 +285,9 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                         families!![position - 1]!!.relationship,
                         families!![position - 1]!!.pan_number,
                     )
-                } else{
-                    familyList[0] = MemberModel(
-                        "",
+                } else {
+                    member = MemberModel(
+                        selectedClient!!.id.toString(),
                         selectedClient!!.firstname,
                         selectedClient!!.lastname,
                         selectedClient!!.birthdate,
@@ -276,7 +300,44 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                     )
                     addLifeInsurance!!.member_id = ""
                 }
-                updateMember()
+                if (!familyIdList.contains(member.family_id!!)) {
+                    familyList.add(member)
+                    familyIdList.add(member.family_id!!)
+                    updateMember()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
+        binding!!.spNewMember.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if(position != 0) {
+                        var member = MemberModel(
+                            families!![position - 1]!!.id.toString(),
+                            families!![position - 1]!!.firstname,
+                            families!![position - 1]!!.lastname,
+                            families!![position - 1]!!.birthdate,
+                            families!![position - 1]!!.gender,
+                            families!![position - 1]!!.height,
+                            families!![position - 1]!!.weight,
+                            families!![position - 1]!!.age,
+                            families!![position - 1]!!.relationship,
+                            families!![position - 1]!!.pan_number,
+                        )
+                        if (!familyIdList.contains(member.family_id!!)) {
+                            familyList.add(member)
+                            familyIdList.add(member.family_id!!)
+                            updateMember()
+                        }
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -322,9 +383,12 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             val datePicker = DatePickerDialog(
                 this@EditLifeInsuranceActivity,
                 { _, year, monthOfYear, dayOfMonth ->
-                    val date =
-                        (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
+                    val date = (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
                     binding!!.tvStartDate.setText(date)
+                    calendar.set(year,monthOfYear,dayOfMonth)
+                    selectedStartDate = calendar.time
+                    var yearDiff = dateDifference(selectedStartDate!!,selectedEndDate!!)
+                    binding!!.etPolicyTerm.setText(yearDiff.toString())
                 },
                 yy,
                 mm,
@@ -343,9 +407,12 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             val datePicker = DatePickerDialog(
                 this@EditLifeInsuranceActivity,
                 { _, year, monthOfYear, dayOfMonth ->
-                    val date =
-                        (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
+                    val date = (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
                     binding!!.tvEndDate.setText(date)
+                    calendar.set(year,monthOfYear,dayOfMonth)
+                    selectedEndDate = calendar.time
+                    var yearDiff = dateDifference(selectedStartDate!!,selectedEndDate!!)
+                    binding!!.etPolicyTerm.setText(yearDiff.toString())
                 },
                 yy,
                 mm,
@@ -432,6 +499,7 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             if (addData!!) {
                 //binding!!.rvViewFamily.visibility = View.GONE
                 familyList.add(MemberModel())
+                familyIdList.add("")
                 updateMember()
             }
         }
@@ -494,16 +562,32 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (binding!!.etNetPremium.editableText.toString()
-                        .isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()
-                ) {
-                    var commission = binding!!.etNetPremium.editableText.toString()
-                        .toDouble() * binding!!.etCommission.editableText.toString()
-                        .toDouble() / 100
-                    binding!!.etViewCommision.setText(String.format("%.2f", commission))
-                } else {
-                    binding!!.etViewCommision.setText("0.00")
+                var netPremium: Double? = 0.0
+                var totalPremium: Double? = 0.0
+                var gst: Double? = 0.0
+                var commission: Double? = 0.0
+                var viewCommission: Double? = 0.0
+                gst = if(binding!!.etGst.editableText.toString().isNotEmpty()){
+                    addLifeInsurance!!.gst!!.toDouble()
+                } else{
+                    0.0
                 }
+                netPremium = if(binding!!.etNetPremium.editableText.toString().isNotEmpty()){
+                    binding!!.etNetPremium.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                commission = if(binding!!.etCommission.editableText.toString().isNotEmpty()){
+                    binding!!.etCommission.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                viewCommission = netPremium
+                    .toDouble() * commission
+                    .toDouble() / 100
+                binding!!.etViewCommision.setText(String.format("%.2f",viewCommission))
+                totalPremium = netPremium + (netPremium * gst / 100)
+                binding!!.etTotalNetPremium.setText(totalPremium.toString())
             }
         })
 
@@ -821,6 +905,7 @@ class EditLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 removeFamily!!.add(familyList[position].family_id!!)
             }
             familyList.removeAt(position)
+            familyIdList.removeAt(position)
             updateMember()
         }
     }

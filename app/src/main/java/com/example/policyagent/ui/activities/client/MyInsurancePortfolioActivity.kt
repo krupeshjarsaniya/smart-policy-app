@@ -134,7 +134,7 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware, PortfolioListe
             "Wc Insurance" -> {
                 selectedType = "wc_insurances"
             }
-            "Fire Insurance" -> {
+            "Other Insurance" -> {
                 selectedType = "fire_insurances"
             }
         }

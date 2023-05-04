@@ -180,6 +180,7 @@
                     />
 
                 <RelativeLayout
+                    android:id="@+id/rl_idv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -193,7 +194,7 @@
                             android:id="@+id/et_idv"
                             style="@style/EditTextStyle"
                             android:hint="@string/idv"
-                            android:inputType="text"
+                            android:inputType="number"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -211,6 +212,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_ncb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -224,7 +226,7 @@
                             android:id="@+id/et_ncb"
                             style="@style/EditTextStyle"
                             android:hint="@string/ncb_val"
-                            android:inputType="text"
+                            android:inputType="number"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -244,6 +246,7 @@
 
 
                 <RelativeLayout
+                    android:id="@+id/rl_discount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -358,6 +361,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
+                    android:visibility="gone"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -450,6 +454,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_claim_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -481,6 +486,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_own_damage_premium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -586,6 +592,8 @@
                             android:id="@+id/et_gst"
                             style="@style/EditTextStyle"
                             android:hint="@string/gst"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="number"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -617,6 +625,8 @@
                             android:id="@+id/et_total_premium"
                             style="@style/EditTextStyle"
                             android:hint="@string/total_premium"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="number"
                             />
                     </com.google.android.material.textfield.TextInputLayout>

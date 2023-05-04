@@ -11,6 +11,7 @@ import com.example.policyagent.data.requests.addwcinsurance.AddWcInsurance
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.ui.listeners.AddHealthInsuranceListener
 import com.example.policyagent.ui.listeners.AddWcInsuranceListener
 import com.example.policyagent.util.*
@@ -48,8 +49,8 @@ class AddWcInsuranceViewModel (
                 map["no_of"] = addWcInsurance.no_of!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["policy_number"] = addWcInsurance.policy_number!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["company_id"] = addWcInsurance.company_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["premium_amount"] = addWcInsurance.premium_amount!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["net_preminum"] = addWcInsurance.net_preminum!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["premium_amount"] = addWcInsurance.net_preminum!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                //map["net_preminum"] = addWcInsurance.net_preminum!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["gst"] = addWcInsurance.gst!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["total_premium"] = addWcInsurance.total_premium!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["commision"] = addWcInsurance.commision!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -90,6 +91,31 @@ class AddWcInsuranceViewModel (
                         }
                     }
                 }
+            }catch (e: ApiException){
+                listener?.onFailure(e.message!!)
+            }catch (e: NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (ex: Exception){
+                printLog("exp-->", ex.message.toString())
+                listener?.onFailure(ex.message!!)
+            }
+        }
+    }
+
+    fun getGst(mContext: Context){
+        listener?.onStarted()
+        Coroutines.main {
+            try {
+
+                val response = Gson().fromJson(repository.getGst(), GstResponse::class.java)
+                if (response.status!!){
+                    if (response.data != null) {
+                        response.let {
+                            listener!!.onSuccessGst(it)
+                            return@main
+                        }
+                    }}
+                listener!!.onFailure("Something Went Wrong")
             }catch (e: ApiException){
                 listener?.onFailure(e.message!!)
             }catch (e: NoInternetException){

@@ -155,7 +155,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_medium"
-                            android:text="@string/no_of_policies"
+                            android:text="@string/no_of_workers"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/normal" />
 

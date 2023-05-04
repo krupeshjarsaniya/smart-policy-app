@@ -42,7 +42,7 @@ class EditHealthInsuranceViewModel (
                 map["client_id"] = addHealthInsurance.client_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["member_id"] = addHealthInsurance.member_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["insurance_type"] = addHealthInsurance.insurance_type!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["st"] = addHealthInsurance.st!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                //map["st"] = addHealthInsurance.st!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["risk_start_date"] = addHealthInsurance.risk_start_date!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["risk_end_date"] = addHealthInsurance.risk_end_date!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["family"] = addHealthInsurance.family!!.replace("\\","").toRequestBody("multipart/form-data".toMediaTypeOrNull())

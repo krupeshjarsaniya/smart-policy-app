@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -50,6 +51,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
     private var binding: ActivityAddHealthInsuranceBinding? = null
     private var viewModel: AddHealthInsuranceViewModel? = null
     private var familyList = ArrayList<MemberModel>()
+    private var familyIdList = ArrayList<String>()
     private var documentList = ArrayList<DocumentModel>()
     private var fileList = ArrayList<File>()
     private var memberAdapter: MemberAdapter? = null
@@ -61,6 +63,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
     var gson = Gson()
     var addHealthInsurance: AddHealthInsurance? = AddHealthInsurance()
     var familyMemberList: ArrayList<String>? = ArrayList()
+    var newMemberList: ArrayList<String>? = ArrayList()
     var families: ArrayList<FamilyDetail?>? = ArrayList()
     var companyList: ArrayList<String>? = ArrayList()
     var companies: ArrayList<CompanyData?>? = ArrayList()
@@ -82,7 +85,6 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
         viewModel = ViewModelProvider(this, factory)[AddHealthInsuranceViewModel::class.java]
         viewModel!!.listener = this
         viewModel!!.getClients(this)
-        familyList.add(MemberModel())
 
 
         var formattedDate = df.format(currentDate)
@@ -122,11 +124,14 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
             ) {
                 addHealthInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
+                newMemberList!!.clear();
                 families = clients!![position]!!.family_Details
                 selectedClient = clients!![position]!!
                 familyMemberList!!.add("Self")
+                newMemberList!!.add("Select")
                 for (i in 0 until families!!.size) {
                     familyMemberList!!.add(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
+                    newMemberList!!.add(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
                 }
                 val familyAdapter = ArrayAdapter(
                     this@AddHealthInsuranceActivity,
@@ -134,6 +139,12 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                     familyMemberList!!
                 )
                 binding!!.spFamilyMember.adapter = familyAdapter
+                val newAdapter = ArrayAdapter(
+                    this@AddHealthInsuranceActivity,
+                    R.layout.dropdown_item,
+                    newMemberList!!
+                )
+                binding!!.spNewMember.adapter = newAdapter
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -148,10 +159,11 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                 position: Int,
                 id: Long
             ) {
+                var member = MemberModel()
                 if(position != 0) {
                     addHealthInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
-                    familyList[0] = MemberModel(
-                            "",
+                    member = MemberModel(
+                            families!![position - 1]!!.id.toString(),
                             families!![position - 1]!!.firstname,
                             families!![position - 1]!!.lastname,
                             families!![position - 1]!!.birthdate,
@@ -163,8 +175,8 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                             families!![position - 1]!!.pan_number,
                         )
                 } else {
-                    familyList[0] = MemberModel(
-                        "",
+                    member = MemberModel(
+                            selectedClient!!.id.toString(),
                             selectedClient!!.firstname,
                             selectedClient!!.lastname,
                             selectedClient!!.birthdate,
@@ -177,7 +189,54 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                     )
                     addHealthInsurance!!.member_id = ""
                 }
+                if(addHealthInsurance!!.insurance_type != "SINGLE") {
+                    if (!familyIdList.contains(member.family_id!!)) {
+                        familyList.add(member)
+                        familyIdList.add(member.family_id!!)
+                        updateMember()
+                    }
+                } else{
+                    familyList.clear()
+                    familyIdList.clear()
+                    familyList.add(member)
+                    familyIdList.add(member.family_id!!)
                     updateMember()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
+        binding!!.spNewMember.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if(position != 0) {
+                    if (addHealthInsurance!!.insurance_type != "SINGLE") {
+                        var member = MemberModel(
+                            families!![position - 1]!!.id.toString(),
+                            families!![position - 1]!!.firstname,
+                            families!![position - 1]!!.lastname,
+                            families!![position - 1]!!.birthdate,
+                            families!![position - 1]!!.gender,
+                            families!![position - 1]!!.height,
+                            families!![position - 1]!!.weight,
+                            families!![position - 1]!!.age,
+                            families!![position - 1]!!.relationship,
+                            families!![position - 1]!!.pan_number,
+                        )
+                        if (!familyIdList.contains(member.family_id!!)) {
+                            familyList.add(member)
+                            familyIdList.add(member.family_id!!)
+                            updateMember()
+                        }
+                    }
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -209,6 +268,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
             ) {
                 addHealthInsurance!!.payment_mode = binding!!.spPaymentMode.selectedItem.toString()
                 selectedPaymentPosition = position
+                //calculatePreimium()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -228,9 +288,16 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                 id: Long
             ) {
                 addHealthInsurance!!.insurance_type = binding!!.spInsuranceType.selectedItem.toString().toUpperCase()
+                Log.e("insuranceType",addHealthInsurance!!.insurance_type.toString())
                 if(addHealthInsurance!!.insurance_type != "SINGLE") {
+                    binding!!.spNewMember.show()
+                } else{
+                    familyList.clear()
+                    familyIdList.clear()
+                    var member: MemberModel = MemberModel()
+                    binding!!.spNewMember.show()
                     if(addHealthInsurance!!.member_id != "") {
-                        familyList[0] = MemberModel(
+                        member = MemberModel(
                             families!![position - 1]!!.id.toString(),
                             families!![position - 1]!!.firstname,
                             families!![position - 1]!!.lastname,
@@ -243,18 +310,24 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                             families!![position - 1]!!.pan_number,
                         )
                     } else {
-                        familyList[0] = MemberModel(
-                            selectedClient!!.id.toString(),
-                            selectedClient!!.firstname,
-                            selectedClient!!.lastname,
-                            selectedClient!!.birthdate,
-                            selectedClient!!.gender,
-                            selectedClient!!.height,
-                            selectedClient!!.weight,
-                            selectedClient!!.age,
-                            selectedClient!!.relationship,
-                            selectedClient!!.pan_number,
-                        )
+                        if (selectedClient != null) {
+                            member = MemberModel(
+                                selectedClient!!.id.toString(),
+                                selectedClient!!.firstname,
+                                selectedClient!!.lastname,
+                                selectedClient!!.birthdate,
+                                selectedClient!!.gender,
+                                selectedClient!!.height,
+                                selectedClient!!.weight,
+                                selectedClient!!.age,
+                                selectedClient!!.relationship,
+                                selectedClient!!.pan_number,
+                            )
+                        }
+                        familyList.add(member)
+                        familyIdList.add(member.family_id!!)
+                        updateMember()
+                        binding!!.spNewMember.hide()
                     }
                 }
             }
@@ -392,6 +465,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
 
                 } else {
                     familyList.add(MemberModel())
+                    familyIdList.add("")
                     updateMember()
                 }
             }
@@ -440,6 +514,47 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
             }
         })
 
+//        binding!!.etPolicyTerm.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                if(binding!!.etPolicyTerm.editableText.toString() == "1"){
+//                    val paymentMode = resources.getStringArray(R.array.payment_mode_one)
+//                    val paymentAdapter = ArrayAdapter(this@AddHealthInsuranceActivity, R.layout.dropdown_item, paymentMode)
+//                    binding!!.spPaymentMode.adapter = paymentAdapter
+//                } else if(binding!!.etPolicyTerm.editableText.toString() == "2"){
+//                    val paymentMode = resources.getStringArray(R.array.payment_mode_two)
+//                    val paymentAdapter = ArrayAdapter(this@AddHealthInsuranceActivity, R.layout.dropdown_item, paymentMode)
+//                    binding!!.spPaymentMode.adapter = paymentAdapter
+//                }
+//                else if(binding!!.etPolicyTerm.editableText.toString() == "3"){
+//                    val paymentMode = resources.getStringArray(R.array.payment_mode_three)
+//                    val paymentAdapter = ArrayAdapter(this@AddHealthInsuranceActivity, R.layout.dropdown_item, paymentMode)
+//                    binding!!.spPaymentMode.adapter = paymentAdapter
+//                }
+//                else if(binding!!.etPolicyTerm.editableText.toString() == "4"){
+//                    val paymentMode = resources.getStringArray(R.array.payment_mode_four)
+//                    val paymentAdapter = ArrayAdapter(this@AddHealthInsuranceActivity, R.layout.dropdown_item, paymentMode)
+//                    binding!!.spPaymentMode.adapter = paymentAdapter
+//                }
+//                else if(binding!!.etPolicyTerm.editableText.toString() == "5"){
+//                    val paymentMode = resources.getStringArray(R.array.payment_mode_five)
+//                    val paymentAdapter = ArrayAdapter(this@AddHealthInsuranceActivity, R.layout.dropdown_item, paymentMode)
+//                    binding!!.spPaymentMode.adapter = paymentAdapter
+//                } else{
+//                    val paymentMode = resources.getStringArray(R.array.payment_mode_five)
+//                    val paymentAdapter = ArrayAdapter(this@AddHealthInsuranceActivity, R.layout.dropdown_item, paymentMode)
+//                    binding!!.spPaymentMode.adapter = paymentAdapter
+//                }
+//            }
+//        })
+
 
         binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -451,6 +566,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
             }
 
             override fun afterTextChanged(s: Editable?) {
+                //calculatePreimium()
 //                if(binding!!.etNetPremium.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
 //                    if(addHealthInsurance!!.payment_mode)
 //                } else{
@@ -470,14 +586,32 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if(binding!!.etNetPremium.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
-                    var commission = binding!!.etNetPremium.editableText.toString()
-                        .toDouble() * binding!!.etCommission.editableText.toString()
-                        .toDouble() / 100
-                binding!!.etViewCommision.setText(String.format("%.2f",commission))
+                var netPremium: Int? = 0
+                var totalPremium: Int? = 0
+                var gst: Int? = 0
+                var commission: Int? = 0
+                var viewCommission: Double? = 0.0
+                gst = if(binding!!.etGst.editableText.toString().isNotEmpty()){
+                    addHealthInsurance!!.gst.toInt()
                 } else{
-                    binding!!.etViewCommision.setText("0.00")
+                    0
                 }
+                netPremium = if(binding!!.etNetPremium.editableText.toString().isNotEmpty()){
+                    binding!!.etNetPremium.editableText.toString().toInt()
+                } else{
+                    0
+                }
+                commission = if(binding!!.etCommission.editableText.toString().isNotEmpty()){
+                    binding!!.etCommission.editableText.toString().toInt()
+                } else{
+                    0
+                }
+                viewCommission = netPremium
+                    .toDouble() * commission
+                    .toDouble() / 100
+                binding!!.etViewCommision.setText(String.format("%.2f",viewCommission))
+                totalPremium = netPremium + (netPremium * gst / 100)
+                binding!!.etTotalNetPremium.setText(totalPremium.toString())
             }
         })
         
@@ -603,13 +737,13 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
             for (doc in documentList) {
                 docJson!!.add(gson.toJson(doc))
             }
-            if (binding!!.etSt.editableText.toString().isNotEmpty()) {
-                callApi+=1
-                addHealthInsurance!!.st = binding!!.etSt.editableText.toString()
-            } else {
-                callApi-=1
-                binding!!.etSt.error = resources.getString(R.string.invalid_st)
-            }
+//            if (binding!!.etSt.editableText.toString().isNotEmpty()) {
+//                callApi+=1
+//                addHealthInsurance!!.st = binding!!.etSt.editableText.toString()
+//            } else {
+//                callApi-=1
+//                binding!!.etSt.error = resources.getString(R.string.invalid_st)
+//            }
             if (binding!!.etPed.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.pre_existing_decease = binding!!.etPed.editableText.toString()
@@ -712,7 +846,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
             addHealthInsurance!!.family = familyJson.toString()
             addHealthInsurance!!.document = docJson.toString()
             addHealthInsurance!!.file = fileList
-            if(callApi >= 10) {
+            if(callApi >= 9) {
                 viewModel!!.addHealthInsurance(addHealthInsurance!!, this)
             } else {
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -724,15 +858,83 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
         memberAdapter!!.updateList(familyList)
     }
 
-    fun setPreimium() {
+    /*fun calculatePreimium() {
         var netPremium: Int? = 0
         var totalPremium: Int? = 0
-        var gst: Int? = binding!!.etGst.toString().toInt()
-        var years: Int? = binding!!.etPolicyTerm.toString().toInt()
-        if(selectedPaymentPosition == 0){
+        var premiumAmount: Int? = 0
+        var gst: Int? = 0
+        var years: Int? = 0
 
+        premiumAmount = if(binding!!.etPremiumAmount.editableText.toString().isNotEmpty()){
+            binding!!.etPremiumAmount.editableText.toString().toInt()
+        } else{
+            0
         }
-    }
+
+        gst = if(binding!!.etGst.editableText.toString().isNotEmpty()){
+            addHealthInsurance!!.gst.toInt()
+        } else{
+            0
+        }
+
+        years = if(binding!!.etPolicyTerm.editableText.toString().isNotEmpty()){
+            binding!!.etPolicyTerm.editableText.toString().toInt()
+        } else{
+            0
+        }
+        Log.e("selectedposition",selectedPaymentPosition.toString())
+        Log.e("premiumamount",premiumAmount.toString())
+
+        when (selectedPaymentPosition) {
+            0 -> {
+                netPremium = premiumAmount * 1 * years
+            }
+            1 -> {
+                netPremium = premiumAmount * 2 * years
+            }
+            2 -> {
+                netPremium = premiumAmount * 4 * years
+            }
+            3 -> {
+                netPremium = premiumAmount * 12 * years
+            }
+            4 -> {
+                netPremium = premiumAmount
+            }
+            5 -> {
+                netPremium = if(years >= 2){
+                    premiumAmount
+                } else{
+                    premiumAmount * years
+                }
+            }
+            6 -> {
+                netPremium = if(years >= 3){
+                    premiumAmount * 1
+                } else{
+                    premiumAmount * years
+                }
+            }
+            7 -> {
+                netPremium = if(years >= 4){
+                    premiumAmount * 1
+                } else{
+                    premiumAmount * years
+                }
+            }
+            8 -> {
+                netPremium = if(years >= 5){
+                    premiumAmount * 1
+                } else{
+                    premiumAmount * years
+                }
+            }
+        }
+        totalPremium = netPremium!! + (netPremium * gst / 100)
+        Log.e("netpremium",netPremium.toString())
+        binding!!.etNetPremium.setText(netPremium.toString())
+        binding!!.etTotalNetPremium.setText(totalPremium.toString())
+    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -778,6 +980,7 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
         //if(addHealthInsurance!!.insurance_type != "SINGLE") {
         if(position != 0) {
             familyList.removeAt(position)
+            familyIdList.removeAt(position)
             updateMember()
         }
     }

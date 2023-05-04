@@ -53,7 +53,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_st"
                             style="@style/EditTextStyle"
-                            android:hint="@string/st"
+                            android:hint="@string/sume_insured"
                             android:inputType="text"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -182,7 +182,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_no_of"
                             style="@style/EditTextStyle"
-                            android:hint="@string/no_of_policies"
+                            android:hint="@string/no_of_workers"
                             android:inputType="number"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -246,6 +246,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
+                    android:visibility="gone"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -285,7 +286,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_net_amount"
                             style="@style/EditTextStyle"
-                            android:hint="@string/net_amount"
+                            android:hint="@string/net_premium"
                             android:inputType="number"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -316,6 +317,8 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_gst"
                             style="@style/EditTextStyle"
+                            android:focusableInTouchMode="false"
+                            android:focusable="false"
                             android:hint="@string/gst"
                             android:inputType="number"
                             />
@@ -347,7 +350,9 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_total_premium"
                             style="@style/EditTextStyle"
-                            android:hint="@string/total_premium"
+                            android:hint="@string/total_net_premium"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:inputType="number"
                             />
                     </com.google.android.material.textfield.TextInputLayout>

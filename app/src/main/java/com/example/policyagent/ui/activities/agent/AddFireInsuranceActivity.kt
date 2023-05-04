@@ -23,6 +23,7 @@ import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.commoninsurance.FamilyDetail
 import com.example.policyagent.data.responses.companylist.CompanyData
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.databinding.ActivityAddFireInsuranceBinding
 import com.example.policyagent.databinding.ActivityAddWcInsuranceBinding
 import com.example.policyagent.ui.activities.BaseActivity
@@ -41,6 +42,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -66,13 +68,25 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
     var companies: ArrayList<CompanyData?>? = ArrayList()
     var clientList: ArrayList<String>? = ArrayList()
     var clients: ArrayList<ClientData?>? = ArrayList()
-  
+    var currentDate = Calendar.getInstance().time
+    var aYearAfter = Calendar.getInstance()
+    var df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+    var selectedClient: ClientData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_fire_insurance)
         viewModel = ViewModelProvider(this, factory)[AddFireInsuranceViewModel::class.java]
         viewModel!!.listener = this
+
+        var formattedDate = df.format(currentDate)
+
+        aYearAfter.add(Calendar.YEAR, 1)
+        var yearFormattedDate = df.format(aYearAfter.time)
+
+        binding!!.tvStartDate.setText(formattedDate)
+        binding!!.tvEndDate.setText(yearFormattedDate)
+
         binding!!.appBar.tvTitle.text = resources.getString(R.string.fire_insurance)
         documentAdapter = UploadDocumentAdapter(this, this)
         binding!!.rvDocument.adapter = documentAdapter
@@ -99,7 +113,7 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 families = clients!![position]!!.family_Details
                 familyMemberList!!.add("Self")
                 for (i in 0 until families!!.size) {
-                    familyMemberList!!.add(families!![i]!!.firstname!!)
+                    familyMemberList!!.add(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
                 }
                 val familyAdapter = ArrayAdapter(
                     this@AddFireInsuranceActivity,
@@ -122,7 +136,7 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 id: Long
             ) {
                 if(position != 0) {
-                    addFireInsurance!!.member_id = families!![position]!!.id!!.toString()
+                    addFireInsurance!!.member_id = families!![position - 1]!!.id!!.toString()
                 } else{
                     addFireInsurance!!.member_id = ""
                 }
@@ -248,8 +262,8 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if(binding!!.etPremiumAmount.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
-                    var commission = binding!!.etPremiumAmount.editableText.toString()
+                if(binding!!.etNetAmount.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
+                    var commission = binding!!.etNetAmount.editableText.toString()
                         .toDouble() * binding!!.etCommission.editableText.toString()
                         .toDouble() / 100
                     binding!!.etViewCommision.setText(String.format("%.2f",commission))
@@ -259,7 +273,46 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
             }
         })
 
-        binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
+        binding!!.etNetAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var netPremium: Double? = 0.0
+                var totalPremium: Double? = 0.0
+                var gst: Double? = 0.0
+                var commission: Double? = 0.0
+                var viewCommission: Double? = 0.0
+                gst = if(binding!!.etGst.editableText.toString().isNotEmpty()){
+                    addFireInsurance!!.gst!!.toDouble()
+                } else{
+                    0.0
+                }
+                netPremium = if(binding!!.etNetAmount.editableText.toString().isNotEmpty()){
+                    binding!!.etNetAmount.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                commission = if(binding!!.etCommission.editableText.toString().isNotEmpty()){
+                    binding!!.etCommission.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                viewCommission = netPremium
+                    .toDouble() * commission
+                    .toDouble() / 100
+                binding!!.etViewCommision.setText(String.format("%.2f",viewCommission))
+                totalPremium = netPremium + (netPremium * gst / 100)
+                binding!!.etTotalPremium.setText(totalPremium.toString())
+            }
+        })
+
+        /*binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -279,7 +332,7 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 }
             }
 
-        })
+        })*/
 
         binding!!.btnSave.setOnClickListener {
             familyJson!!.clear()
@@ -330,14 +383,14 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 callApi-=1
                 binding!!.etPolicyNumber.error = resources.getString(R.string.invalid_policy_number)
             }
-            if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addFireInsurance!!.premium_amount =
                     binding!!.etPremiumAmount.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPremiumAmount.error = resources.getString(R.string.invalid_premium_amount)
-            }
+            }*/
             if (binding!!.etNetAmount.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addFireInsurance!!.net_preminum = binding!!.etNetAmount.editableText.toString()
@@ -345,13 +398,13 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 callApi-=1
                 binding!!.etNetAmount.error = resources.getString(R.string.invalid_net_amount)
             }
-            if (binding!!.etGst.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etGst.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addFireInsurance!!.gst = binding!!.etGst.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etGst.error = resources.getString(R.string.invalid_gst)
-            }
+            }*/
             if (binding!!.etCommission.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addFireInsurance!!.commision = binding!!.etCommission.editableText.toString()
@@ -370,7 +423,7 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
 
             addFireInsurance!!.document = docJson.toString()
             addFireInsurance!!.file = fileList
-            if(callApi >= 9) {
+            if(callApi >= 7) {
                 viewModel!!.addFireInsurance(addFireInsurance!!, this)
             } else{
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -449,12 +502,22 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
         }
     }
 
+    override fun onSuccessGst(gst: GstResponse) {
+        if(gst.status!!) {
+            addFireInsurance!!.gst = gst.data!!.gst.toString()
+            binding!!.etGst.setText("${gst.data!!.gst} %")
+        } else{
+            binding!!.etGst.setText("0%")
+        }
+        viewModel!!.getCompanies(this)
+    }
+
     override fun onSuccessClient(client: ClientListResponse) {
         val gson = Gson()
         val json = gson.toJson(client)
         viewModel!!.getPreference().setStringValue(AppConstants.CLIENTS, json)
         AppConstants.clients = client.data!!
-        viewModel!!.getCompanies(this)
+        viewModel!!.getGst(this)
     }
 
     override fun onSuccessCompany(company: CompanyListResponse) {
@@ -469,7 +532,7 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
         clients = clientObj.data
         resources.getStringArray(R.array.clients)
         for (i in 0 until clients!!.size) {
-            clientList!!.add(clients!![i]!!.firstname!!)
+            clientList!!.add(clients!![i]!!.firstname!! + " "+ clients!![i]!!.lastname!!)
         }
         val clientAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
         binding!!.spClientName.setAdapter(clientAdapter)

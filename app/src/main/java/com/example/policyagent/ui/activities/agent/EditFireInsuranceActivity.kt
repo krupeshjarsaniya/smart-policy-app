@@ -29,6 +29,7 @@ import com.example.policyagent.data.responses.commoninsurance.FamilyDetail
 import com.example.policyagent.data.responses.companylist.CompanyData
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
 import com.example.policyagent.data.responses.fireinsurancelist.FireInsuranceData
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.data.responses.lifeinsurancelist.LifeInsuranceData
 import com.example.policyagent.databinding.ActivityAddFireInsuranceBinding
 import com.example.policyagent.databinding.ActivityEditFireInsuranceBinding
@@ -106,7 +107,6 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
 
         binding!!.etPolicyNumber.setText(policy!!.policy_number)
 
-
         binding!!.spFamilyMember.adapter = familyAdapter
 
         binding!!.tvStartDate.setText(policy!!.rsd)
@@ -118,11 +118,13 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         val paymentPosition: Int = insuranceTypeAdapter.getPosition(policy!!.fire_policy_type)
         binding!!.spPolicyType.setSelection(paymentPosition)
 
-        binding!!.etPremiumAmount.setText(policy!!.premium_amount)
+        //binding!!.etPremiumAmount.setText(policy!!.premium_amount)
 
-        binding!!.etNetAmount.setText(policy!!.net_preminum)
+        binding!!.etNetAmount.setText(policy!!.premium_amount)
 
-        binding!!.etGst.setText(policy!!.gst)
+        addFireInsurance!!.gst = policy!!.gst!!
+
+        binding!!.etGst.setText(policy!!.gst+"%")
 
         binding!!.etTotalPremium.setText(policy!!.total_premium)
 
@@ -135,6 +137,11 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             var commission =
                 policy!!.commision!!.toDouble() * policy!!.premium_amount!!.toDouble() / 100
             binding!!.etViewCommision.setText(String.format("%.2f", commission))
+        }
+
+        if(policy!!.gst!!.isNotEmpty() && policy!!.premium_amount!!.isNotEmpty()){
+            var commission = policy!!.premium_amount!!.toDouble() + (policy!!.gst!!.toDouble() * policy!!.premium_amount!!.toDouble() / 100)
+            binding!!.etTotalPremium.setText(String.format("%.2f",commission))
         }
 
 
@@ -168,19 +175,19 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 addFireInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 families = clients!![position]!!.family_Details
-                familyMemberList!!.add("select")
-                for (i in 0 until families!!.size) {
-                    familyMemberList!!.add(families!![i]!!.firstname!!)
-                }
+                familyMemberList!!.add("Self")
                 familyAdapter = ArrayAdapter(
                     this@EditFireInsuranceActivity,
                     R.layout.dropdown_item,
                     familyMemberList!!
                 )
                 binding!!.spFamilyMember.adapter = familyAdapter
-                if (policy!!.member_name != "") {
-                    val memberPosition: Int = familyAdapter!!.getPosition(policy!!.member_name)
-                    binding!!.spFamilyMember.setSelection(memberPosition)
+                for (i in 0 until families!!.size) {
+                    familyMemberList!!.add(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
+                    if (policy!!.member_name == families!![i]!!.firstname) {
+                        val memberPosition: Int = familyAdapter!!.getPosition(families!![i]!!.firstname!! + " " + families!![i]!!.lastname!! + " - " + families!![i]!!.relationship)
+                        binding!!.spFamilyMember.setSelection(memberPosition)
+                    }
                 }
             }
 
@@ -322,20 +329,57 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (binding!!.etPremiumAmount.editableText.toString()
-                        .isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()
-                ) {
-                    var commission = binding!!.etPremiumAmount.editableText.toString()
+                if(binding!!.etNetAmount.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
+                    var commission = binding!!.etNetAmount.editableText.toString()
                         .toDouble() * binding!!.etCommission.editableText.toString()
                         .toDouble() / 100
-                    binding!!.etViewCommision.setText(String.format("%.2f", commission))
-                } else {
+                    binding!!.etViewCommision.setText(String.format("%.2f",commission))
+                } else{
                     binding!!.etViewCommision.setText("0.00")
                 }
             }
         })
 
-        binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
+        binding!!.etNetAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var netPremium: Double? = 0.0
+                var totalPremium: Double? = 0.0
+                var gst: Double? = 0.0
+                var commission: Double? = 0.0
+                var viewCommission: Double? = 0.0
+                gst = if(binding!!.etGst.editableText.toString().isNotEmpty()){
+                    addFireInsurance!!.gst!!.toDouble()
+                } else{
+                    0.0
+                }
+                netPremium = if(binding!!.etNetAmount.editableText.toString().isNotEmpty()){
+                    binding!!.etNetAmount.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                commission = if(binding!!.etCommission.editableText.toString().isNotEmpty()){
+                    binding!!.etCommission.editableText.toString().toDouble()
+                } else{
+                    0.0
+                }
+                viewCommission = netPremium
+                    .toDouble() * commission
+                    .toDouble() / 100
+                binding!!.etViewCommision.setText(String.format("%.2f",viewCommission))
+                totalPremium = netPremium + (netPremium * gst / 100)
+                binding!!.etTotalPremium.setText(totalPremium.toString())
+            }
+        })
+
+        /*binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -357,7 +401,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 }
             }
 
-        })
+        })*/
 
         binding!!.btnSave.setOnClickListener {
             var sendFiles: java.util.ArrayList<File>? = java.util.ArrayList()
@@ -410,7 +454,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 callApi -= 1
                 binding!!.etPolicyNumber.error = resources.getString(R.string.invalid_policy_number)
             }
-            if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
                 callApi += 1
                 addFireInsurance!!.premium_amount =
                     binding!!.etPremiumAmount.editableText.toString()
@@ -418,7 +462,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 callApi -= 1
                 binding!!.etPremiumAmount.error =
                     resources.getString(R.string.invalid_premium_amount)
-            }
+            }*/
             if (binding!!.etNetAmount.editableText.toString().isNotEmpty()) {
                 callApi += 1
                 addFireInsurance!!.net_preminum = binding!!.etNetAmount.editableText.toString()
@@ -426,13 +470,13 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 callApi -= 1
                 binding!!.etNetAmount.error = resources.getString(R.string.invalid_net_amount)
             }
-            if (binding!!.etGst.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etGst.editableText.toString().isNotEmpty()) {
                 callApi += 1
                 addFireInsurance!!.gst = binding!!.etGst.editableText.toString()
             } else {
                 callApi -= 1
                 binding!!.etGst.error = resources.getString(R.string.invalid_gst)
-            }
+            }*/
             if (binding!!.etCommission.editableText.toString().isNotEmpty()) {
                 callApi += 1
                 addFireInsurance!!.commision = binding!!.etCommission.editableText.toString()
@@ -455,7 +499,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             }
 
             var commaseparatedlistD = strD.toString()
-            if (commaseparatedlistD.length > 0) commaseparatedlistD = commaseparatedlistD.substring(
+            if (commaseparatedlistD.isNotEmpty()) commaseparatedlistD = commaseparatedlistD.substring(
                 0, commaseparatedlistD.length - 1
             )
 
@@ -463,7 +507,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             addFireInsurance!!.documentsRemoveDataArray = removeD
             addFireInsurance!!.document = docJson.toString()
             addFireInsurance!!.file = sendFiles!!
-            if (callApi >= 9) {
+            if (callApi >= 7) {
                 viewModel!!.editFireInsurance(addFireInsurance!!, policy!!.id!!.toString(), this)
             } else {
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -546,6 +590,10 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         }
     }
 
+    override fun onSuccessGst(gst: GstResponse) {
+
+    }
+
     override fun onSuccessClient(client: ClientListResponse) {
         val gson = Gson()
         val json = gson.toJson(client)
@@ -566,7 +614,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         clients = clientObj.data
         resources.getStringArray(R.array.clients)
         for (i in 0 until clients!!.size) {
-            clientList!!.add(clients!![i]!!.firstname!!)
+            clientList!!.add(clients!![i]!!.firstname!! + " " + clients!![i]!!.lastname!!)
         }
         val clientAdapter = ArrayAdapter(this, R.layout.dropdown_item, clientList!!)
         binding!!.spClientName.setAdapter(clientAdapter)
@@ -585,7 +633,7 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         binding!!.spCompanyName.adapter = companyAdapter
 
         if (clientDetails!!.firstname!!.isNotEmpty()) {
-            val clientPosition: Int = clientAdapter.getPosition(clientDetails!!.firstname)
+            val clientPosition: Int = clientAdapter.getPosition(clientDetails!!.firstname + " " + clientDetails!!.lastname)
             binding!!.spClientName.setSelection(clientPosition)
 
             if (clientPosition >= 0) {

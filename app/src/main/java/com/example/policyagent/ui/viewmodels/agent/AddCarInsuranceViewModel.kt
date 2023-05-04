@@ -10,6 +10,7 @@ import com.example.policyagent.data.requests.addcarinsurance.AddCarInsurance
 import com.example.policyagent.data.responses.CommonResponse
 import com.example.policyagent.data.responses.clientlist.ClientListResponse
 import com.example.policyagent.data.responses.companylist.CompanyListResponse
+import com.example.policyagent.data.responses.gst.GstResponse
 import com.example.policyagent.ui.listeners.AddCarInsuranceListener
 import com.example.policyagent.util.*
 import com.google.gson.Gson
@@ -51,13 +52,13 @@ class AddCarInsuranceViewModel (
                 map["policy_number"] = addCarInsurance.policy_number!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["company_id"] = addCarInsurance.company_id!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["plan_name"] = addCarInsurance.plan_name!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["premium_amount"] = addCarInsurance.premium_amount!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["premium_amount"] = addCarInsurance.net_preminum!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["seating_capacity"] = addCarInsurance.seating_capacity!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["gvw"] = addCarInsurance.gvw!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["claim_details"] = addCarInsurance.claim_details!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["own_damage_premium"] = addCarInsurance.own_damage_premium!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["tp_premium"] = addCarInsurance.tp_premium!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["net_preminum"] = addCarInsurance.net_preminum!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                //map["net_preminum"] = addCarInsurance.net_preminum!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["gst"] = addCarInsurance.gst!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["total_premium"] = addCarInsurance.total_premium!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["premium_type"] = addCarInsurance.premium_type!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -99,6 +100,31 @@ class AddCarInsuranceViewModel (
                         }
                     }
                 }
+            }catch (e: ApiException){
+                listener?.onFailure(e.message!!)
+            }catch (e: NoInternetException){
+                listener?.onFailure(e.message!!)
+            }catch (ex: Exception){
+                printLog("exp-->", ex.message.toString())
+                listener?.onFailure(ex.message!!)
+            }
+        }
+    }
+
+    fun getGst(mContext: Context){
+        listener?.onStarted()
+        Coroutines.main {
+            try {
+
+                val response = Gson().fromJson(repository.getGst(), GstResponse::class.java)
+                if (response.status!!){
+                    if (response.data != null) {
+                        response.let {
+                            listener!!.onSuccessGst(it)
+                            return@main
+                        }
+                    }}
+                listener!!.onFailure("Something Went Wrong")
             }catch (e: ApiException){
                 listener?.onFailure(e.message!!)
             }catch (e: NoInternetException){
