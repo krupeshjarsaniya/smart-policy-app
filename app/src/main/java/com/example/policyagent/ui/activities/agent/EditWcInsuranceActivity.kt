@@ -403,83 +403,83 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
                 }
             }
 
-            if (binding!!.etSt.editableText.toString().isNotEmpty()) {
-                callApi += 1
+            /*if (binding!!.etSt.editableText.toString().isNotEmpty()) {
+                callApi+=1
                 addWcInsurance!!.st = binding!!.etSt.editableText.toString()
             } else {
-                callApi -= 1
-                binding!!.etSt.error = resources.getString(R.string.invalid_st)
-            }
-            if (binding!!.etStWithMe.editableText.toString().isNotEmpty()) {
-                callApi += 1
+                callApi-=1
+                binding!!.etSt.error = resources.getString(R.string.invalid_sum_insured)
+            }*/
+            /*if (binding!!.etStWithMe.editableText.toString().isNotEmpty()) {
+                callApi+=1
                 addWcInsurance!!.st_with_me = binding!!.etStWithMe.editableText.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.etStWithMe.error = resources.getString(R.string.invalid_st_with_me)
-            }
-            if (binding!!.etNoOf.editableText.toString().isNotEmpty()) {
-                callApi += 1
-                addWcInsurance!!.no_of = binding!!.etNoOf.editableText.toString()
+            }*/
+            /*if (binding!!.etNoOf.editableText.toString().isNotEmpty()) {
+                callApi+=1
+                addWcInsurance!!.no_of = binding!!. etNoOf.editableText.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.etNoOf.error = resources.getString(R.string.invalid_no_of)
-            }
+            }*/
             /*if (binding!!.etGst.editableText.toString().isNotEmpty()) {
-                callApi += 1
+                callApi+=1
                 addWcInsurance!!.gst = binding!!.etGst.editableText.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.etGst.error = resources.getString(R.string.invalid_gst)
             }*/
             if (binding!!.etCommission.editableText.toString().isNotEmpty()) {
-                callApi += 1
+                callApi+=1
                 addWcInsurance!!.commision = binding!!.etCommission.editableText.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.etCommission.error = resources.getString(R.string.invalid_commission)
             }
             if (binding!!.tvStartDate.editableText.toString().isNotEmpty()) {
-                callApi += 1
+                callApi+=1
                 addWcInsurance!!.risk_start_date = binding!!.tvStartDate.text.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.tvStartDate.error = resources.getString(R.string.invalid_risk_start_date)
             }
             if (binding!!.tvEndDate.editableText.toString().isNotEmpty()) {
-                callApi += 1
+                callApi+=1
                 addWcInsurance!!.risk_end_date = binding!!.tvEndDate.text.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.tvEndDate.error = resources.getString(R.string.invalid_risk_end_date)
             }
             if (binding!!.etPolicyNumber.editableText.toString().isNotEmpty()) {
-                callApi += 1
+                callApi+=1
                 addWcInsurance!!.policy_number = binding!!.etPolicyNumber.editableText.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.etPolicyNumber.error = resources.getString(R.string.invalid_policy_number)
             }
             /*if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
-                callApi += 1
+                callApi+=1
                 addWcInsurance!!.premium_amount =
                     binding!!.etPremiumAmount.editableText.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.etPremiumAmount.error = resources.getString(R.string.invalid_premium_amount)
             }*/
             if (binding!!.etNetAmount.editableText.toString().isNotEmpty()) {
-                callApi += 1
+                callApi+=1
                 addWcInsurance!!.net_preminum = binding!!.etNetAmount.editableText.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.etNetAmount.error = resources.getString(R.string.invalid_net_premium)
             }
             if (binding!!.etTotalPremium.editableText.toString().isNotEmpty()) {
-                callApi += 1
+                callApi+=1
                 addWcInsurance!!.total_premium =
                     binding!!.etTotalPremium.editableText.toString()
             } else {
-                callApi -= 1
+                callApi-=1
                 binding!!.etTotalPremium.error = resources.getString(R.string.invalid_total_premium)
             }
             val strD = StringBuilder("")
@@ -491,12 +491,14 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
             if (commaseparatedlistD.isNotEmpty()) commaseparatedlistD = commaseparatedlistD.substring(
                 0, commaseparatedlistD.length - 1
             )
-
+            addWcInsurance!!.st = binding!!.etSt.editableText.toString()
+            addWcInsurance!!.st_with_me = binding!!.etStWithMe.editableText.toString()
+            addWcInsurance!!.no_of = binding!!. etNoOf.editableText.toString()
             var removeD = commaseparatedlistD
             addWcInsurance!!.documentsRemoveDataArray = removeD
             addWcInsurance!!.document = docJson.toString()
             addWcInsurance!!.file = sendFiles!!
-            if (callApi >= 9) {
+            if (callApi >= 6) {
                 viewModel!!.editWcInsurance(addWcInsurance!!, policy!!.id!!.toString(),this)
             } else {
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -566,6 +568,10 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         hideProgress()
         if (errors.containsKey("policy_number")) {
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        } else if(errors.containsKey("policy_file")){
+            showToastMessage(errors["policy_file"].toString())
+        } else if(errors.containsKey("file")){
+            showToastMessage(errors["file"].toString())
         }
     }
 

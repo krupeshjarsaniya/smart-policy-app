@@ -117,6 +117,10 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.getCompanyList(getHeaderMap()) }
     }
 
+    suspend fun getContactUs(): JsonObject {
+        return apiRequest { api.getContactUs(getHeaderMap()) }
+    }
+
     suspend fun getState(): JsonObject {
         return apiRequest { api.getStateList(getHeaderMap()) }
     }
@@ -174,6 +178,14 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
     }
     suspend fun editClient(map: HashMap<String, RequestBody>, id: String): JsonObject {
         return apiRequest { api.editClient(getHeaderMap(),map,id) }
+    }
+
+    suspend fun editClientProfile(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.clientEditProfile(getHeaderMap(),map) }
+    }
+
+    suspend fun editAgentProfile(map: HashMap<String, RequestBody>): JsonObject {
+        return apiRequest { api.agentEditProfile(getHeaderMap(),map) }
     }
 
     suspend fun editHealthInsurance(map: HashMap<String, RequestBody>, id: String): JsonObject {

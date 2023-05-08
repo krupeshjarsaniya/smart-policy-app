@@ -1,11 +1,13 @@
 package com.example.policyagent.ui.fragments.client
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.CommonResponse
@@ -13,6 +15,7 @@ import com.example.policyagent.databinding.FragmentClientProfileBinding
 import com.example.policyagent.ui.activities.ChangePasswordActivity
 import com.example.policyagent.ui.activities.ContactUsActivity
 import com.example.policyagent.ui.activities.LoginActivity
+import com.example.policyagent.ui.activities.agent.AgentEditProfileActivity
 import com.example.policyagent.ui.activities.client.ClientEditProfileActivity
 import com.example.policyagent.ui.factory.MainViewModelFactory
 import com.example.policyagent.ui.fragments.BaseFragment
@@ -42,19 +45,35 @@ class ClientProfileFragment : BaseFragment(), KodeinAware, ClientProfileListener
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_client_profile, container, false)
         viewModel = ViewModelProvider(this, factory).get(ClientProfileViewModel::class.java)
         viewModel.listener = this
-        binding!!.appBar.tvTitle.text = resources.getString(R.string.policies)
+        binding!!.appBar.tvTitle.text = resources.getString(R.string.profile)
         binding!!.appBar.ivBack.hide()
+        viewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer { user ->
+            if (user != null) {
+                binding!!.tvUsername.text = "${user.firstname} ${user.lastname}"
+                binding!!.itvEmail.text = "${user.email}"
+            }
+        })
         binding!!.llChangePassword.setOnClickListener {
             requireActivity().launchActivity<ChangePasswordActivity> {
             }
         }
         binding!!.llEditProfile.setOnClickListener {
-            requireActivity().launchActivity<ClientEditProfileActivity> {
+            var userType = viewModel.getPreference().getStringValue(AppConstants.USER_TYPE)
+            if(userType == AppConstants.AGENT) {
+                requireActivity().launchActivity<AgentEditProfileActivity> {
+                }
+            } else{
+                requireActivity().launchActivity<ClientEditProfileActivity> {
+                }
             }
         }
         binding!!.llContactUs.setOnClickListener {
             requireActivity().launchActivity<ContactUsActivity> {
             }
+        }
+        binding!!.llTermsCondition.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://technocometsolutions.in/developers/smart-policy/termandcondition"))
+            startActivity(browserIntent)
         }
         binding!!.btnLogout.setOnClickListener {
             viewModel.onLogout(requireContext())

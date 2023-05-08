@@ -354,13 +354,13 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 docJson!!.add(gson.toJson(doc))
             }
 
-            if (binding!!.etSt.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etSt.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addFireInsurance!!.st = binding!!.etSt.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etSt.error = resources.getString(R.string.invalid_st)
-            }
+            }*/
 
             if (binding!!.tvStartDate.editableText.toString().isNotEmpty()) {
                 callApi+=1
@@ -420,10 +420,10 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 callApi-=1
                 binding!!.etTotalPremium.error = resources.getString(R.string.invalid_total_premium)
             }
-
+            addFireInsurance!!.st = binding!!.etSt.editableText.toString()
             addFireInsurance!!.document = docJson.toString()
             addFireInsurance!!.file = fileList
-            if(callApi >= 7) {
+            if(callApi >= 6) {
                 viewModel!!.addFireInsurance(addFireInsurance!!, this)
             } else{
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -491,6 +491,10 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
         hideProgress()
         if(errors.containsKey("policy_number")){
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        } else if(errors.containsKey("policy_file")){
+            showToastMessage(errors["policy_file"].toString())
+        } else if(errors.containsKey("file")){
+            showToastMessage(errors["file"].toString())
         }
     }
 

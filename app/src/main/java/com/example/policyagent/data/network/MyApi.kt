@@ -71,6 +71,9 @@ interface MyApi {
     @GET("agent/companylist")
     suspend fun getCompanyList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
 
+    @GET("contactus")
+    suspend fun getContactUs(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
+
     @GET("agent/statelist")
     suspend fun getStateList(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>
 
@@ -141,6 +144,14 @@ interface MyApi {
     suspend fun getPolicyList(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
 
     @Multipart
+    @POST("client/profile/update")
+    suspend fun clientEditProfile(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
+
+    @Multipart
+    @POST("agent/profile/update")
+    suspend fun agentEditProfile(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
+
+    @Multipart
     @POST("client/other-insurance/create")
     suspend fun addPolicy(@HeaderMap map: HashMap<String, Any>, @PartMap body: HashMap<String, RequestBody>): Response<JsonObject>
 
@@ -189,8 +200,8 @@ interface MyApi {
 
             val okkHttpclient = OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(1, TimeUnit.MINUTES)
+                .writeTimeout(1, TimeUnit.MINUTES)
                 .addInterceptor(networkConnectionInterceptor)
                 .addInterceptor(interceptor)
                 .build()

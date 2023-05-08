@@ -425,13 +425,13 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
                 }
             }
 
-            if (binding!!.etSt.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etSt.editableText.toString().isNotEmpty()) {
                 callApi += 1
                 addFireInsurance!!.st = binding!!.etSt.editableText.toString()
             } else {
                 callApi -= 1
                 binding!!.etSt.error = resources.getString(R.string.invalid_st)
-            }
+            }*/
 
             if (binding!!.tvStartDate.editableText.toString().isNotEmpty()) {
                 callApi += 1
@@ -502,12 +502,13 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
             if (commaseparatedlistD.isNotEmpty()) commaseparatedlistD = commaseparatedlistD.substring(
                 0, commaseparatedlistD.length - 1
             )
+            addFireInsurance!!.st = binding!!.etSt.editableText.toString()
 
             var removeD = commaseparatedlistD
             addFireInsurance!!.documentsRemoveDataArray = removeD
             addFireInsurance!!.document = docJson.toString()
             addFireInsurance!!.file = sendFiles!!
-            if (callApi >= 7) {
+            if (callApi >= 6) {
                 viewModel!!.editFireInsurance(addFireInsurance!!, policy!!.id!!.toString(), this)
             } else {
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -579,6 +580,10 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         hideProgress()
         if (errors.containsKey("policy_number")) {
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        } else if(errors.containsKey("policy_file")){
+            showToastMessage(errors["policy_file"].toString())
+        } else if(errors.containsKey("file")){
+            showToastMessage(errors["file"].toString())
         }
     }
 

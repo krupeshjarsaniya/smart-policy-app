@@ -744,13 +744,13 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
 //                callApi-=1
 //                binding!!.etSt.error = resources.getString(R.string.invalid_st)
 //            }
-            if (binding!!.etPed.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etPed.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.pre_existing_decease = binding!!.etPed.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPed.error = resources.getString(R.string.invalid_pre_existing_decease)
-            }
+            }*/
             if (binding!!.tvStartDate.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.risk_start_date = binding!!.tvStartDate.text.toString()
@@ -802,14 +802,14 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                 callApi-=1
                 binding!!.etPolicyTerm.error = resources.getString(R.string.invalid_policy_term)
             }*/
-            if (binding!!.etWaitingPeriod.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etWaitingPeriod.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.waiting =
                     binding!!.etWaitingPeriod.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etWaitingPeriod.error = resources.getString(R.string.invalid_waiting_period)
-            }
+            }*/
             /*if (binding!!.etSumInsured.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.sum_insured = binding!!.etSumInsured.editableText.toString()
@@ -817,13 +817,13 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
                 callApi-=1
                 binding!!.etSumInsured.error = resources.getString(R.string.invalid_sum_insured)
             }*/
-            if (binding!!.etBonus.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etBonus.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.bonus = binding!!.etBonus.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etBonus.error = resources.getString(R.string.invalid_bonus)
-            }
+            }*/
             /*if (binding!!.etTotalSumInsured.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.total_sum_insured = binding!!.etTotalSumInsured.editableText.toString()
@@ -843,10 +843,13 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
             addHealthInsurance!!.policy_term = binding!!.etPolicyTerm.editableText.toString()
             addHealthInsurance!!.sum_insured = binding!!.etSumInsured.editableText.toString()
             addHealthInsurance!!.total_sum_insured = binding!!.etTotalSumInsured.editableText.toString()
+            addHealthInsurance!!.pre_existing_decease = binding!!.etPed.editableText.toString()
+            addHealthInsurance!!.waiting = binding!!.etWaitingPeriod.editableText.toString()
+            addHealthInsurance!!.bonus = binding!!.etBonus.editableText.toString()
             addHealthInsurance!!.family = familyJson.toString()
             addHealthInsurance!!.document = docJson.toString()
             addHealthInsurance!!.file = fileList
-            if(callApi >= 9) {
+            if(callApi >= 6) {
                 viewModel!!.addHealthInsurance(addHealthInsurance!!, this)
             } else {
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -1004,6 +1007,10 @@ class AddHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentList
         hideProgress()
         if(errors.containsKey("policy_number")){
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        } else if(errors.containsKey("policy_file")){
+            showToastMessage(errors["policy_file"].toString())
+        } else if(errors.containsKey("file")){
+            showToastMessage(errors["file"].toString())
         }
     }
 

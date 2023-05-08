@@ -1,4 +1,4 @@
-package com.example.policyagent.ui.viewmodels.client
+package com.example.policyagent.ui.viewmodels.agent
 
 import android.content.Context
 import android.net.Uri
@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.policyagent.data.preferences.PreferenceProvider
 import com.example.policyagent.data.repositories.MainRepository
+import com.example.policyagent.data.requests.editAgentProfile.EditAgentProfile
 import com.example.policyagent.data.requests.editClientProfile.EditClientProfile
 import com.example.policyagent.data.requests.editclient.EditClient
 import com.example.policyagent.data.responses.CommonResponse
@@ -22,7 +23,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
-class ClientEditProfileViewModel (
+class AgentEditProfileViewModel (
     private val repository: MainRepository
 ) : ViewModel() {
 
@@ -35,7 +36,7 @@ class ClientEditProfileViewModel (
     }
 
 
-    fun editClientProfile(editClient: EditClientProfile, mContext: Context){
+    fun editClientProfile(editClient: EditAgentProfile, mContext: Context){
         listener?.onStarted()
         Coroutines.main {
             try {
@@ -43,22 +44,21 @@ class ClientEditProfileViewModel (
                 val json = gson.toJson(editClient)
                 Log.e("ediclientrequest",json!!.replace("\\",""))
                 val map = HashMap<String, RequestBody>()
-                map["firstname"] = editClient.firstname!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["middlename"] = editClient.middlename!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["lastname"] = editClient.lastname!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["first_name"] = editClient.firstname!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["middle_name"] = editClient.middlename!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["last_name"] = editClient.lastname!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["email"] = editClient.email!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["mobile"] = editClient.mobile!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                //map["mobile"] = editClient.mobile!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["address"] = editClient.address!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["city"] = editClient.city!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["state"] = editClient.state!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["birthdate"] = editClient.birthdate!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["gender"] = editClient.gender!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["age"] = editClient.age!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["marital_status"] = editClient.marital_status!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                map["plantype"] = editClient.plantype!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["c_pan_number"] = editClient.c_pan_number!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["gst_number"] = editClient.gst_number!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
-                val response = Gson().fromJson(repository.editClientProfile(map), LoginResponse::class.java)
+                val response = Gson().fromJson(repository.editAgentProfile(map), LoginResponse::class.java)
                 if (response.status!!){
                     listener!!.onSuccess(response)
                     repository.saveUser(response.data!!)

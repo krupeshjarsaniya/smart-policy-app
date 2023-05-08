@@ -557,13 +557,13 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
             for (doc in documentList) {
                 docJson!!.add(gson.toJson(doc))
             }
-            if (binding!!.etSumInsured.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etSumInsured.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.sum_insured = binding!!.etSumInsured.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etSumInsured.error = resources.getString(R.string.invalid_sum_insured)
-            }
+            }*/
             if (binding!!.tvStartDate.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.policy_start_date = binding!!.tvStartDate.text.toString()
@@ -578,13 +578,13 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 callApi-=1
                 binding!!.tvEndDate.error = resources.getString(R.string.invalid_policy_end_date)
             }
-            if (binding!!.etPed.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etPed.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.pre_existing_decease = binding!!.etPed.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPed.error = resources.getString(R.string.invalid_pre_existing_decease)
-            }
+            }*/
             if (binding!!.etPolicyNumber.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.policy_number = binding!!.etPolicyNumber.editableText.toString()
@@ -592,13 +592,13 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 callApi-=1
                 binding!!.etPolicyNumber.error = resources.getString(R.string.invalid_policy_number)
             }
-            if (binding!!.etPlanName.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etPlanName.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.plan_name = binding!!.etPlanName.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPlanName.error = resources.getString(R.string.invalid_plan_name)
-            }
+            }*/
             if (binding!!.etPremiumAmount.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.premium_amount =
@@ -640,21 +640,21 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 callApi-=1
                 binding!!.etPremiumPaymentTerm.error = resources.getString(R.string.invalid_premium_payment_term)
             }
-            if (binding!!.etMaturityTerm.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etMaturityTerm.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.maturity_term = binding!!.etMaturityTerm.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etMaturityTerm.error = resources.getString(R.string.invalid_maturity_term)
-            }
-            if (binding!!.etYearlyBonusAmount.editableText.toString().isNotEmpty()) {
+            }*/
+            /*if (binding!!.etYearlyBonusAmount.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.yearly_bonus_amount =
                     binding!!.etYearlyBonusAmount.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etYearlyBonusAmount.error = resources.getString(R.string.invalid_yearly_bonus_amount)
-            }
+            }*/
             if (binding!!.etCommission.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.commision = binding!!.etCommission.editableText.toString()
@@ -662,26 +662,33 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                 callApi-=1
                 binding!!.etCommission.error = resources.getString(R.string.invalid_commission)
             }
-            if (binding!!.etNomineeDetails.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etNomineeDetails.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.nominee_details =
                     binding!!.etNomineeDetails.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etNomineeDetails.error = resources.getString(R.string.invalid_nominee_details)
-            }
-            if (binding!!.etAdditionalRider.editableText.toString().isNotEmpty()) {
+            }*/
+            /*if (binding!!.etAdditionalRider.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addLifeInsurance!!.additional_rider =
                     binding!!.etAdditionalRider.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etAdditionalRider.error = resources.getString(R.string.invalid_additional_rider)
-            }
+            }*/
             addLifeInsurance!!.family = familyJson.toString()
             addLifeInsurance!!.document = docJson.toString()
+            addLifeInsurance!!.sum_insured = binding!!.etSumInsured.editableText.toString()
+            addLifeInsurance!!.pre_existing_decease = binding!!.etPed.editableText.toString()
+            addLifeInsurance!!.plan_name = binding!!.etPlanName.editableText.toString()
+            addLifeInsurance!!.maturity_term = binding!!.etMaturityTerm.editableText.toString()
+            addLifeInsurance!!.yearly_bonus_amount = binding!!.etYearlyBonusAmount.editableText.toString()
+            addLifeInsurance!!.nominee_details = binding!!.etNomineeDetails.editableText.toString()
+            addLifeInsurance!!.additional_rider = binding!!.etAdditionalRider.editableText.toString()
             addLifeInsurance!!.file = fileList
-            if(callApi >= 16) {
+            if(callApi >= 9) {
                 viewModel!!.addLifeInsurance(addLifeInsurance!!, this)
             } else{
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -763,6 +770,10 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
         } else if(errors.containsKey("preminum_payment_term")){
             binding!!.etPremiumPaymentTerm.error = errors["preminum_payment_term"].toString()
+        } else if(errors.containsKey("policy_file")){
+            showToastMessage(errors["policy_file"].toString())
+        } else if(errors.containsKey("file")){
+            showToastMessage(errors["file"].toString())
         }
     }
 

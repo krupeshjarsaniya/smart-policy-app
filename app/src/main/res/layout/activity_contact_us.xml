@@ -61,13 +61,14 @@
                             android:textSize="@dimen/small" />
 
                         <TextView
+                            android:id="@+id/tv_mobile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:fontFamily="@font/poppins_bold"
                             android:gravity="center_vertical"
-                            android:text="+91 99******99"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/normal" />
                     </LinearLayout>
@@ -115,13 +116,14 @@
                             android:textSize="@dimen/small" />
 
                         <TextView
+                            android:id="@+id/tv_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins_bold"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:gravity="center_vertical"
-                            android:text="info**********com"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/normal" />
                     </LinearLayout>
@@ -166,13 +168,14 @@
                             android:textSize="@dimen/small" />
 
                         <TextView
+                            android:id="@+id/tv_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:fontFamily="@font/poppins_bold"
                             android:gravity="center_vertical"
-                            android:text="1234 RK Empire, Rajkot, Gujrat 360004"
+                            android:text=""
                             android:textColor="@color/black"
                             android:textSize="@dimen/normal" />
                     </LinearLayout>

@@ -68,6 +68,7 @@
                 android:padding="@dimen/_1sdp"
                 android:elevation="@dimen/_5sdp"
                 android:src="@drawable/ic_profile_placeholder"
+                android:visibility="gone"
                 />
 
             <TextView
@@ -173,6 +174,7 @@
                     android:id="@+id/ll_notification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -209,6 +211,7 @@
                     android:id="@+id/ll_share_app"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"

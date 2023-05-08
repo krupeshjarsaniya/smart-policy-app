@@ -337,27 +337,27 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 docJson!!.add(gson.toJson(doc))
             }
 
-            if (binding!!.etSt.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etSt.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addWcInsurance!!.st = binding!!.etSt.editableText.toString()
             } else {
                 callApi-=1
-                binding!!.etSt.error = resources.getString(R.string.invalid_st)
-            }
-            if (binding!!.etStWithMe.editableText.toString().isNotEmpty()) {
+                binding!!.etSt.error = resources.getString(R.string.invalid_sum_insured)
+            }*/
+            /*if (binding!!.etStWithMe.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addWcInsurance!!.st_with_me = binding!!.etStWithMe.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etStWithMe.error = resources.getString(R.string.invalid_st_with_me)
-            }
-            if (binding!!.etNoOf.editableText.toString().isNotEmpty()) {
+            }*/
+            /*if (binding!!.etNoOf.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addWcInsurance!!.no_of = binding!!. etNoOf.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etNoOf.error = resources.getString(R.string.invalid_no_of)
-            }
+            }*/
             /*if (binding!!.etGst.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addWcInsurance!!.gst = binding!!.etGst.editableText.toString()
@@ -416,10 +416,12 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 callApi-=1
                 binding!!.etTotalPremium.error = resources.getString(R.string.invalid_total_premium)
             }
-
+            addWcInsurance!!.st = binding!!.etSt.editableText.toString()
+            addWcInsurance!!.st_with_me = binding!!.etStWithMe.editableText.toString()
+            addWcInsurance!!.no_of = binding!!. etNoOf.editableText.toString()
             addWcInsurance!!.document = docJson.toString()
             addWcInsurance!!.file = fileList
-            if(callApi >= 9) {
+            if(callApi >= 6) {
                 viewModel!!.addWcInsurance(addWcInsurance!!, this)
             } else{
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -486,6 +488,10 @@ class AddWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListener
         hideProgress()
         if(errors.containsKey("policy_number")){
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        } else if(errors.containsKey("policy_file")){
+            showToastMessage(errors["policy_file"].toString())
+        } else if(errors.containsKey("file")){
+            showToastMessage(errors["file"].toString())
         }
     }
 

@@ -665,6 +665,11 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         hideProgress()
         if(errors.containsKey("policy_number")){
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        } else if(errors.containsKey("policy_file")){
+            showToastMessage(errors["policy_file"].toString())
+        }
+        else if(errors.containsKey("file")){
+            showToastMessage(errors["file"].toString())
         }
     }
 

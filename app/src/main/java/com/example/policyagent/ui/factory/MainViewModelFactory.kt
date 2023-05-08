@@ -131,6 +131,9 @@ class MainViewModelFactory(
             EditClientViewModel::class.java -> {
                 EditClientViewModel(repository) as T
             }
+            AgentEditProfileViewModel::class.java -> {
+                AgentEditProfileViewModel(repository) as T
+            }
             else -> {
                 SplashViewModel(repository) as T
             }

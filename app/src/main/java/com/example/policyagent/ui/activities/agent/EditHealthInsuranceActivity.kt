@@ -774,20 +774,20 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 }
             }
 
-            /*if (binding!!.etSt.editableText.toString().isNotEmpty()) {
-                callApi+=1
-                addHealthInsurance!!.st = binding!!.etSt.editableText.toString()
-            } else {
-                callApi-=1
-                binding!!.etSt.error = resources.getString(R.string.invalid_st)
-            }*/
-            if (binding!!.etPed.editableText.toString().isNotEmpty()) {
+            //            if (binding!!.etSt.editableText.toString().isNotEmpty()) {
+//                callApi+=1
+//                addHealthInsurance!!.st = binding!!.etSt.editableText.toString()
+//            } else {
+//                callApi-=1
+//                binding!!.etSt.error = resources.getString(R.string.invalid_st)
+//            }
+            /*if (binding!!.etPed.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.pre_existing_decease = binding!!.etPed.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etPed.error = resources.getString(R.string.invalid_pre_existing_decease)
-            }
+            }*/
             if (binding!!.tvStartDate.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.risk_start_date = binding!!.tvStartDate.text.toString()
@@ -826,7 +826,8 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
             }
             if (binding!!.etNetPremium.editableText.toString().isNotEmpty()) {
                 callApi+=1
-                addHealthInsurance!!.net_premium = binding!!.etNetPremium.editableText.toString()
+                addHealthInsurance!!.net_premium =
+                    binding!!.etNetPremium.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etNetPremium.error = resources.getString(R.string.invalid_net_premium)
@@ -838,14 +839,14 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 callApi-=1
                 binding!!.etPolicyTerm.error = resources.getString(R.string.invalid_policy_term)
             }*/
-            if (binding!!.etWaitingPeriod.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etWaitingPeriod.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.waiting =
                     binding!!.etWaitingPeriod.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etWaitingPeriod.error = resources.getString(R.string.invalid_waiting_period)
-            }
+            }*/
             /*if (binding!!.etSumInsured.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.sum_insured = binding!!.etSumInsured.editableText.toString()
@@ -853,13 +854,13 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 callApi-=1
                 binding!!.etSumInsured.error = resources.getString(R.string.invalid_sum_insured)
             }*/
-            if (binding!!.etBonus.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etBonus.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.bonus = binding!!.etBonus.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etBonus.error = resources.getString(R.string.invalid_bonus)
-            }
+            }*/
             /*if (binding!!.etTotalSumInsured.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.total_sum_insured = binding!!.etTotalSumInsured.editableText.toString()
@@ -867,7 +868,6 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 callApi-=1
                 binding!!.etTotalSumInsured.error = resources.getString(R.string.invalid_total_sum_insured)
             }*/
-
             if (binding!!.etCommission.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.commision =
@@ -897,6 +897,9 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
             addHealthInsurance!!.policy_term = binding!!.etPolicyTerm.editableText.toString()
             addHealthInsurance!!.sum_insured = binding!!.etSumInsured.editableText.toString()
             addHealthInsurance!!.total_sum_insured = binding!!.etTotalSumInsured.editableText.toString()
+            addHealthInsurance!!.pre_existing_decease = binding!!.etPed.editableText.toString()
+            addHealthInsurance!!.waiting = binding!!.etWaitingPeriod.editableText.toString()
+            addHealthInsurance!!.bonus = binding!!.etBonus.editableText.toString()
             var removeF = commaseparatedlistF
             var removeD = commaseparatedlistD
             addHealthInsurance!!.familayRemove = removeF
@@ -904,7 +907,7 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
             addHealthInsurance!!.family = familyJson.toString()
             addHealthInsurance!!.document = docJson.toString()
             addHealthInsurance!!.file = sendFiles!!
-            if(callApi >= 9) {
+            if(callApi >= 6) {
                 viewModel!!.editHealthInsurance(addHealthInsurance!!, policy!!.id!!.toString(),this)
             } else{
                 showToastMessage(resources.getString(R.string.invalid_data))
@@ -990,6 +993,10 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
         hideProgress()
         if (errors.containsKey("policy_number")) {
             binding!!.etPolicyNumber.error = errors["policy_number"].toString()
+        } else if(errors.containsKey("policy_file")){
+            showToastMessage(errors["policy_file"].toString())
+        } else if(errors.containsKey("file")){
+            showToastMessage(errors["file"].toString())
         }
     }
 

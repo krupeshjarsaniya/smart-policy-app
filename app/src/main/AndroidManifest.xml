@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.agent.AgentEditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.agent.ClientDetailsActivity"
             android:exported="false" />
         <activity

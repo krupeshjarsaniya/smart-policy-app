@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.text.*
-import android.text.format.DateFormat
 import android.util.Base64
 import android.util.Base64OutputStream
 import android.util.Log
@@ -21,6 +20,7 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.startActivity
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.policyagent.BuildConfig
 import com.example.policyagent.R
@@ -30,8 +30,6 @@ import java.io.*
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.time.ZonedDateTime
-import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -93,6 +91,20 @@ fun getFileChooserIntent(): Intent {
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
     }
     return intent
+}
+
+fun openDieler(number: String,context: Context){
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = Uri.parse("tel:"+number)
+    context.startActivity(intent)
+}
+
+fun openMail(addresses: String,context: Context) {
+    val intent = Intent(Intent.ACTION_SENDTO)
+    intent.data = Uri.parse("mailto:") // only email apps should handle this
+    intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(addresses))
+    intent.putExtra(Intent.EXTRA_SUBJECT, "")
+        context.startActivity(intent)
 }
 
 fun getFileFromURI(uri: Uri, context: Context): File? {

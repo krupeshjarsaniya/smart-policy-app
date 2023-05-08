@@ -46,7 +46,7 @@ class LoginSuccessActivity : BaseActivity(), KodeinAware, LoginSuccessListener {
             }
         },1000)*/
         if (userType == "AGENT") {
-            viewModel!!.getGst(this)
+            viewModel!!.getClients(this)
         } else {
             viewModel!!.getMembers(this)
         }
