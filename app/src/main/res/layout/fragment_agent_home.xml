@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,6 +74,16 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:text="@string/dashboard"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,7 +92,7 @@
                     android:orientation="horizontal">
 
                     <FrameLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
@@ -113,75 +123,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="@dimen/_8sdp"
                                 android:fontFamily="@font/poppins_semibold"
-                                android:text="10000"
+                                android:text="0"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
 
-                           <!-- <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="@dimen/_10sdp"
-                                    android:layout_height="@dimen/_10sdp"
-                                    android:src="@drawable/ic_up" />
-
-                                <TextView
-                                    android:id="@+id/tv_user_growth"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/_2sdp"
-                                    android:fontFamily="@font/poppins_regular"
-                                    android:text="5%"
-                                    android:textColor="@color/black"
-                                    android:textSize="@dimen/extra_small" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/_2sdp"
-                                    android:fontFamily="@font/poppins_medium"
-                                    android:text="Last Week"
-                                    android:textColor="@color/grey"
-                                    android:textSize="@dimen/extra_small" />
-                            </LinearLayout>-->
                         </LinearLayout>
-                        <!--<LinearLayout
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_gravity="end"
-                            android:gravity="center"
-                            android:background="@drawable/bg_white_circle">
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="@dimen/_10sdp"
-                                    android:layout_height="@dimen/_10sdp"
-                                    android:src="@drawable/ic_up"
-                                    app:tint="@color/green" />
-
-                                <TextView
-                                    android:id="@+id/tv_user_growth"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/_2sdp"
-                                    android:fontFamily="@font/poppins_regular"
-                                    android:text="5%"
-                                    android:textColor="@color/green"
-                                    android:textSize="@dimen/normal" />
-
-                            </LinearLayout>
-                        </LinearLayout>-->
                     </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
@@ -212,7 +162,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="@dimen/_8sdp"
                                 android:fontFamily="@font/poppins_semibold"
-                                android:text="12000"
+                                android:text="0"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
 
@@ -259,7 +209,7 @@
                     android:orientation="horizontal">
 
                     <FrameLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
@@ -289,49 +239,18 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginVertical="@dimen/_8sdp"
                                 android:fontFamily="@font/poppins_semibold"
-                                android:text="$21451"
+                                android:text="₹0"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
 
                         </LinearLayout>
 
-                        <!--<LinearLayout
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_gravity="end"
-                            android:gravity="center"
-                            android:background="@drawable/bg_white_circle">
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="@dimen/_10sdp"
-                                    android:layout_height="@dimen/_10sdp"
-                                    android:src="@drawable/ic_down"
-                                    app:tint="@color/red" />
-
-                                <TextView
-                                    android:id="@+id/tv_expenses_growth"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginHorizontal="@dimen/_2sdp"
-                                    android:fontFamily="@font/poppins_regular"
-                                    android:text="5%"
-                                    android:textColor="@color/red"
-                                    android:textSize="@dimen/normal" />
-
-                            </LinearLayout>
-                        </LinearLayout>-->
                     </FrameLayout>
 
                     <FrameLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2">
+                        android:layout_weight="1">
                     <LinearLayout
                         android:id="@+id/ll_due_payment"
                         android:layout_width="match_parent"
@@ -359,11 +278,113 @@
                             android:layout_height="wrap_content"
                             android:layout_marginVertical="@dimen/_8sdp"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="$87564"
+                            android:text="₹0"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginVertical="@dimen/_12sdp"
+                    android:layout_marginHorizontal="@dimen/_12sdp"
+                    android:background="@color/grey"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingStart="@dimen/_12sdp"
+                    android:text="@string/policy_details"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:id="@+id/ll_expired_policy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_user"
+                            android:gravity="start"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_8sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/expired_policy"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp" />
+
+                            <TextView
+                                android:id="@+id/tv_expired_policy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/_8sdp"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="0"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12sdp" />
+
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:id="@+id/ll_upcoming_expire_policy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_profit"
+                            android:gravity="start"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_8sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/upcoming_expire_policy"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp" />
+
+                            <TextView
+                                android:id="@+id/tv_upcoming_expire_policy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/_8sdp"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="0"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12sdp" />
+
+                        </LinearLayout>
                         <!--<LinearLayout
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
@@ -380,21 +401,106 @@
                                 <ImageView
                                     android:layout_width="@dimen/_10sdp"
                                     android:layout_height="@dimen/_10sdp"
-                                    android:src="@drawable/ic_up"
-                                    app:tint="@color/green" />
+                                    android:src="@drawable/ic_down"
+                                    app:tint="@color/red" />
 
                                 <TextView
-                                    android:id="@+id/tv_cost_growth"
+                                    android:id="@+id/tv_profit_growth"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/_2sdp"
                                     android:fontFamily="@font/poppins_regular"
                                     android:text="5%"
-                                    android:textColor="@color/green"
+                                    android:textColor="@color/red"
                                     android:textSize="@dimen/normal" />
 
                             </LinearLayout>
                         </LinearLayout>-->
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:id="@+id/ll_payment_due_policy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:background="@drawable/bg_expenses"
+                            android:gravity="start"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_8sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/payment_due_policy"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp" />
+
+                            <TextView
+                                android:id="@+id/tv_payment_due_policy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/_8sdp"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="₹0"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12sdp" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <LinearLayout
+                            android:id="@+id/ll_upcoming_payment_policy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_cost"
+                            android:gravity="start"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_8sdp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/upcoming_payment_policy"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9sdp" />
+
+                            <TextView
+                                android:id="@+id/tv_upcoming_payment_policy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/_8sdp"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="₹0"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12sdp" />
+
+                        </LinearLayout>
                     </FrameLayout>
 
                 </LinearLayout>

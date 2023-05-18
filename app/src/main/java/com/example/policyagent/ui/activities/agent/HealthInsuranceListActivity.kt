@@ -86,7 +86,6 @@ class HealthInsuranceListActivity : BaseActivity(), KodeinAware, HealthInsurance
 
     override fun onResume() {
         super.onResume()
-        policyList.clear()
         page = 1
         viewModel!!.getHealthInsurance(this, page)
     }
@@ -122,6 +121,7 @@ class HealthInsuranceListActivity : BaseActivity(), KodeinAware, HealthInsurance
         page++
         hasMore = data.hasmore!!
         binding!!.loader.hide()
+        //policyList.clear()
         policyList.addAll(data.data!!)
         policyAdapter!!.updateList(policyList)
         hideProgress()

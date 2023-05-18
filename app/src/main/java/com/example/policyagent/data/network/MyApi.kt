@@ -38,6 +38,17 @@ interface MyApi {
     /*@GET("agent/form/life-insurance")
     suspend fun getLifeInsurance(@HeaderMap map: HashMap<String, Any>,): Response<JsonObject>*/
 
+    @POST("agent/expirepolicyreport")
+    suspend fun getExpiredPolicy(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
+    @POST("agent/upcomingexpirepolicyreport")
+    suspend fun getUpcomingExpirePolicy(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
+
+    @POST("agent/paymentduepolicyreport")
+    suspend fun getPaymentDueInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
+
+    @POST("agent/upcomingpaymentpolicyreport")
+    suspend fun getUpcomingPaymentInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
+
     @POST("agent/form/life-insurance")
     suspend fun getLifeInsurance(@HeaderMap map: HashMap<String, Any>,@Body body: HashMap<String, Any>): Response<JsonObject>
 

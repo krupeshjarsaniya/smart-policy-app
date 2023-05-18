@@ -32,6 +32,7 @@ class YearlyPremiumAdapter(private val mContext: Context, val listener: PremiumC
     }
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
+        holder.setIsRecyclable(false)
         mBinding!!.tvYear.text = yearList[position]!!.year.toString()
         holder.itemView.setOnClickListener {
             listener.onYearSelected(yearList[position]!!.year.toString())

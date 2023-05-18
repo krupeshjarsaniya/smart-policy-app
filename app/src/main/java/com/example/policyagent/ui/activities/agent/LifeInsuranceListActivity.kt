@@ -89,7 +89,6 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
 
     override fun onResume() {
         super.onResume()
-        policyList!!.clear()
         Log.e("resume", "resume")
         page = 1
         viewModel!!.getLifeInsurance(this, page)
@@ -126,6 +125,7 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
         page++
         hasMore = data.hasmore!!
         binding!!.loader.hide()
+        //policyList!!.clear()
         policyList!!.addAll(data.data!!)
         policyAdapter!!.updateList(policyList!!)
         hideProgress()

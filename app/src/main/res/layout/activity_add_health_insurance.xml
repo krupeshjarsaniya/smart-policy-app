@@ -362,6 +362,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginVertical="@dimen/_6sdp"
+                    android:visibility="gone"
                     >
 
                     <com.google.android.material.textfield.TextInputLayout

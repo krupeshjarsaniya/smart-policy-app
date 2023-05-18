@@ -46,9 +46,9 @@ class AgentEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfileL
         binding!!.appBar.ivBack.setOnClickListener {
             finish()
         }
-            val maritalStatus = resources.getStringArray(R.array.plan_type)
-            val maritalStatusAdapter = ArrayAdapter(this, R.layout.dropdown_item, maritalStatus)
-            binding!!.spPlanType.adapter = maritalStatusAdapter
+            //val maritalStatus = resources.getStringArray(R.array.plan_type)
+            //val maritalStatusAdapter = ArrayAdapter(this, R.layout.dropdown_item, maritalStatus)
+            //binding!!.spPlanType.adapter = maritalStatusAdapter
 
             val gender = resources.getStringArray(R.array.gender)
             val genderAdapter = ArrayAdapter(this, R.layout.dropdown_item, gender)
@@ -65,6 +65,7 @@ class AgentEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfileL
                     binding!!.tvBirthDate.setText(user.birthdate)
                     binding!!.etGstNumber.setText(user.gst)
                     binding!!.etPanNumber.setText(user.pan_number)
+                    binding!!.etPlanType.setText(user.plantype)
                     selectedState = user.state
 
                     if(user.gender!!.isNotEmpty()) {
@@ -73,12 +74,12 @@ class AgentEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfileL
                         binding!!.spGender.setSelection(genderPosition)
                     }
 
-                    if(user.marital_status!!.isNotEmpty()) {
+                    /*if(user.marital_status!!.isNotEmpty()) {
                         val selectedMaritalStatus: String = user.plantype!!.substring(0, 1)
                             .toUpperCase() + user.plantype.substring(1).toLowerCase()
                         val maritalStatusPosition: Int = genderAdapter.getPosition(selectedMaritalStatus)
                         binding!!.spPlanType.setSelection(maritalStatusPosition)
-                    }
+                    }*/
 
 
                 }
@@ -99,7 +100,7 @@ class AgentEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfileL
                 }
             }
 
-            binding!!.spPlanType.onItemSelectedListener = object :
+            /*binding!!.spPlanType.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
@@ -112,7 +113,7 @@ class AgentEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfileL
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
-            }
+            }*/
             binding!!.spGender.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -167,13 +168,13 @@ class AgentEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfileL
                     callApi-=1
                     binding!!.etLastName.error = resources.getString(R.string.invalid_last_name)
                 }
-                if (isValidMobile(binding!!.etMobile.editableText.toString())) {
+                /*if (isValidMobile(binding!!.etMobile.editableText.toString())) {
                     callApi+=1
                     addClient!!.mobile = binding!!.etMobile.text.toString()
                 } else {
                     callApi-=1
                     binding!!.etMobile.error = resources.getString(R.string.invalid_mobile)
-                }
+                }*/
                 if (isValidMail(binding!!.etEmail.editableText.toString())) {
                     callApi+=1
                     addClient!!.email = binding!!.etEmail.editableText.toString()
@@ -190,7 +191,7 @@ class AgentEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfileL
 
 
                 Log.e("callApi",callApi.toString())
-                if(callApi >= 4) {
+                if(callApi >= 3) {
                     viewModel!!.editClientProfile(addClient!!,this)
                 } else{
                     showToastMessage(resources.getString(R.string.invalid_data))

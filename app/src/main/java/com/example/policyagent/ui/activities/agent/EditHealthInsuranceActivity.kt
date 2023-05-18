@@ -225,6 +225,8 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 addHealthInsurance!!.client_id = clients!![position]!!.id!!.toString()
                 familyMemberList!!.clear();
                 newMemberList!!.clear();
+                familyList.clear();
+                familyIdList.clear();
                 families = clients!![position]!!.family_Details
                 selectedClient = clients!![position]!!
                 familyMemberList!!.add("Self")
@@ -602,8 +604,8 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if(binding!!.etNetPremium.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
-                    var commission = binding!!.etNetPremium.editableText.toString()
+                if(binding!!.etPremiumAmount.editableText.toString().isNotEmpty() && binding!!.etCommission.editableText.toString().isNotEmpty()) {
+                    var commission = binding!!.etPremiumAmount.editableText.toString()
                         .toDouble() * binding!!.etCommission.editableText.toString()
                         .toDouble() / 100
                     binding!!.etViewCommision.setText(String.format("%.2f",commission))
@@ -613,7 +615,7 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
             }
         })
 
-        binding!!.etNetPremium.addTextChangedListener(object : TextWatcher {
+        binding!!.etPremiumAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -633,8 +635,8 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 } else{
                     0.0
                 }
-                netPremium = if(binding!!.etNetPremium.editableText.toString().isNotEmpty()){
-                    binding!!.etNetPremium.editableText.toString().toDouble()
+                netPremium = if(binding!!.etPremiumAmount.editableText.toString().isNotEmpty()){
+                    binding!!.etPremiumAmount.editableText.toString().toDouble()
                 } else{
                     0.0
                 }
@@ -713,7 +715,7 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                         Toast.LENGTH_LONG
                     ).show()
                     break
-                } else if (familyList[i].birth_date == "") {
+                } /*else if (familyList[i].birth_date == "") {
                     callApi -= 1
                     Toast.makeText(
                         this,
@@ -753,7 +755,7 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                         Toast.LENGTH_LONG
                     ).show()
                     break
-                } else {
+                } */else {
                     familyJson!!.add(gson.toJson(familyList[i]))
                 }
             }
@@ -824,14 +826,14 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                 callApi-=1
                 binding!!.etPremiumAmount.error = resources.getString(R.string.invalid_premium_amount)
             }
-            if (binding!!.etNetPremium.editableText.toString().isNotEmpty()) {
+            /*if (binding!!.etNetPremium.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.net_premium =
                     binding!!.etNetPremium.editableText.toString()
             } else {
                 callApi-=1
                 binding!!.etNetPremium.error = resources.getString(R.string.invalid_net_premium)
-            }
+            }*/
             /*if (binding!!.etPolicyTerm.editableText.toString().isNotEmpty()) {
                 callApi+=1
                 addHealthInsurance!!.policy_term = binding!!.etPolicyTerm.editableText.toString()
@@ -907,7 +909,7 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
             addHealthInsurance!!.family = familyJson.toString()
             addHealthInsurance!!.document = docJson.toString()
             addHealthInsurance!!.file = sendFiles!!
-            if(callApi >= 6) {
+            if(callApi >= 5) {
                 viewModel!!.editHealthInsurance(addHealthInsurance!!, policy!!.id!!.toString(),this)
             } else{
                 showToastMessage(resources.getString(R.string.invalid_data))

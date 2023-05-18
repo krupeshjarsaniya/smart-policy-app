@@ -3,6 +3,7 @@ package com.example.policyagent.ui.activities.client
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -23,10 +24,12 @@ import com.example.policyagent.util.AppConstants
 import com.example.policyagent.util.getFileChooserIntent
 import com.example.policyagent.util.getFileFromURI
 import com.example.policyagent.util.launchLoginActivity
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
 import com.google.gson.Gson
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -40,6 +43,8 @@ class AddPolicyFormActivity : BaseActivity(), KodeinAware, AddPolicyListener {
     var clients: ArrayList<MemberData?>? = ArrayList()
     var addPolicy: AddPolicy? = AddPolicy()
     private val FILEREQUEST = 100
+    var df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+    var selectedStartDate: Date? = Calendar.getInstance().time
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +82,7 @@ class AddPolicyFormActivity : BaseActivity(), KodeinAware, AddPolicyListener {
         val clientObj: MemberListResponse =
             gson.fromJson(clientJson, MemberListResponse::class.java)
         clients = clientObj.data
+            clientList!!.add("select")
         for (i in 0 until clients!!.size) {
             clientList!!.add(clients!![i]!!.firstname!!)
         }
@@ -91,7 +97,9 @@ class AddPolicyFormActivity : BaseActivity(), KodeinAware, AddPolicyListener {
                 position: Int,
                 id: Long
             ) {
-                addPolicy!!.member_id = clients!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addPolicy!!.member_id = clients!![position - 1]!!.id!!.toString()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -110,6 +118,8 @@ class AddPolicyFormActivity : BaseActivity(), KodeinAware, AddPolicyListener {
             val datePicker = DatePickerDialog(
                 this@AddPolicyFormActivity,
                 { _, year, monthOfYear, dayOfMonth ->
+                    calendar.set(year,monthOfYear,dayOfMonth + 1)
+                    selectedStartDate = calendar.time
                     val date =
                         (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
                     binding!!.tvStartDate.setText(date)
@@ -119,7 +129,7 @@ class AddPolicyFormActivity : BaseActivity(), KodeinAware, AddPolicyListener {
                 dd
             )
             binding!!.tvStartDate.setTextColor(resources.getColor(R.color.black))
-            datePicker.datePicker.minDate = System.currentTimeMillis()
+            //datePicker.datePicker.minDate = System.currentTimeMillis()
             datePicker.show()
         }
 
@@ -139,7 +149,8 @@ class AddPolicyFormActivity : BaseActivity(), KodeinAware, AddPolicyListener {
                 mm,
                 dd
             )
-            datePicker.datePicker.minDate = System.currentTimeMillis()
+            Log.e("mindate",selectedStartDate!!.time.toString())
+            datePicker.datePicker.minDate = selectedStartDate!!.time
             binding!!.tvEndDate.setTextColor(resources.getColor(R.color.black))
             datePicker.show()
         }

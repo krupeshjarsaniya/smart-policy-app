@@ -86,7 +86,6 @@ class WcInsuranceListActivity : BaseActivity(), KodeinAware, WcInsuranceListList
 
     override fun onResume() {
         super.onResume()
-        policyList.clear()
         page = 1
         viewModel!!.getWcInsurance(this, page)
     }
@@ -122,6 +121,7 @@ class WcInsuranceListActivity : BaseActivity(), KodeinAware, WcInsuranceListList
         page++
         hasMore = data.hasmore!!
         binding!!.loader.hide()
+        //policyList.clear()
         policyList.addAll(data.data!!)
         policyAdapter!!.updateList(policyList)
         hideProgress()

@@ -12,7 +12,7 @@ import com.example.policyagent.R
 import com.example.policyagent.data.responses.agentdashboard.AgentDashBoardResponse
 import com.example.policyagent.databinding.FragmentAgentHomeBinding
 import com.example.policyagent.databinding.FragmentClientHomeBinding
-import com.example.policyagent.ui.activities.agent.ClientListActivity
+import com.example.policyagent.ui.activities.agent.*
 import com.example.policyagent.ui.activities.client.MyInsurancePortfolioActivity
 import com.example.policyagent.ui.activities.client.PremiumCalendarActivity
 import com.example.policyagent.ui.adapters.client.HomeTopBannerAdapter
@@ -53,7 +53,26 @@ class AgentHomeFragment : BaseFragment(), KodeinAware, AgentDashBoardListener {
         })
         binding!!.llTotalClients.setOnClickListener {
             requireActivity().launchActivity<ClientListActivity> {
+            }
+        }
 
+        binding!!.llExpiredPolicy.setOnClickListener {
+            requireActivity().launchActivity<ExpiredActivity> {
+            }
+        }
+
+        binding!!.llUpcomingExpirePolicy.setOnClickListener {
+            requireActivity().launchActivity<UpcomingExpiredActivity> {
+            }
+        }
+
+        binding!!.llPaymentDuePolicy.setOnClickListener {
+            requireActivity().launchActivity<PaymentDuePolicyActivity> {
+            }
+        }
+
+        binding!!.llUpcomingPaymentPolicy.setOnClickListener {
+            requireActivity().launchActivity<UpcomingPaymentPolicyActivity> {
             }
         }
         return binding!!.root
@@ -70,6 +89,11 @@ class AgentHomeFragment : BaseFragment(), KodeinAware, AgentDashBoardListener {
             binding!!.tvTotalInsurance.text = data.data.total_insurance
             binding!!.tvTotalCommission.text = "₹ "+data.data.total_commision
             binding!!.tvDuePayment.text = "₹ "+data.data.due_payment
+
+            binding!!.tvExpiredPolicy.text = data.data.total_expired_policy
+            binding!!.tvUpcomingExpirePolicy.text = data.data.total_upcoming_expire_policy
+            binding!!.tvPaymentDuePolicy.text = data.data.total_payment_due_policy
+            binding!!.tvUpcomingPaymentPolicy.text = data.data.total_upcoming_payment_policy
         }
     }
 

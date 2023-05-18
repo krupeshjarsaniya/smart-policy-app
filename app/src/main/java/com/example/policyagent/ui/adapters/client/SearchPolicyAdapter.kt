@@ -1,6 +1,7 @@
 package com.example.policyagent.ui.adapters.client
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -11,7 +12,7 @@ import com.example.policyagent.databinding.ItemPolicySearchBinding
 import com.example.policyagent.ui.listeners.FireInsuranceListListener
 import com.example.policyagent.ui.listeners.PolicyListListener
 
-class SearchPolicyAdapter (private val mContext: Context, val listener: PolicyListListener): RecyclerView.Adapter<SearchPolicyAdapter.ViewHolderClass>() {
+class SearchPolicyAdapter(private val mContext: Context, val listener: PolicyListListener, var userName: String): RecyclerView.Adapter<SearchPolicyAdapter.ViewHolderClass>() {
 
     private var mBinding: ItemPolicySearchBinding? = null
     private var mPolicyList = ArrayList<PolicyData?>()
@@ -34,7 +35,12 @@ class SearchPolicyAdapter (private val mContext: Context, val listener: PolicyLi
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         holder.setIsRecyclable(false)
-        mBinding!!.tvName.text = mPolicyList[position]!!.memberDetails!!.firstname
+        Log.e("username",userName)
+        if(mPolicyList[position]!!.memberDetails!!.firstname!!.isNotEmpty()) {
+            mBinding!!.tvName.text = mPolicyList[position]!!.memberDetails!!.firstname
+        } else{
+            mBinding!!.tvName.text = userName
+        }
         mBinding!!.tvPolicyNo.text = mPolicyList[position]!!.policy_number
         mBinding!!.tvProduct.text = mPolicyList[position]!!.model_type
         mBinding!!.tvCompany.text = mPolicyList[position]!!.company_name

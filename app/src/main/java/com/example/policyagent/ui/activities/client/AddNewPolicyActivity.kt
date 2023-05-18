@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.policyagent.R
@@ -36,6 +37,7 @@ class AddNewPolicyActivity : BaseActivity(), KodeinAware,PolicyListListener {
     var policyList: ArrayList<PolicyData?> = arrayListOf()
     var page = 1
     var hasMore = true
+    var userName = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_policy)
@@ -45,11 +47,16 @@ class AddNewPolicyActivity : BaseActivity(), KodeinAware,PolicyListListener {
         binding!!.appBar.ivBack.setOnClickListener{
             finish()
         }
+        viewModel!!.getLoggedInUser().observe(this, Observer { user ->
+            if (user != null) {
+                userName = "${user.firstname} ${user.lastname}"
+            }
+        })
         binding!!.appBar.btnAddPolicy.visibility = View.VISIBLE
         binding!!.appBar.btnAddPolicy.setOnClickListener{
             launchActivity<AddPolicyFormActivity> {  }
         }
-        policyAdapter = SearchPolicyAdapter(this,this)
+        policyAdapter = SearchPolicyAdapter(this,this,userName)
         binding!!.rvPolicies.adapter = policyAdapter
 
         binding!!.etSearch.addTextChangedListener(object : TextWatcher {

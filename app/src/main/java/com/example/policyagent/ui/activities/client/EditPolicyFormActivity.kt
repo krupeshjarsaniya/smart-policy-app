@@ -45,6 +45,7 @@ class EditPolicyFormActivity : BaseActivity(), KodeinAware, LoadDocumentListener
     var policy: PolicyData? = PolicyData()
     var addPolicy: AddPolicy? = AddPolicy()
     private val FILEREQUEST = 100
+    var selectedStartDate: Date? = Calendar.getInstance().time
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_policy_form)
@@ -61,6 +62,7 @@ class EditPolicyFormActivity : BaseActivity(), KodeinAware, LoadDocumentListener
             gson.fromJson(clientJson, MemberListResponse::class.java)
         clients = clientObj.data
         //resources.getStringArray(R.array.clients)
+        clientList!!.add("select")
         for (i in 0 until clients!!.size) {
             clientList!!.add(clients!![i]!!.firstname!!)
         }
@@ -118,6 +120,8 @@ class EditPolicyFormActivity : BaseActivity(), KodeinAware, LoadDocumentListener
             val datePicker = DatePickerDialog(
                 this@EditPolicyFormActivity,
                 { _, year, monthOfYear, dayOfMonth ->
+                    calendar.set(year,monthOfYear,dayOfMonth + 1)
+                    selectedStartDate = calendar.time
                     val date =
                         (dayOfMonth.toString() + "-" + (monthOfYear + 1).toString() + "-" + year.toString())
                     binding!!.tvStartDate.setText(date)
@@ -127,7 +131,7 @@ class EditPolicyFormActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 dd
             )
             binding!!.tvStartDate.setTextColor(resources.getColor(R.color.black))
-            datePicker.datePicker.minDate = System.currentTimeMillis()
+            //datePicker.datePicker.minDate = System.currentTimeMillis()
             datePicker.show()
         }
 
@@ -147,7 +151,7 @@ class EditPolicyFormActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 mm,
                 dd
             )
-            datePicker.datePicker.minDate = System.currentTimeMillis()
+            datePicker.datePicker.minDate = selectedStartDate!!.time
             binding!!.tvEndDate.setTextColor(resources.getColor(R.color.black))
             datePicker.show()
         }
@@ -166,7 +170,9 @@ class EditPolicyFormActivity : BaseActivity(), KodeinAware, LoadDocumentListener
                 position: Int,
                 id: Long
             ) {
-                addPolicy!!.member_id = clients!![position]!!.id!!.toString()
+                if(position != 0) {
+                    addPolicy!!.member_id = clients!![position - 1]!!.id!!.toString()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

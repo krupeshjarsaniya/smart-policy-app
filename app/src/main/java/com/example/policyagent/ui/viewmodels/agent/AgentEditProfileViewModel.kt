@@ -54,7 +54,7 @@ class AgentEditProfileViewModel (
                 map["state"] = editClient.state!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["birthdate"] = editClient.birthdate!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["gender"] = editClient.gender!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                map["plantype"] = editClient.plantype!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                //map["plantype"] = editClient.plantype!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["c_pan_number"] = editClient.c_pan_number!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                 map["gst_number"] = editClient.gst_number!!.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 

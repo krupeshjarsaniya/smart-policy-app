@@ -88,7 +88,6 @@ class CarInsuranceListActivity : BaseActivity(), KodeinAware, CarInsuranceListLi
 
     override fun onResume() {
         super.onResume()
-        policyList!!.clear()
         page = 1
         viewModel!!.getCarInsurance(this, page)
     }
@@ -124,6 +123,7 @@ class CarInsuranceListActivity : BaseActivity(), KodeinAware, CarInsuranceListLi
         page++
         hasMore = data.hasmore!!
         binding!!.loader.hide()
+        //policyList!!.clear()
         policyList!!.addAll(data.data!!)
         policyAdapter!!.updateList(policyList!!)
         hideProgress()

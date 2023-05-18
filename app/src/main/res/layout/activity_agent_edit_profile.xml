@@ -131,6 +131,8 @@
                             style="@style/EditTextStyle"
                             android:hint="@string/mobile"
                             android:inputType="number"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -307,8 +309,40 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="@dimen/_6sdp"
+                    >
 
-                <TextView
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/TextInputOuterFieldStyle"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_plan_type"
+                            style="@style/EditTextStyle"
+                            android:hint="@string/plan_type"
+                            android:inputType="text"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:src="@drawable/ic_mobile"
+                        app:tint="@color/black"
+                        android:visibility="gone"
+                        />
+
+                </RelativeLayout>
+
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/plan_type"
@@ -323,7 +357,7 @@
                     android:layout_marginVertical="@dimen/_6sdp"
                     android:background="@drawable/bg_edit_text"
                     android:paddingHorizontal="@dimen/_8sdp"
-                    />
+                    />-->
 
                 <RelativeLayout
                     android:layout_width="match_parent"

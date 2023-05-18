@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Smart Policy Agency</string>
+    <string name="app_name">Insure Book</string>
     <string name="top_image">Top Image</string>
     <string name="bottom_image">Bottom Image</string>
-    <string name="splash_title">Welcome to name!</string>
+    <string name="splash_title">Welcome to Insure Book!</string>
     <string name="splash_description">Lorem Ipsum has been the industry\'s standard dummy text ever.</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_in_description">Please enter the details to begin</string>
@@ -403,6 +403,14 @@
     <string name="invalid_address">Enter Valid Address</string>
     <string name="total_net_premium">Total Net Premium</string>
     <string name="plan_type">Plan Type</string>
+    <string name="expired_policy">Expired Policy</string>
+    <string name="expired_policy_lbl">Expired Policy</string>
+    <string name="upcoming_expire_policy">Upcoming Expire Policy</string>
+    <string name="payment_due_policy">Payment Due Policy</string>
+    <string name="upcoming_payment_policy">Upcoming Payment Policy</string>
+    <string name="policy_name">Policy Name</string>
+    <string name="installment">Installment</string>
+    <string name="dashboard">Dashboard</string>
 
 
 </resources>

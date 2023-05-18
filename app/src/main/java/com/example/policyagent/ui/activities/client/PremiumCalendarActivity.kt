@@ -165,7 +165,7 @@ class PremiumCalendarActivity : BaseActivity(), KodeinAware, PremiumCalendarList
                 var label = ""
                 when (value) {
                     01f -> label = "Jan"
-                    02f -> label = "Fab"
+                    02f -> label = "Feb"
                     03f -> label = "Mar"
                     04f -> label = "Apr"
                     05f -> label = "May"
@@ -196,9 +196,10 @@ class PremiumCalendarActivity : BaseActivity(), KodeinAware, PremiumCalendarList
         binding!!.barChart.xAxis.axisLineColor = Color.TRANSPARENT
         binding!!.barChart.axisLeft.axisLineColor = Color.TRANSPARENT
         binding!!.barChart.axisRight.isEnabled = false
-        binding!!.barChart.setScaleEnabled(true)
+        binding!!.barChart.setScaleEnabled(false)
         binding!!.barChart.setDrawGridBackground(false)
         binding!!.barChart.xAxis.setDrawGridLines(false)
+        binding!!.barChart.xAxis.mAxisMinimum = 0f
         binding!!.barChart.axisLeft.setDrawGridLines(false)
         binding!!.barChart.axisRight.setDrawGridLines(false)
         val barChartRender = CustomBarChartRender(
@@ -207,7 +208,6 @@ class PremiumCalendarActivity : BaseActivity(), KodeinAware, PremiumCalendarList
             binding!!.barChart.viewPortHandler,
             barImage
         )
-
         barChartRender.setRadius(25)
         binding!!.barChart.renderer = barChartRender
         binding!!.barChart.notifyDataSetChanged()

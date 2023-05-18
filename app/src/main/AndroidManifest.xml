@@ -9,7 +9,7 @@
 
     <application
         android:name=".AppApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:hardwareAccelerated="true"
@@ -19,7 +19,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PolicyAgent"
         android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activities.agent.UpcomingPaymentPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.agent.PaymentDuePolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.agent.UpcomingExpiredActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.agent.ExpiredActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.agent.AgentEditProfileActivity"
             android:exported="false" />

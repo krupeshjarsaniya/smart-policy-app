@@ -70,10 +70,21 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
         return apiRequest { api.getLifeInsurance(getHeaderMap()) }
     }*/
 
+    suspend fun getExpiredPolicy(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getExpiredPolicy(getHeaderMap(),map) }
+    }
+    suspend fun getUpcomingExpirePolicy(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getUpcomingExpirePolicy(getHeaderMap(),map) }
+    }
+    suspend fun getPaymentDueInsurance(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getPaymentDueInsurance(getHeaderMap(),map) }
+    }
+    suspend fun getUpcomingPaymentInsurance(map: HashMap<String, Any>): JsonObject {
+        return apiRequest { api.getUpcomingPaymentInsurance(getHeaderMap(),map) }
+    }
     suspend fun getLifeInsurance(map: HashMap<String, Any>): JsonObject {
         return apiRequest { api.getLifeInsurance(getHeaderMap(),map) }
     }
-
     suspend fun getHealthInsurance(map: HashMap<String, Any>): JsonObject {
         return apiRequest { api.getHealthInsurance(getHeaderMap(),map) }
     }

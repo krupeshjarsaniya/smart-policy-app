@@ -134,6 +134,9 @@ class MainViewModelFactory(
             AgentEditProfileViewModel::class.java -> {
                 AgentEditProfileViewModel(repository) as T
             }
+            ExpiredPolicyListViewModel::class.java -> {
+                ExpiredPolicyListViewModel(repository) as T
+            }
             else -> {
                 SplashViewModel(repository) as T
             }

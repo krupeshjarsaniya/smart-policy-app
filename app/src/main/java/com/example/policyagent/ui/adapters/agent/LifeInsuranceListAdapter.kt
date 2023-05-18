@@ -45,6 +45,7 @@ class LifeInsuranceListAdapter (private val mContext: Context, val listener: Lif
         mBinding!!.tvStartDate.text = mPolicyList[position]!!.psd
         mBinding!!.tvEndDate.text = mPolicyList[position]!!.ped
         holder.itemView.setOnClickListener {
+            Log.e("position",position.toString());
             listener.onItemClick(mPolicyList[position]!!)
         }
 

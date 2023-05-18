@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.policyagent.data.database.entities.User
 
 
-@Database(entities = [User::class], version = 4, exportSchema = false)
+@Database(entities = [User::class], version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getUserDao(): UserDao
 

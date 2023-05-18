@@ -86,7 +86,6 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
 
     override fun onResume() {
         super.onResume()
-        policyList.clear()
         page = 1
         viewModel!!.getFireInsurance(this, page)
     }
@@ -122,6 +121,7 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
         page++
         hasMore = data.hasmore!!
         binding!!.loader.hide()
+        //policyList.clear()
         policyList.addAll(data.data!!)
         policyAdapter!!.updateList(policyList)
         hideProgress()
