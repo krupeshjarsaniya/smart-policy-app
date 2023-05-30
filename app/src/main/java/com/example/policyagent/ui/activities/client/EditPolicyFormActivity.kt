@@ -371,4 +371,8 @@ class EditPolicyFormActivity : BaseActivity(), KodeinAware, LoadDocumentListener
     override fun onLoadPdf(url: String) {
         loadPdf(this, url)
     }
+
+    override fun onDownload(url: String) {
+
+    }
 }

@@ -339,7 +339,7 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                     ).show()
                     addData = false
                     break
-                } else if (familyList[i].birth_date == "") {
+                } /*else if (familyList[i].birth_date == "") {
                     Toast.makeText(
                         this,
                         "Please Add Birth date For Member ${i + 1}",
@@ -379,7 +379,7 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
                     ).show()
                     addData = false
                     break
-                }
+                }*/
                 else {
                     addData = true
                 }
@@ -725,6 +725,10 @@ class AddLifeInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
     }
 
     override fun onLoadPdf(url: String) {
+
+    }
+
+    override fun onDownload(url: String) {
 
     }
 

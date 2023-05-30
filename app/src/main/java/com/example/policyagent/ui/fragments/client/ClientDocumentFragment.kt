@@ -19,6 +19,7 @@ import com.example.policyagent.ui.fragments.BaseFragment
 import com.example.policyagent.ui.listeners.ClientDocumentListener
 import com.example.policyagent.ui.listeners.LoadDocumentListener
 import com.example.policyagent.ui.viewmodels.client.ClientDocumentViewModel
+import com.example.policyagent.util.downloadFile
 import com.example.policyagent.util.getGlideProgress
 import com.example.policyagent.util.hide
 import org.kodein.di.KodeinAware
@@ -65,12 +66,13 @@ class ClientDocumentFragment : BaseFragment(), KodeinAware, ClientDocumentListen
 
     override fun onSuccess(data: ClientDocumentListResponse) {
         hideProgress()
+        documentList!!.clear()
         documentList!!.addAll(data.data!!)
         clientDocumentAdapter!!.updateList(documentList!!)
     }
 
-    override fun onDelete(id: String, position: Int) {
-        viewModel.deleteDocument(requireContext(),id,position)
+    override fun onDownload(url: String, position: Int) {
+        downloadFile(requireContext(),url, requireActivity())
     }
 
     override fun onSuccessDelete(data: CommonResponse, position: Int) {
@@ -98,5 +100,9 @@ class ClientDocumentFragment : BaseFragment(), KodeinAware, ClientDocumentListen
     }
 
     override fun onLoadPdf(url: String) {
+    }
+
+    override fun onDownload(url: String) {
+        downloadFile(requireContext(),url,requireActivity())
     }
 }

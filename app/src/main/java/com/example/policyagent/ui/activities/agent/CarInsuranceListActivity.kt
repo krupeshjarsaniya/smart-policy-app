@@ -1,5 +1,7 @@
 package com.example.policyagent.ui.activities.agent
 
+import android.content.DialogInterface
+import android.content.DialogInterface.OnClickListener
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -149,7 +151,14 @@ class CarInsuranceListActivity : BaseActivity(), KodeinAware, CarInsuranceListLi
     }
 
     override fun onDelete(id: String, position: Int) {
-        viewModel!!.deleteCarInsurance(this, id, position)
+        deleteAlert(this
+        ) { dialog, which ->
+            viewModel!!.deleteCarInsurance(
+                this@CarInsuranceListActivity,
+                id,
+                position
+            )
+        }
     }
 
     override fun onEdit(data: CarInsuranceData) {

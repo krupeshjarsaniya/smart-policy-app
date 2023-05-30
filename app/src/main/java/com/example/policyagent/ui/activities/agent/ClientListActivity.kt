@@ -1,5 +1,7 @@
 package com.example.policyagent.ui.activities.agent
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -24,6 +26,8 @@ import com.example.policyagent.util.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.net.URLEncoder
+
 
 class ClientListActivity : BaseActivity(), KodeinAware, ClientListListener {
     override val kodein by kodein()
@@ -157,8 +161,20 @@ class ClientListActivity : BaseActivity(), KodeinAware, ClientListListener {
         }
     }
 
+    override fun onWhatsApp(data: ClientData) {
+        var sendData = "Username:${data.client_id}\nPassword:${data.password}"
+        val url = "https://api.whatsapp.com/send?phone=${data.mobile}&text=${URLEncoder.encode(sendData, "UTF-8")}"
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(url)
+        startActivity(i)
+    }
+
     override fun onDelete(id: String, position: Int) {
-        viewModel!!.deleteClient(this, id, position)
+        deleteAlert(this
+        ) { dialog, which ->
+            viewModel!!.deleteClient(this, id, position)
+        }
+
     }
 
     override fun onSuccessDelete(data: CommonResponse, position: Int) {

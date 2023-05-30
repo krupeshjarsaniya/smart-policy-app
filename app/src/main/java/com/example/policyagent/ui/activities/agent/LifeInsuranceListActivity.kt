@@ -146,7 +146,10 @@ class LifeInsuranceListActivity : BaseActivity(), KodeinAware, LifeInsuranceList
     }
 
     override fun onDelete(id: String, position: Int) {
-        viewModel!!.deleteLifeInsurance(this, id, position)
+        deleteAlert(this
+        ) { dialog, which ->
+            viewModel!!.deleteLifeInsurance(this, id, position)
+        }
     }
 
     override fun onEdit(data: LifeInsuranceData) {

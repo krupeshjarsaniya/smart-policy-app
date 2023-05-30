@@ -3,6 +3,7 @@ package com.example.policyagent.ui.activities.agent
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -177,23 +178,28 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
         }
 
 
-        for (i in 0 until policy!!.family!!.size){
-            var detail = policy!!.family!![i]
-            var family = MemberModel(
-                detail!!.id.toString(),
-                detail.firstname,
-                detail.lastname,
-                detail.birthdate,
-                detail.gender,
-                detail.height,
-                detail.weight,
-                detail.age,
-                detail.relationship,
-                detail.pan_number
-            )
-            familyList.add(family)
-            familyIdList.add(family.family_id!!)
-        }
+        Handler().postDelayed({
+            for (i in 0 until policy!!.family!!.size){
+                var detail = policy!!.family!![i]
+                var family = MemberModel(
+                    detail!!.id.toString(),
+                    detail.firstname,
+                    detail.lastname,
+                    detail.birthdate,
+                    detail.gender,
+                    detail.height,
+                    detail.weight,
+                    detail.age,
+                    detail.relationship,
+                    detail.pan_number
+                )
+                if(!familyIdList.contains(family.family_id!!)) {
+                    familyList.add(family)
+                    familyIdList.add(family.family_id!!)
+                }
+            }
+            updateMember()
+        },2000)
 
         for (i in 0 until policy!!.insurance_Documents!!.size){
             var clientDoc = policy!!.insurance_Documents!![i]
@@ -517,7 +523,7 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                     ).show()
                     addData = false
                     break
-                } else if (familyList[i].birth_date == "" && familyList[i].family_id!!.isEmpty()) {
+                } /*else if (familyList[i].birth_date == "" && familyList[i].family_id!!.isEmpty()) {
                     Toast.makeText(
                         this,
                         "Please Add Birth date For Member ${i + 1}",
@@ -557,7 +563,7 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
                     ).show()
                     addData = false
                     break
-                } else {
+                }*/ else {
                     addData = true
                 }
             }
@@ -948,6 +954,10 @@ class EditHealthInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentLis
 
     override fun onLoadPdf(url: String) {
         loadPdf(this, url)
+    }
+
+    override fun onDownload(url: String) {
+
     }
 
 

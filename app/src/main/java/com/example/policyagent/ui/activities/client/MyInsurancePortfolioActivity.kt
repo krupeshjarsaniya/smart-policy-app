@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.policyagent.R
 import com.example.policyagent.data.responses.carinsurancelist.CarInsuranceData
@@ -57,12 +58,22 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware, PortfolioListe
     var personalDetails : ClientPersonalDetails? = null
     var page = 1
 
+    var username = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_insurance_portfolio)
         viewModel = ViewModelProvider(this, factory)[MyInsurancePortfolioViewModel::class.java]
         viewModel!!.listener = this
         viewModel!!.getPortFolio(page,true)
+
+        viewModel!!.getLoggedInUser().observe(this, Observer { user ->
+            if (user != null) {
+                username = "${user.firstname}"
+            }
+        })
+
+
         val memberJson: String = viewModel!!.getPreference().getStringValue(AppConstants.MEMBERS)!!
         val memberObj: MemberListResponse =
             gson.fromJson(memberJson, MemberListResponse::class.java)
@@ -142,8 +153,15 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware, PortfolioListe
             if(selectedMember == "All" && selectedId == "All" && selectedType == "All"){
                 filteredList.add(item)
             } else if(selectedMember == "All" && selectedId == "All"){
-                if(item!!.insuranceType.toString() == selectedType){
-                    filteredList.add(item)
+                if(selectedType == "My Insurance"){
+                    Log.e("matchclient",item!!.client_name+"   "+username)
+                    if (item.client_name == username) {
+                        filteredList.add(item)
+                    }
+                } else {
+                    if (item!!.insuranceType.toString() == selectedType) {
+                        filteredList.add(item)
+                    }
                 }
             } else if(selectedMember == "All" && selectedType == "All"){
                 if(item!!.id.toString() == selectedId){
@@ -155,18 +173,36 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware, PortfolioListe
                 }
             }
             else if(selectedId == "All"){
-                if(item!!.member_name.toString() == selectedMember && item.insuranceType.toString() == selectedType){
-                    filteredList.add(item)
+                if(selectedType == "My Insurance"){
+                    if(item!!.member_name.toString() == selectedMember && item.client_name == username) {
+                        filteredList.add(item)
+                    }
+                } else {
+                    if (item!!.member_name.toString() == selectedMember && item.insuranceType.toString() == selectedType) {
+                        filteredList.add(item)
+                    }
                 }
             } else if(selectedMember == "All"){
-                if(item!!.id.toString() == selectedId && item.insuranceType.toString() == selectedType){
-                    filteredList.add(item)
+                if(selectedType == "My Insurance"){
+                    if(item!!.id.toString() == selectedId && item.client_name == username) {
+                        filteredList.add(item)
+                    }
+                } else {
+                    if (item!!.id.toString() == selectedId && item.insuranceType.toString() == selectedType) {
+                        filteredList.add(item)
+                    }
                 }
             } else if(selectedType == "All"){
                 if(item!!.id.toString() == selectedId && item.member_name.toString() == selectedMember){
                     filteredList.add(item)
                 }
-            } else if (item!!.member_name.toString() == selectedMember && item.id.toString() == selectedId && item.insuranceType.toString() == selectedType) {
+            } else if (item!!.member_name.toString() == selectedMember && item.id.toString() == selectedId && selectedType == "My Insurance") {
+                    Log.e("matchclient",item.client_name+"   "+username)
+                    if (item.client_name == username) {
+                        filteredList.add(item)
+                    }
+            }
+            else if (item.member_name.toString() == selectedMember && item.id.toString() == selectedId && item.insuranceType.toString() == selectedType) {
                 filteredList.add(item)
             }
         }
@@ -192,9 +228,8 @@ class MyInsurancePortfolioActivity : BaseActivity(), KodeinAware, PortfolioListe
                 position: Int,
                 id: Long
             ) {
-
                 (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.white))
-                (parent!!.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.primary_color))
+                (parent.getChildAt(0) as TextView).setTextColor(resources.getColor(R.color.primary_color))
                 (parent.getChildAt(0) as TextView).gravity = Gravity.CENTER
                 selectedId = if(position != 0) {
                     binding!!.spPolicy.selectedItem.toString().substring(8, binding!!.spPolicy.selectedItem.toString().length)

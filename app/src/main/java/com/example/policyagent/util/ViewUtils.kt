@@ -8,6 +8,7 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.OpenableColumns
 import android.provider.Settings
 import android.text.*
@@ -20,7 +21,6 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.startActivity
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.policyagent.BuildConfig
 import com.example.policyagent.R
@@ -81,6 +81,59 @@ fun getGlideProgress(mContext: Context): CircularProgressDrawable {
     circularProgressDrawable.start()
     return circularProgressDrawable
 }
+
+fun deleteAlert(mContext: Context, click: DialogInterface.OnClickListener){
+    val alert = AlertDialog.Builder(mContext)
+    alert.setTitle("Alert!")
+    alert.setMessage("Are you sure you want to delete?")
+    alert.setPositiveButton(android.R.string.yes, click)
+    alert.setNegativeButton(
+        android.R.string.no
+    ) { dialog, which -> // close dialog
+        dialog.cancel()
+    }
+    alert.show()
+}
+
+
+fun downloadFile(mContext: Context,url: String,activity: Activity) {
+    val time = System.currentTimeMillis()
+    var name = ""
+    if(url.contains(".pdf")){
+        name = time.toString()+".pdf"
+    } else{
+        name = time.toString()+".png"
+    }
+    try {
+        val file = File(Environment.getExternalStorageDirectory(), "Download")
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        val result = File((file.absolutePath + File.separator).toString() + name)
+        val downloadManager = mContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
+        val request = DownloadManager.Request(Uri.parse(url))
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+        request.setDestinationUri(Uri.fromFile(result))
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        downloadManager?.enqueue(request)
+        //mToast(mContext, "Starting download...");
+        MediaScannerConnection.scanFile(
+            mContext, arrayOf<String>(result.toString()), null
+        ) { path, uri -> }
+    } catch (e: java.lang.Exception) {
+        Log.e(">>>>>", e.toString())
+        //mToast(this, e.toString());
+    }
+}
+
+/*fun downloadFile(mContext: Context,url: String,activity: Activity){
+    var manager: DownloadManager
+    manager = mContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    val uri = Uri.parse(url)
+    val request = DownloadManager.Request(uri)
+    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+    val reference = manager.enqueue(request)
+}*/
 
 fun getFileChooserIntent(): Intent {
     val mimeTypes = arrayOf("image/*", "application/pdf")

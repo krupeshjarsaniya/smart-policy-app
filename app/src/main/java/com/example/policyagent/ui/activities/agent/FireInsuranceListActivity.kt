@@ -147,7 +147,10 @@ class FireInsuranceListActivity : BaseActivity(), KodeinAware, FireInsuranceList
     }
 
     override fun onDelete(id: String, position: Int) {
-        viewModel!!.deleteFireInsurance(this, id, position)
+        deleteAlert(this
+        ) { dialog, which ->
+            viewModel!!.deleteFireInsurance(this, id, position)
+        }
     }
 
     override fun onEdit(data: FireInsuranceData) {

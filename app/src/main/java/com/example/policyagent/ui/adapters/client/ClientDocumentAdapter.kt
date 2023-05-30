@@ -40,8 +40,8 @@ class ClientDocumentAdapter(private val mContext: Context, val listener: ClientD
         holder.setIsRecyclable(false)
         documentListener.onLoadImage(documentList[position]!!.url!!,mBinding!!.ivDocument)
         mBinding!!.tvDocument.text = documentList[position]!!.document_type
-        holder.itemView.setOnClickListener {
-            listener.onDelete(documentList[position]!!.id!!.toString(),position)
+        mBinding!!.ivDownload.setOnClickListener {
+            listener.onDownload(documentList[position]!!.url!!.toString(),position)
         }
     }
 

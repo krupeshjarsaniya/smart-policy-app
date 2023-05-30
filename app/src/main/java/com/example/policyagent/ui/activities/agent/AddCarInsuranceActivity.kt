@@ -634,6 +634,10 @@ class AddCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
 
     }
 
+    override fun onDownload(url: String) {
+
+    }
+
 
     override fun onFileSelect(position: Int) {
         pos = position

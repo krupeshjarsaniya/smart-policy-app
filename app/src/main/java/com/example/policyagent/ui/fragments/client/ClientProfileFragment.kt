@@ -53,6 +53,10 @@ class ClientProfileFragment : BaseFragment(), KodeinAware, ClientProfileListener
                 binding!!.itvEmail.text = "${user.email}"
             }
         })
+        var userType = viewModel.getPreference().getStringValue(AppConstants.USER_TYPE)
+        if(userType == AppConstants.AGENT){
+            binding!!.llEditProfile.hide()
+        }
         binding!!.llChangePassword.setOnClickListener {
             requireActivity().launchActivity<ChangePasswordActivity> {
             }

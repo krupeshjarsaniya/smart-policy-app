@@ -153,7 +153,10 @@ class HealthInsuranceListActivity : BaseActivity(), KodeinAware, HealthInsurance
     }
 
     override fun onDelete(id: String, position: Int) {
-        viewModel!!.deleteHealthInsurance(this, id, position)
+        deleteAlert(this
+        ) { dialog, which ->
+            viewModel!!.deleteHealthInsurance(this, id, position)
+        }
     }
 
     override fun onSuccessDelete(data: CommonResponse, position: Int) {

@@ -147,7 +147,10 @@ class WcInsuranceListActivity : BaseActivity(), KodeinAware, WcInsuranceListList
     }
 
     override fun onDelete(id: String, position: Int) {
-        viewModel!!.deleteWcInsurance(this, id, position)
+        deleteAlert(this
+        ) { dialog, which ->
+            viewModel!!.deleteWcInsurance(this, id, position)
+        }
     }
 
     override fun onEdit(data: WcInsuranceData) {

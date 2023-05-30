@@ -89,6 +89,9 @@ class ClientListAdapter (private val mContext: Context, val listener: ClientList
         mBinding!!.ivEdit.setOnClickListener {
             listener.onEdit(mPolicyList[position]!!)
         }
+        mBinding!!.ivWhatsapp.setOnClickListener {
+            listener.onWhatsApp(mPolicyList[position]!!)
+        }
     }
 
     override fun getItemCount(): Int {

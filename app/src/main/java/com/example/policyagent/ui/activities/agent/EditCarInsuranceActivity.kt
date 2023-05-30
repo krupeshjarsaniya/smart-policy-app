@@ -769,8 +769,12 @@ class EditCarInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
             loadPdf(this, url)
         }
 
+    override fun onDownload(url: String) {
 
-        override fun onFileSelect(position: Int) {
+    }
+
+
+    override fun onFileSelect(position: Int) {
             pos = position
             startActivityForResult(getFileChooserIntent(), 111)
         }

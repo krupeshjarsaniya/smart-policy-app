@@ -534,6 +534,10 @@ class EditWcInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListene
         loadPdf(this, url)
     }
 
+    override fun onDownload(url: String) {
+
+    }
+
 
     override fun onFileSelect(position: Int) {
         pos = position

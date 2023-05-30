@@ -185,6 +185,9 @@ interface MyApi {
     @GET("agent/dashboard")
     suspend fun getAgentDashboard(@HeaderMap map: HashMap<String, Any>): Response<JsonObject>
 
+    @GET("client/bannerList")
+    suspend fun getClientDashboard(@HeaderMap map: HashMap<String, Any>): Response<JsonObject>
+
     @GET("client/documents")
     suspend fun getClientDocuments(@HeaderMap map: HashMap<String, Any>): Response<JsonObject>
 

@@ -56,6 +56,10 @@ class ClientEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfile
             finish()
         }
 
+        binding!!.spState.isEnabled = false
+        binding!!.spGender.isEnabled = false
+        binding!!.spMaritalStatus.isEnabled = false
+
         val maritalStatus = resources.getStringArray(R.array.marital_status_list)
         val maritalStatusAdapter = ArrayAdapter(this, R.layout.dropdown_item, maritalStatus)
         binding!!.spMaritalStatus.adapter = maritalStatusAdapter
@@ -141,7 +145,7 @@ class ClientEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfile
         }
 
 
-        binding!!.tvBirthDate.setOnClickListener {
+        /*binding!!.tvBirthDate.setOnClickListener {
             val calendar = Calendar.getInstance()
             val yy = calendar.get(Calendar.YEAR)
             val mm = calendar.get(Calendar.MONTH)
@@ -160,7 +164,7 @@ class ClientEditProfileActivity : BaseActivity(), KodeinAware, EditClientProfile
             binding!!.tvBirthDate.setTextColor(resources.getColor(R.color.black))
             datePicker.datePicker.maxDate = System.currentTimeMillis()
             datePicker.show()
-        }
+        }*/
 
         binding!!.btnSaveProfile.setOnClickListener {
 

@@ -5,29 +5,43 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
 import com.example.policyagent.R
+import com.example.policyagent.data.responses.clienthome.ClientHomeData
+import com.example.policyagent.databinding.ItemClientDocumentsBinding
+import com.example.policyagent.databinding.ItemTopBannerBinding
+import com.example.policyagent.ui.listeners.ClientHomeListener
 import com.smarteist.autoimageslider.SliderViewAdapter
 
 
-class HomeTopBannerAdapter(private val mContext:Context):
+class HomeTopBannerAdapter(private val mContext:Context, var listener: ClientHomeListener):
     SliderViewAdapter<HomeTopBannerAdapter.SliderAdapterVH>() {
+    private var mBinding: ItemTopBannerBinding? = null
+    var bannerList: ArrayList<ClientHomeData?>? = ArrayList<ClientHomeData?>()
 
     override fun getCount(): Int {
-        return 3
+        return bannerList!!.size
     }
 
-    /*fun updateList(sliderItems:ArrayList<TopBannerItem>) {
-        mSliderItems = sliderItems
+    fun updateList(sliderItems: ArrayList<ClientHomeData?>) {
+        bannerList = sliderItems
         notifyDataSetChanged()
-    }*/
+    }
 
 
 
     override fun onCreateViewHolder(parent: ViewGroup):SliderAdapterVH {
-        val inflate = LayoutInflater.from(parent.context).inflate(R.layout.item_top_banner, parent,false)
-        return SliderAdapterVH(inflate)
+        val inflater = LayoutInflater.from(parent.context)
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.item_top_banner,
+            parent,
+            false
+        )
+        return SliderAdapterVH(mBinding!!)
     }
     override fun onBindViewHolder(viewHolder:SliderAdapterVH, position:Int) {
+        listener.onLoadImage(bannerList!![position]!!.image_url!!,mBinding!!.ivBannerImage)
        /* val sliderItem = mSliderItems.get(position)
         if (sliderItem.image != null && !sliderItem.image.isEmpty()) {
             homeLIstener.onLoadImage(
@@ -36,10 +50,5 @@ class HomeTopBannerAdapter(private val mContext:Context):
             )
         }*/
     }
-    inner class SliderAdapterVH(itemView: View):SliderViewAdapter.ViewHolder(itemView) {
-        var imageViewBackground: ImageView
-        init{
-            imageViewBackground = itemView.findViewById(R.id.iv_banner_image)
-        }
-    }
+    inner class SliderAdapterVH(itemView: ItemTopBannerBinding):SliderViewAdapter.ViewHolder(itemView.root)
 }

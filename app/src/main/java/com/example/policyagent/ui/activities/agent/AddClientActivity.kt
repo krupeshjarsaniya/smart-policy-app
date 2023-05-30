@@ -190,7 +190,7 @@ class AddClientActivity : BaseActivity(), KodeinAware, LoadDocumentListener,
                     ).show()
                     addData = false
                     break
-                } else if (familyList[i].birth_date == "") {
+                } /*else if (familyList[i].birth_date == "") {
                     Toast.makeText(
                         this,
                         "Please Add Birth date For Member ${i + 1}",
@@ -230,7 +230,7 @@ class AddClientActivity : BaseActivity(), KodeinAware, LoadDocumentListener,
                     ).show()
                     addData = false
                     break
-                }
+                }*/
                 else {
                     addData = true
                 }
@@ -285,7 +285,7 @@ class AddClientActivity : BaseActivity(), KodeinAware, LoadDocumentListener,
                         Toast.LENGTH_LONG
                     ).show()
                     break
-                } else if (familyList[i].birth_date == "") {
+                } /*else if (familyList[i].birth_date == "") {
                     callApi-=1
                     Toast.makeText(
                         this,
@@ -325,7 +325,7 @@ class AddClientActivity : BaseActivity(), KodeinAware, LoadDocumentListener,
                         Toast.LENGTH_LONG
                     ).show()
                     break
-                }
+                }*/
                 else {
                 }
             }
@@ -413,6 +413,10 @@ class AddClientActivity : BaseActivity(), KodeinAware, LoadDocumentListener,
     }
 
     override fun onLoadPdf(url: String) {
+
+    }
+
+    override fun onDownload(url: String) {
 
     }
 

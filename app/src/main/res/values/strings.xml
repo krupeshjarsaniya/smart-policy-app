@@ -178,6 +178,7 @@
         <item>Car/Motor Insurance</item>
         <item>Wc Insurance</item>
         <item>Other Insurance</item>
+        <item>My Insurance</item>
     </string-array>
 
     <string-array name="due_insurance_type">

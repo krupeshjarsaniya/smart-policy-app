@@ -11,7 +11,7 @@ import com.example.policyagent.databinding.ItemDocumentListBinding
 import com.example.policyagent.ui.listeners.LifeInsuranceListListener
 import com.example.policyagent.ui.listeners.LoadDocumentListener
 
-class DocumentAdapter (private val mContext: Context, val listener: LoadDocumentListener): RecyclerView.Adapter<DocumentAdapter.ViewHolderClass>() {
+class DocumentAdapter(private val mContext: Context, val listener: LoadDocumentListener): RecyclerView.Adapter<DocumentAdapter.ViewHolderClass>() {
 
     private var mBinding: ItemDocumentListBinding? = null
     private var mDocumentList = ArrayList<Document?>()
@@ -40,6 +40,11 @@ class DocumentAdapter (private val mContext: Context, val listener: LoadDocument
                     listener.onLoadPdf(mDocumentList[position]!!.url!!)
                 }
         }
+
+        mBinding!!.ivDownload.setOnClickListener {
+            listener.onDownload(mDocumentList[position]!!.url!!)
+        }
+
     }
 
     override fun getItemCount(): Int {

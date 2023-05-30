@@ -99,6 +99,9 @@ class MainRepository(private val api: MyApi, private val db: AppDatabase, privat
     suspend fun getAgentDashboard(): JsonObject {
         return apiRequest { api.getAgentDashboard(getHeaderMap()) }
     }
+    suspend fun getClientDashboard(): JsonObject {
+        return apiRequest { api.getClientDashboard(getHeaderMap()) }
+    }
 
     suspend fun getWcInsurance(map: HashMap<String, Any>): JsonObject {
         return apiRequest { api.getWcInsurance(getHeaderMap(),map) }

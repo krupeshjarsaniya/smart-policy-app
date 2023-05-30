@@ -546,6 +546,10 @@ class EditFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListe
         loadPdf(this, url)
     }
 
+    override fun onDownload(url: String) {
+
+    }
+
 
     override fun onFileSelect(position: Int) {
         pos = position

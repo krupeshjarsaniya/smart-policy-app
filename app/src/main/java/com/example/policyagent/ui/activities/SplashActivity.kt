@@ -1,6 +1,7 @@
 package com.example.policyagent.ui.activities
 
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import androidx.databinding.DataBindingUtil

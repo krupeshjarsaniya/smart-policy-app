@@ -10,10 +10,7 @@ import com.example.policyagent.databinding.ActivityClientDetailsBinding
 import com.example.policyagent.ui.activities.BaseActivity
 import com.example.policyagent.ui.adapters.agent.DocumentAdapter
 import com.example.policyagent.ui.listeners.LoadDocumentListener
-import com.example.policyagent.util.AppConstants
-import com.example.policyagent.util.getGlideProgress
-import com.example.policyagent.util.hide
-import com.example.policyagent.util.loadPdf
+import com.example.policyagent.util.*
 
 class ClientDetailsActivity : BaseActivity(), LoadDocumentListener {
     private var binding: ActivityClientDetailsBinding? = null
@@ -127,5 +124,8 @@ class ClientDetailsActivity : BaseActivity(), LoadDocumentListener {
 
     override fun onLoadPdf(url: String) {
         loadPdf(this, url)
+    }
+    override fun onDownload(url: String) {
+        downloadFile(this,url,this)
     }
 }

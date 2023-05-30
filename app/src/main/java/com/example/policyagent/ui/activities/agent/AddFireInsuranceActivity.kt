@@ -459,6 +459,10 @@ class AddFireInsuranceActivity : BaseActivity(), KodeinAware, LoadDocumentListen
 
     }
 
+    override fun onDownload(url: String) {
+
+    }
+
 
     override fun onFileSelect(position: Int) {
         pos = position

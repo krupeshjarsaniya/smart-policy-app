@@ -5,4 +5,5 @@ import android.widget.ImageView
 interface LoadDocumentListener {
     fun onLoadImage(image: String, imageview: ImageView)
     fun onLoadPdf(url: String)
+    fun onDownload(url: String)
 }

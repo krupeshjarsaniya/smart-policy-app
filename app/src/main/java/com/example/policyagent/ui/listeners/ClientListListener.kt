@@ -11,6 +11,7 @@ interface ClientListListener {
     fun onError(errors: HashMap<String,Any>)
     fun onItemClick(data: ClientData)
     fun onEdit(data: ClientData)
+    fun onWhatsApp(data: ClientData)
     fun onDelete(id: String,position: Int)
     fun onSuccessDelete(data: CommonResponse, position: Int)
     fun onLogout(message: String)

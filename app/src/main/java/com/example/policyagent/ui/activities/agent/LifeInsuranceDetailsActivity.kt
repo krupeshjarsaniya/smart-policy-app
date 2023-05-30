@@ -1,6 +1,7 @@
 package com.example.policyagent.ui.activities.agent
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -11,10 +12,7 @@ import com.example.policyagent.databinding.ActivityLifeInsuranceDetailsBinding
 import com.example.policyagent.ui.activities.BaseActivity
 import com.example.policyagent.ui.adapters.agent.DocumentAdapter
 import com.example.policyagent.ui.listeners.LoadDocumentListener
-import com.example.policyagent.util.AppConstants
-import com.example.policyagent.util.getGlideProgress
-import com.example.policyagent.util.hide
-import com.example.policyagent.util.loadPdf
+import com.example.policyagent.util.*
 
 class LifeInsuranceDetailsActivity : BaseActivity(), LoadDocumentListener {
     private var binding: ActivityLifeInsuranceDetailsBinding? = null
@@ -217,5 +215,10 @@ class LifeInsuranceDetailsActivity : BaseActivity(), LoadDocumentListener {
 
     override fun onLoadPdf(url: String) {
         loadPdf(this, url)
+    }
+
+    override fun onDownload(url: String) {
+        Log.e("download data","downloaddata")
+        downloadFile(this,url,this)
     }
 }
