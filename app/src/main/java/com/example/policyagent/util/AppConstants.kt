@@ -32,8 +32,8 @@ class AppConstants {
         val RESEND: String = "resend"
         val USER_TYPE: String = "user_type"
         val AGENT: String = "AGENT"
-        val API_BASE_URL = "http://technocometsolutions.in/developers/smart-policy/api/"//Live
-        val API_DEVELOPMENT_URL = "http://technocometsolutions.in/developers/smart-policy/api/"//Development
+        val API_BASE_URL = "http://insurebook.in/api/"//Live
+        val API_DEVELOPMENT_URL = "http://insurebook.in/api/"//Development
         const val ACCESS_HEADER = "access_token"
         const val DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"
         const val DATE_FORMAT_NEW = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
@@ -71,7 +71,7 @@ class AppConstants {
             return if (BuildConfig.DEBUG) {
                 API_DEVELOPMENT_URL
             } else {
-                API_BASE_URL
+                API_DEVELOPMENT_URL
             }
         }
 
